@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Your Name</title>
+<title>Julien Mann</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 <style>
@@ -53,12 +53,7 @@ body.cursor-active #cursor{width:18px;height:18px;}
   background-repeat:repeat;background-size:128px;
 }
 
-/* ── PROGRESS BAR ── */
-#progress-bar{
-  position:fixed;top:0;left:0;height:2px;
-  background:var(--fg);width:0%;z-index:9997;
-  transition:width .1s linear;
-}
+
 
 /* ── GLOBAL ── */
 html{scroll-behavior:smooth;cursor:none;}
@@ -142,32 +137,33 @@ hr{border:none;border-top:1px solid var(--rule);margin:0;}
 }
 .hero-title-word{display:block;overflow:hidden;}
 .hero-title-inner{display:block;transform:translateY(100%);animation:slideUp .8s cubic-bezier(.16,1,.3,1) forwards;}
-.hero-title-word:nth-child(2) .hero-title-inner{animation-delay:.1s;}
 @keyframes slideUp{to{transform:translateY(0);}}
-
 .hero-bottom{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:6rem;
   margin-top:4rem;padding-top:2rem;
   border-top:1px solid var(--rule);
 }
 .hero-desc{font-size:.88rem;line-height:1.9;color:var(--mid);}
-.hero-meta{
-  text-align:right;
-  font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;
-  color:var(--mid);line-height:2;
+.hero-arrow{
+  display:flex;align-items:center;gap:1rem;
+  border:1px solid var(--rule);
+  padding:.9rem 1.4rem;
+  flex-shrink:0;
+  transition:background .25s,color .25s,border-color .25s;
+  color:var(--fg);
+}
+.hero-arrow:hover{background:var(--fg);color:var(--bg);border-color:var(--fg);}
+.hero-arrow:hover .hero-arrow-icon{transform:translateX(3px) translateY(-3px);}
+.hero-arrow-label{
+  font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;
+  font-family:var(--mono);
+}
+.hero-arrow-icon{
+  font-size:1.1rem;line-height:1;
+  transition:transform .25s;
 }
 
-/* ── SECTION STRUCTURE ── */
-.section-header{
-  display:flex;justify-content:space-between;align-items:baseline;
-  padding:1.2rem 3rem 1rem;
-  max-width:1600px;margin:0 auto;
-}
-.section-label{
-  font-size:.65rem;letter-spacing:.28em;text-transform:uppercase;color:var(--mid);
-}
-.section-num{
-  font-family:var(--bebas);font-size:1rem;letter-spacing:.1em;color:var(--mid);
-}
 .section-container{padding:0 3rem;max-width:1600px;margin:0 auto;}
 
 /* ── ABOUT ── */
@@ -352,172 +348,32 @@ hr{border:none;border-top:1px solid var(--rule);margin:0;}
 <div id="cursor"></div>
 <div id="cursor-ring"></div>
 <div id="noise"></div>
-<div id="progress-bar"></div>
-
 <!-- HIRE ME -->
-<a href="#contact" class="hire-btn">Hire Me</a>
+<a href="contact.html" class="hire-btn">Contact Me</a>
 
 <!-- HERO -->
 <div id="hero-wrapper">
 <div id="hero-bg"></div>
 <section id="hero">
   <div class="hero-title-main">
-    <div class="hero-title-word"><span class="hero-title-inner">YOUR</span></div>
-    <div class="hero-title-word"><span class="hero-title-inner">NAME</span></div>
+    <div class="hero-title-word"><span class="hero-title-inner">JULIEN</span></div>
+    <div class="hero-title-word"><span class="hero-title-inner">MANN</span></div>
   </div>
   <div class="hero-bottom">
     <div class="hero-desc">
-      Placeholder profession. Building things that matter.<br>
-      Short bio describing your focus area.<br>
-      Open to full-time & freelance opportunities.
+      I'm a cégep student at the crossroads of sciences, literature and the arts, a combination that reflects my genuine desire to understand the world from multiple angles. Outside of academics, I invest my time in climbing, mountain biking, sailing and mountaineering, disciplines that have taught me focus, resilience and how to perform under pressure. Photography and filmmaking run alongside all of it, driven by an interest in storytelling and a habit of paying close attention to my surroundings. I bring that same curiosity and dedication to everything I take on.
     </div>
-
+    <a href="mannphotography.html" class="hero-arrow" target="_blank" rel="noopener">
+      <span class="hero-arrow-label">Photography</span>
+      <span class="hero-arrow-icon">&#8599;</span>
+    </a>
   </div>
 </section>
 </div>
 
-<hr>
-
-<!-- SKILLS -->
-<section id="skills">
-  <div class="section-header">
-    <span class="section-label">Skills &amp; Tools</span>
-    <span class="section-num">02</span>
-  </div>
-  <hr>
-  <div class="section-container">
-    <div class="skills-grid">
-      <div class="skill-group">
-        <div class="skill-group-title">Discipline One</div>
-        <ul class="skill-list">
-          <li>Skill / Tool A</li>
-          <li>Skill / Tool B</li>
-          <li>Skill / Tool C</li>
-          <li>Skill / Tool D</li>
-          <li>Skill / Tool E</li>
-        </ul>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title">Discipline Two</div>
-        <ul class="skill-list">
-          <li>Skill / Tool A</li>
-          <li>Skill / Tool B</li>
-          <li>Skill / Tool C</li>
-          <li>Skill / Tool D</li>
-          <li>Skill / Tool E</li>
-        </ul>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title">Discipline Three</div>
-        <ul class="skill-list">
-          <li>Skill / Tool A</li>
-          <li>Skill / Tool B</li>
-          <li>Skill / Tool C</li>
-          <li>Skill / Tool D</li>
-          <li>Skill / Tool E</li>
-        </ul>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title">Discipline Four</div>
-        <ul class="skill-list">
-          <li>Skill / Tool A</li>
-          <li>Skill / Tool B</li>
-          <li>Skill / Tool C</li>
-          <li>Skill / Tool D</li>
-        </ul>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title">Discipline Five</div>
-        <ul class="skill-list">
-          <li>Skill / Tool A</li>
-          <li>Skill / Tool B</li>
-          <li>Skill / Tool C</li>
-          <li>Skill / Tool D</li>
-        </ul>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title">Soft Skills</div>
-        <ul class="skill-list">
-          <li>Communication</li>
-          <li>Collaboration</li>
-          <li>Problem Solving</li>
-          <li>Attention to Detail</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="section-header">
-    <span class="section-label">Get in Touch</span>
-    <span class="section-num">03</span>
-  </div>
-  <hr>
-  <div class="section-container">
-    <div class="contact-grid">
-      <div class="contact-left">
-        <div class="contact-headline">LET'S<br>TALK</div>
-        <div class="contact-meta-row">
-          <span class="contact-meta-key">Status</span>
-          <span class="contact-meta-val">Open to opportunities</span>
-        </div>
-        <div class="contact-meta-row">
-          <span class="contact-meta-key">Email</span>
-          <span class="contact-meta-val">hello@yourname.com</span>
-        </div>
-        <div class="contact-meta-row">
-          <span class="contact-meta-key">Based in</span>
-          <span class="contact-meta-val">Your City, Country</span>
-        </div>
-        <div class="contact-meta-row">
-          <span class="contact-meta-key">Response Time</span>
-          <span class="contact-meta-val">Within 24 hours</span>
-        </div>
-        <div class="contact-meta-row">
-          <span class="contact-meta-key">LinkedIn</span>
-          <span class="contact-meta-val">linkedin.com/in/yourname</span>
-        </div>
-      </div>
-      <div class="contact-right">
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">First Name</label>
-            <input class="form-input" type="text" placeholder="Jane">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Last Name</label>
-            <input class="form-input" type="text" placeholder="Smith">
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group full">
-            <label class="form-label">Email Address</label>
-            <input class="form-input" type="email" placeholder="jane@example.com">
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group full">
-            <label class="form-label">Message</label>
-            <textarea class="form-textarea" placeholder="Tell me about your project or opportunity…"></textarea>
-          </div>
-        </div>
-        <button class="form-submit">Send Message</button>
-        <p class="form-note">All messages answered personally.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr>
-
-<!-- FOOTER -->
 <footer>
   <div id="footer">
-    <span class="footer-copy">© 2025 Your Name. All rights reserved.</span>
+    <span class="footer-copy">© 2025 Julien Mann. All rights reserved.</span>
     <ul class="footer-links">
       <li><a href="#">GitHub</a></li>
       <li><a href="#">LinkedIn</a></li>
@@ -548,12 +404,7 @@ document.querySelectorAll('a,button,.nav-cta,.form-submit').forEach(el=>{
 document.addEventListener('mousedown',()=>document.body.classList.add('cursor-active'));
 document.addEventListener('mouseup',()=>document.body.classList.remove('cursor-active'));
 
-/* ── PROGRESS BAR ── */
-const bar=document.getElementById('progress-bar');
-window.addEventListener('scroll',()=>{
-  const pct=window.scrollY/(document.body.scrollHeight-window.innerHeight)*100;
-  bar.style.width=pct+'%';
-});
+
 
 
 
