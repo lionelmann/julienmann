@@ -341,6 +341,73 @@ hr{border:none;border-top:1px solid var(--rule);margin:0;}
   .form-row{grid-template-columns:1fr;}
   #footer{flex-direction:column;gap:1.5rem;text-align:center;padding:2rem 1.5rem;}
 }
+
+/* ── MODAL ── */
+#modal-overlay{
+  position:fixed;inset:0;z-index:8000;
+  background:rgba(0,0,0,0);
+  backdrop-filter:blur(0px);
+  -webkit-backdrop-filter:blur(0px);
+  pointer-events:none;
+  transition:background .35s,backdrop-filter .35s;
+}
+#modal-overlay.open{
+  background:rgba(0,0,0,.7);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  pointer-events:all;
+}
+#modal{
+  position:fixed;top:50%;left:50%;
+  transform:translate(-50%,-44%);
+  opacity:0;
+  z-index:8001;
+  background:var(--bg);
+  border:1px solid var(--rule);
+  padding:3rem;
+  width:min(680px,92vw);
+  transition:opacity .35s,transform .35s;
+  pointer-events:none;
+}
+#modal-overlay.open #modal{
+  opacity:1;
+  transform:translate(-50%,-50%);
+  pointer-events:all;
+}
+.modal-header{
+  display:flex;justify-content:space-between;align-items:baseline;
+  margin-bottom:2rem;
+}
+.modal-title{
+  font-family:var(--bebas);font-size:2.8rem;letter-spacing:.03em;line-height:1;
+}
+#close-modal{
+  background:none;border:none;cursor:none;
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--mid);transition:color .25s;padding:0;
+}
+#close-modal:hover{color:var(--fg);}
+.modal-form .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1.2rem;}
+.modal-form .form-group{display:flex;flex-direction:column;gap:.5rem;}
+.modal-form .form-group.full{grid-column:1/-1;}
+.modal-form .form-label{font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:var(--mid);}
+.modal-form .form-input,.modal-form .form-textarea{
+  background:transparent;border:none;border-bottom:1px solid var(--rule);
+  color:var(--fg);font-family:var(--mono);font-size:.82rem;font-weight:300;
+  padding:.6rem 0;outline:none;transition:border-color .25s;width:100%;
+}
+.modal-form .form-input:focus,.modal-form .form-textarea:focus{border-bottom-color:var(--fg);}
+.modal-form .form-textarea{resize:none;height:90px;}
+.modal-form .form-submit{
+  margin-top:2rem;
+  font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;
+  border:1px solid var(--fg);padding:.75rem 2.5rem;
+  background:transparent;color:var(--fg);
+  font-family:var(--mono);cursor:none;
+  transition:background .25s,color .25s;
+}
+.modal-form .form-submit:hover{background:var(--fg);color:var(--bg);}
+.modal-form .form-note{margin-top:1rem;font-size:.62rem;letter-spacing:.12em;color:var(--mid);}
 </style>
 </head>
 <body>
@@ -349,7 +416,7 @@ hr{border:none;border-top:1px solid var(--rule);margin:0;}
 <div id="cursor-ring"></div>
 <div id="noise"></div>
 <!-- HIRE ME -->
-<a href="contact.html" class="hire-btn">Contact Me</a>
+<button class="hire-btn" id="open-modal">Contact Me</button>
 
 <!-- HERO -->
 <div id="hero-wrapper">
@@ -382,6 +449,42 @@ hr{border:none;border-top:1px solid var(--rule);margin:0;}
   </div>
 </footer>
 
+<!-- CONTACT MODAL -->
+<div id="modal-overlay">
+  <div id="modal">
+    <div class="modal-header">
+      <div class="modal-title">LET'S TALK</div>
+      <button id="close-modal">Close ✕</button>
+    </div>
+    <div class="modal-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">First Name</label>
+          <input class="form-input" type="text" placeholder="Jane">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Last Name</label>
+          <input class="form-input" type="text" placeholder="Smith">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group full">
+          <label class="form-label">Email Address</label>
+          <input class="form-input" type="email" placeholder="jane@example.com">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group full">
+          <label class="form-label">Message</label>
+          <textarea class="form-textarea" placeholder="Tell me about your project or opportunity…"></textarea>
+        </div>
+      </div>
+      <button class="form-submit">Send Message</button>
+      <p class="form-note">All messages answered personally.</p>
+    </div>
+  </div>
+</div>
+
 <script>
 /* ── CUSTOM CURSOR ── */
 const cur = document.getElementById('cursor');
@@ -408,6 +511,20 @@ document.addEventListener('mouseup',()=>document.body.classList.remove('cursor-a
 
 
 
+
+/* ── MODAL ── */
+const overlay = document.getElementById('modal-overlay');
+document.getElementById('open-modal').addEventListener('click', () => {
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+});
+document.getElementById('close-modal').addEventListener('click', closeModal);
+overlay.addEventListener('click', e => { if(e.target === overlay) closeModal(); });
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+function closeModal(){
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
 </script>
 </body>
 </html>
