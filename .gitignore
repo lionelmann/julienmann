@@ -1,0 +1,14 @@
+# Ignore raw/original image files — only push compressed web/ versions
+commercial examples/*.JPG
+commercial examples/*.jpg
+commercial examples/*.png
+commercial examples/*.PNG
+event examples/*.jpg
+event examples/*.png
+
+# Keep the compressed web/ subfolders
+!commercial examples/web/
+!event examples/web/
+
+# macOS
+.DS_Store
