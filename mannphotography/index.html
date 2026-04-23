@@ -612,19 +612,14 @@ footer{
 .tab-gallery{
   padding:0 3rem 2rem;
 }
-.tab-gallery::after{
-  content:'More examples available on request.';
-  display:block;
-  font-size:.65rem;
-  letter-spacing:.15em;
-  text-transform:uppercase;
-  color:var(--mid);
-  margin-top:.9rem;
+.gallery-note{
+  font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--mid);margin-top:.9rem;display:none;
 }
+.gallery-note.visible{display:block;}
 .gallery-header{
   display:flex;align-items:center;justify-content:space-between;
   padding:1.2rem 0;
-  border-bottom:1px solid var(--rule);
   margin-bottom:0;
 }
 .gallery-label{
@@ -1487,6 +1482,11 @@ document.querySelectorAll('.tab-gallery').forEach(gallery=>{
   header.appendChild(label);
   gallery.insertBefore(header,grid);
 
+  const note=document.createElement('p');
+  note.className='gallery-note';
+  note.textContent='More examples available on request.';
+  gallery.appendChild(note);
+
   const btn=document.createElement('button');
   const galleryLabel=()=>(currentLang==='fr'?'Photos exemple':'Example photos');
   btn.className='gallery-toggle';
@@ -1499,6 +1499,7 @@ document.querySelectorAll('.tab-gallery').forEach(gallery=>{
     const hiding=!grid.classList.contains('hidden');
     grid.classList.toggle('hidden',hiding);
     btn.classList.toggle('collapsed',hiding);
+    note.classList.toggle('visible',!hiding);
     btn.innerHTML=`${galleryLabel()} <em class="toggle-icon">↓</em>`;
   });
 });
