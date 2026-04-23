@@ -84,6 +84,21 @@ hr{border:none;border-top:1px solid var(--rule);margin:0;}
 }
 .hire-btn:hover{background:#fff;color:#000;border-color:#fff;}
 
+/* ── LANG TOGGLE ── */
+#lang-toggle{
+  position:fixed;top:2rem;left:2.5rem;z-index:500;
+  font-size:.62rem;letter-spacing:.18em;font-family:var(--mono);
+  color:rgba(255,255,255,.7);background:rgba(0,0,0,.25);
+  border:1px solid rgba(255,255,255,.4);
+  padding:.55rem .9rem;cursor:none;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  transition:color .25s,border-color .25s,background .25s;
+  text-transform:uppercase;
+}
+#lang-toggle:hover,#lang-toggle.active{color:#fff;border-color:rgba(255,255,255,.8);}
+
+
+
 /* ── HERO ── */
 #hero-wrapper{
   position:relative;
@@ -309,19 +324,24 @@ hr{border:none;border-top:1px solid var(--rule);margin:0;}
 }
 
 /* ── FOOTER ── */
+
+
 #footer{
   border-top:1px solid var(--rule);
   padding:2rem 3rem;
   display:flex;justify-content:space-between;align-items:center;
   max-width:1600px;margin:0 auto;
 }
-.footer-copy{font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--mid);}
+footer{background:var(--bg);}
+.footer-copy{font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--fg);}
 .footer-links{display:flex;gap:2rem;list-style:none;}
 .footer-links a{
   font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;
-  color:var(--mid);transition:color .25s;
+  color:var(--fg);transition:color .25s;
+  border-bottom:1px solid var(--rule);
+  padding-bottom:.2rem;
 }
-.footer-links a:hover{color:var(--fg);}
+.footer-links a:hover{border-bottom-color:var(--fg);}
 
 /* ── RESPONSIVE ── */
 @media(max-width:768px){
@@ -374,6 +394,7 @@ hr{border:none;border-top:1px solid var(--rule);margin:0;}
   transform:translate(-50%,-50%);
   pointer-events:all;
 }
+
 .modal-header{
   display:flex;justify-content:space-between;align-items:baseline;
   margin-bottom:2rem;
@@ -408,6 +429,36 @@ hr{border:none;border-top:1px solid var(--rule);margin:0;}
 }
 .modal-form .form-submit:hover{background:var(--fg);color:var(--bg);}
 .modal-form .form-note{margin-top:1rem;font-size:.62rem;letter-spacing:.12em;color:var(--mid);}
+
+/* ── MODAL CONFIRMATION ── */
+#modal-confirm{
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:3rem 1rem;
+  gap:1.5rem;
+}
+#modal-confirm.visible{display:flex;}
+.confirm-icon{
+  font-size:2.5rem;line-height:1;
+}
+.confirm-title{
+  font-family:var(--bebas);font-size:2.8rem;letter-spacing:.03em;line-height:1;
+}
+.confirm-sub{
+  font-size:.78rem;letter-spacing:.12em;color:var(--mid);line-height:1.9;
+}
+.confirm-close{
+  margin-top:1rem;
+  font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;
+  border:1px solid var(--fg);padding:.75rem 2.5rem;
+  background:transparent;color:var(--fg);
+  font-family:var(--mono);cursor:none;
+  transition:background .25s,color .25s;
+}
+.confirm-close:hover{background:var(--fg);color:var(--bg);}
 </style>
 </head>
 <body>
@@ -416,7 +467,8 @@ hr{border:none;border-top:1px solid var(--rule);margin:0;}
 <div id="cursor-ring"></div>
 <div id="noise"></div>
 <!-- HIRE ME -->
-<button class="hire-btn" id="open-modal">Contact Me</button>
+<button id="lang-toggle">FR</button>
+<button class="hire-btn" id="open-modal" data-i18n="btn.contact">Contact Me</button>
 
 <!-- HERO -->
 <div id="hero-wrapper">
@@ -428,10 +480,10 @@ hr{border:none;border-top:1px solid var(--rule);margin:0;}
   </div>
   <div class="hero-bottom">
     <div class="hero-desc">
-      I'm a cégep student at the crossroads of sciences, literature and the arts, a combination that reflects my genuine desire to understand the world from multiple angles. Outside of academics, I invest my time in climbing, mountain biking, sailing and mountaineering, disciplines that have taught me focus, resilience and how to perform under pressure. Photography and filmmaking run alongside all of it, driven by an interest in storytelling and a habit of paying close attention to my surroundings. I bring that same curiosity and dedication to everything I take on.
+<span data-i18n="hero.bio">I'm a cégep student at the crossroads of sciences, literature and the arts, a combination that reflects my genuine desire to understand the world from multiple angles. Outside of academics, I invest my time in climbing, mountain biking, sailing and mountaineering, disciplines that have taught me focus, resilience and how to perform under pressure. Photography and filmmaking run alongside all of it, driven by an interest in storytelling and a habit of paying close attention to my surroundings. I bring that same curiosity and dedication to everything I take on.</span>
     </div>
     <a href="mannphotography.html" class="hero-arrow" target="_blank" rel="noopener">
-      <span class="hero-arrow-label">Photography</span>
+      <span class="hero-arrow-label" data-i18n="arrow.label">Photography</span>
       <span class="hero-arrow-icon">&#8599;</span>
     </a>
   </div>
@@ -440,11 +492,9 @@ hr{border:none;border-top:1px solid var(--rule);margin:0;}
 
 <footer>
   <div id="footer">
-    <span class="footer-copy">© 2025 Julien Mann. All rights reserved.</span>
+    <span class="footer-copy" data-i18n="footer.copy">© 2025 Julien Mann. All rights reserved.</span>
     <ul class="footer-links">
-      <li><a href="#">GitHub</a></li>
       <li><a href="#">LinkedIn</a></li>
-      <li><a href="#">Twitter / X</a></li>
     </ul>
   </div>
 </footer>
@@ -453,34 +503,42 @@ hr{border:none;border-top:1px solid var(--rule);margin:0;}
 <div id="modal-overlay">
   <div id="modal">
     <div class="modal-header">
-      <div class="modal-title">LET'S TALK</div>
-      <button id="close-modal">Close ✕</button>
+      <div class="modal-title" data-i18n="modal.title">LET'S TALK</div>
+      <button id="close-modal" data-i18n="modal.close">Close ✕</button>
     </div>
-    <div class="modal-form">
+    <form class="modal-form" id="modal-contact-form">
+      <input type="hidden" name="access_key" value="3da1f7ac-99e9-49bd-8aa1-c3b621510613">
+      <input type="hidden" name="subject" value="New Message — julienmann.com">
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label">First Name</label>
-          <input class="form-input" type="text" placeholder="Jane">
+          <label class="form-label" data-i18n="form.fname">First Name</label>
+          <input class="form-input" type="text" name="first_name" data-i18n-placeholder="form.fname.ph" placeholder="Jane">
         </div>
         <div class="form-group">
-          <label class="form-label">Last Name</label>
-          <input class="form-input" type="text" placeholder="Smith">
+          <label class="form-label" data-i18n="form.lname">Last Name</label>
+          <input class="form-input" type="text" name="last_name" data-i18n-placeholder="form.lname.ph" placeholder="Smith">
         </div>
       </div>
       <div class="form-row">
         <div class="form-group full">
-          <label class="form-label">Email Address</label>
-          <input class="form-input" type="email" placeholder="jane@example.com">
+          <label class="form-label" data-i18n="form.email">Email Address</label>
+          <input class="form-input" type="email" name="email" placeholder="jane@example.com">
         </div>
       </div>
       <div class="form-row">
         <div class="form-group full">
-          <label class="form-label">Message</label>
-          <textarea class="form-textarea" placeholder="Tell me about your project or opportunity…"></textarea>
+          <label class="form-label" data-i18n="form.msg">Message</label>
+          <textarea class="form-textarea" name="message" data-i18n-placeholder="form.msg.ph" placeholder="Tell me about your project or opportunity…"></textarea>
         </div>
       </div>
-      <button class="form-submit">Send Message</button>
-      <p class="form-note">All messages answered personally.</p>
+      <button class="form-submit" type="submit" data-i18n="form.submit">Send Message</button>
+      <p class="form-note" data-i18n="form.note">All messages answered personally.</p>
+    </form>
+    <div id="modal-confirm">
+      <div class="confirm-icon">✓</div>
+      <div class="confirm-title" data-i18n="confirm.title">MESSAGE SENT</div>
+      <p class="confirm-sub" data-i18n="confirm.sub">Thanks for reaching out.<br>I'll get back to you within 24 hours.</p>
+      <button class="confirm-close" id="confirm-close-btn" data-i18n="confirm.close">Close</button>
     </div>
   </div>
 </div>
@@ -524,7 +582,102 @@ document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal();
 function closeModal(){
   overlay.classList.remove('open');
   document.body.style.overflow = '';
+  // reset form after close animation
+  setTimeout(() => {
+    document.getElementById('modal-confirm').classList.remove('visible');
+    document.querySelector('.modal-form').style.display = '';
+    document.querySelector('.modal-header').style.display = '';
+  }, 350);
 }
+document.getElementById('modal-contact-form').addEventListener('submit', e => {
+  e.preventDefault();
+  const btn = e.target.querySelector('.form-submit');
+  btn.disabled = true;
+  btn.textContent = '…';
+
+  fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+    body: JSON.stringify(Object.fromEntries(new FormData(e.target)))
+  })
+  .then(res => res.json())
+  .then(json => {
+    if (json.success) {
+      document.querySelector('.modal-form').style.display = 'none';
+      document.querySelector('.modal-header').style.display = 'none';
+      document.getElementById('modal-confirm').classList.add('visible');
+      e.target.reset();
+    } else {
+      btn.textContent = currentLang === 'fr' ? 'Erreur. Réessayez.' : 'Error. Try again.';
+      btn.disabled = false;
+    }
+  })
+  .catch(() => {
+    btn.textContent = currentLang === 'fr' ? 'Erreur. Réessayez.' : 'Error. Try again.';
+    btn.disabled = false;
+  });
+});
+document.getElementById('confirm-close-btn').addEventListener('click', closeModal);
+
+/* ── I18N ── */
+const translations = {
+  en: {
+    'btn.contact': 'Contact Me',
+    'hero.bio': "I'm a cégep student at the crossroads of sciences, literature and the arts, a combination that reflects my genuine desire to understand the world from multiple angles. Outside of academics, I invest my time in climbing, mountain biking, sailing and mountaineering, disciplines that have taught me focus, resilience and how to perform under pressure. Photography and filmmaking run alongside all of it, driven by an interest in storytelling and a habit of paying close attention to my surroundings. I bring that same curiosity and dedication to everything I take on.",
+    'arrow.label': 'Photography',
+    'footer.copy': '© 2025 Julien Mann. All rights reserved.',
+    'modal.title': "LET'S TALK",
+    'modal.close': 'Close ✕',
+    'form.fname': 'First Name', 'form.fname.ph': 'Jane',
+    'form.lname': 'Last Name', 'form.lname.ph': 'Smith',
+    'form.email': 'Email Address',
+    'form.msg': 'Message', 'form.msg.ph': 'Tell me about your project or opportunity…',
+    'form.submit': 'Send Message',
+    'form.note': 'All messages answered personally.',
+    'confirm.title': 'MESSAGE SENT',
+    'confirm.sub': "Thanks for reaching out.<br>I'll get back to you within 24 hours.",
+    'confirm.close': 'Close',
+  },
+  fr: {
+    'btn.contact': 'Me contacter',
+    'hero.bio': "Je suis étudiant au cégep à la croisée des sciences, de la littérature et des arts, une combinaison qui reflète mon désir sincère de comprendre le monde sous différents angles. En dehors des études, je consacre mon temps à l'escalade, au vélo de montagne, à la voile et à l'alpinisme — des disciplines qui m'ont appris la concentration, la résilience et la capacité à performer sous pression. La photographie et la réalisation accompagnent tout cela, portées par un intérêt pour la narration et une habitude d'observer attentivement mon environnement. J'apporte cette même curiosité et cette même détermination à tout ce que j'entreprends.",
+    'arrow.label': 'Photographie',
+    'footer.copy': '© 2025 Julien Mann. Tous droits réservés.',
+    'modal.title': 'PARLONS-EN',
+    'modal.close': 'Fermer ✕',
+    'form.fname': 'Prénom', 'form.fname.ph': 'Marie',
+    'form.lname': 'Nom', 'form.lname.ph': 'Dupont',
+    'form.email': 'Adresse e-mail',
+    'form.msg': 'Message', 'form.msg.ph': 'Parlez-moi de votre projet ou opportunité…',
+    'form.submit': 'Envoyer',
+    'form.note': 'Tous les messages reçoivent une réponse personnelle.',
+    'confirm.title': 'MESSAGE ENVOYÉ',
+    'confirm.sub': "Merci de m'avoir contacté.<br>Je vous répondrai dans les 24 heures.",
+    'confirm.close': 'Fermer',
+  }
+};
+
+let currentLang = 'en';
+function applyLang(lang) {
+  const t = translations[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (t[key] !== undefined) el.placeholder = t[key];
+  });
+  document.documentElement.lang = lang;
+}
+
+document.getElementById('lang-toggle').addEventListener('click', () => {
+  currentLang = currentLang === 'en' ? 'fr' : 'en';
+  const btn = document.getElementById('lang-toggle');
+  btn.textContent = currentLang === 'en' ? 'FR' : 'EN';
+  btn.classList.toggle('active', currentLang === 'fr');
+  applyLang(currentLang);
+});
 </script>
 </body>
 </html>

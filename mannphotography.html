@@ -383,6 +383,12 @@ hr{border:none;border-top:1px solid var(--rule);margin:0;}
 
 /* ── SERVICES TABS ── */
 #services{padding:3rem 0;}
+.services-pricing-note{
+  max-width:1600px;margin:0 auto;
+  padding:.9rem 3rem 0;
+  font-size:.72rem;letter-spacing:.08em;color:var(--mid);font-family:var(--mono);
+  border-top:1px solid var(--rule);
+}
 .tabs-row{
   display:flex;gap:0;border-bottom:1px solid var(--rule);
   max-width:1600px;margin:0 auto;padding:0 3rem;
@@ -669,7 +675,13 @@ footer{
   #hero,.section-container,.section-header,.contact-grid,.about-grid{padding-left:1.5rem;padding-right:1.5rem;}
   .about-grid,.contact-grid,.tab-content.active{grid-template-columns:1fr;}
   .about-left,.about-right,.tab-left,.tab-right,.contact-left,.contact-right{padding:3rem 1.5rem;border-right:none;}
-  .tabs-row{padding:0 1.5rem;overflow-x:auto;}
+  .services-pricing-note{
+  max-width:1600px;margin:0 auto;
+  padding:.9rem 3rem 0;
+  font-size:.72rem;letter-spacing:.08em;color:var(--mid);font-family:var(--mono);
+  border-top:1px solid var(--rule);
+}
+.tabs-row{padding:0 1.5rem;overflow-x:auto;}
   .work-trigger{grid-template-columns:3rem 1fr;gap:1rem;}
   .work-cat,.work-year{display:none;}
   .work-detail-inner{grid-template-columns:3rem 1fr;}
@@ -719,18 +731,15 @@ footer{
     </div>
   </h1>
   <div class="hero-bottom">
-    <p class="hero-desc" data-i18n="hero.desc">
-      Photography for people, sport, and brands.<br>
-      Portraits, weddings, events &amp; commercial.<br>
-      Based in Montréal. Travel welcome.
-    </p>
+
+    <p class="hero-desc" data-i18n="hero.desc">Photography for people, sport, and brands.<br>Portraits, events &amp; commercial.</p>
     <div class="hero-typewriter">
       <span id="typewriter-text"></span>
     </div>
     <div class="hero-meta" data-i18n="hero.meta">
-      Available 2025<br>
-      12 Years Active<br>
-      340+ Commissions<br>
+      Available 2026<br>
+      3 Years Active<br>
+      20+ Happy Clients<br>
       <br>
       ↓ Scroll to explore
     </div>
@@ -747,33 +756,26 @@ footer{
     <div class="about-left reveal">
       <h2 class="about-headline" data-i18n="about.headline">JUST ME,<br>A CAMERA,<br>AND YOUR<br>BRIEF</h2>
       <div class="about-body">
-        <p data-i18n="about.p1">I'm Elise Laurent — a photographer based in New York with twelve years of experience shooting weddings, portraits, sport, and commercial work across four continents.</p>
-        <p data-i18n="about.p2">I work on my own, which keeps things simple. No junior photographers, no account managers — you deal with me directly from the first email to the final gallery. I take the job seriously without making it weird.</p>
+        <p data-i18n="about.p1">I'm Julien Mann — a photographer based in Montréal with three years of experience shooting events, portraits, sport, and travel work worldwide. I grew up around filmmakers and people in the industry, and learned early on what it takes to get a great shot.</p>
+        <p data-i18n="about.p2">I work on my own, which keeps things simple. No junior photographers, no account managers, you deal with me directly from the first email to the final gallery.</p>
         <p data-i18n="about.p3">If you need good photos taken reliably and professionally, get in touch.</p>
       </div>
-      <div class="about-sig">— Elise Laurent</div>
+      <div class="about-sig">— Julien Mann</div>
     </div>
     <div class="about-right reveal">
       <div class="stats-grid">
         <div class="stat-box">
-          <span class="stat-num counter" data-target="12">0</span>
+          <span class="stat-num counter" data-target="3">0</span>
           <span class="stat-label" data-i18n="about.stat1">Years Active</span>
         </div>
         <div class="stat-box">
-          <span class="stat-num counter" data-target="340">0</span>
-          <span class="stat-label" data-i18n="about.stat2">Commissions</span>
+          <span class="stat-num counter" data-target="20">0</span>
+          <span class="stat-label" data-i18n="about.stat2">Happy Clients</span>
         </div>
-        <div class="stat-box">
-          <span class="stat-num counter" data-target="28">0</span>
-          <span class="stat-label" data-i18n="about.stat3">Countries Worked</span>
-        </div>
-        <div class="stat-box">
-          <span class="stat-num counter" data-target="4">0</span>
-          <span class="stat-label" data-i18n="about.stat4">Awards</span>
-        </div>
+
       </div>
       <div class="about-manifesto" data-i18n="about.manifesto">
-        I started in sport photography, moved into weddings to pay the bills, and ended up doing all of it. Twelve years in, I still enjoy it.
+        “Photography is an art of observation. It has little to do with the things you see and everything to do with the way you see them.” — Elliott Erwitt
       </div>
     </div>
   </div>
@@ -785,12 +787,14 @@ footer{
     <span class="section-label" data-i18n="services.label">Services &amp; Pricing</span>
     <span class="section-num">02 / 04</span>
   </div>
+
   <div class="tabs-row" id="tabs-row">
     <button class="tab-btn active" data-tab="sport" data-i18n="services.tab.sport">Sport</button>
     <button class="tab-btn" data-tab="events" data-i18n="services.tab.events">Events</button>
     <button class="tab-btn" data-tab="portraits" data-i18n="services.tab.portraits">Portraits</button>
     <button class="tab-btn" data-tab="commercial" data-i18n="services.tab.commercial">Commercial</button>
   </div>
+  <p class="services-pricing-note" data-i18n="services.pricing.note">Pricing is per job and varies from shoot to shoot. Get in touch for a quote tailored to your project.</p>
 
   <div class="tab-content" id="tab-portraits">
     <div class="tab-top">
@@ -799,7 +803,7 @@ footer{
     </div>
     <div class="tab-body">
       <div class="tab-desc-col">
-        <p class="tab-desc" data-i18n="services.portraits.desc">A 2-hour session at a location that works for you, or a studio if you prefer. Good for individuals, couples, families, and headshots. We'll have a quick chat beforehand so I know what you're after, and I'll be straight with you about what'll work and what won't.</p>
+        <p class="tab-desc" data-i18n="services.portraits.desc">A 2-hour session at a location that works for you. Good for individuals, couples, families, and headshots. We'll have a quick chat beforehand so I know what you're after, and I'll be straight with you about what'll work and what won't.</p>
       </div>
       <div class="tab-includes-col">
         <span class="tab-includes-label" data-i18n="services.included">What's included</span>
@@ -829,13 +833,13 @@ footer{
     </div>
     <div class="tab-body">
       <div class="tab-desc-col">
-        <p class="tab-desc" data-i18n="services.events.desc">Full coverage for weddings, corporate events, parties, and galas. I keep out of the way and focus on the moments that actually matter — candid, real, and uninterrupted. Available for half-day or full-day bookings.</p>
+        <p class="tab-desc" data-i18n="services.events.desc">Full coverage for corporate and school events, parties, and galas. I keep out of the way and focus on the moments that actually matter, keeping it candid, real, and uninterrupted. Available for half-day or full-day bookings.</p>
       </div>
       <div class="tab-includes-col">
         <span class="tab-includes-label" data-i18n="services.included">What's included</span>
         <div class="include-item" data-i18n="services.events.i1">Pre-event consultation + venue walkthrough</div>
         <div class="include-item" data-i18n="services.events.i2">Half or full day coverage</div>
-        <div class="include-item" data-i18n="services.events.i3">400+ retouched images</div>
+        <div class="include-item" data-i18n="services.events.i3">200+ retouched images</div>
         <div class="include-item" data-i18n="services.events.i4">Private online gallery, 12 months</div>
         <div class="include-item" data-i18n="services.events.i5">Print release included</div>
       </div>
@@ -950,7 +954,7 @@ footer{
         <span class="process-step-title" data-i18n="process.s4.title">The Shoot</span>
         <span class="process-icon">+</span>
       </div>
-      <div class="process-body"><div class="process-body-inner" data-i18n="process.s4.body">I show up on time, get on with it, and don't make the day about me. For events and weddings I stay until it's done. For portraits and commercial work I'll flag if something isn't working so we can adjust on the spot.</div></div>
+      <div class="process-body"><div class="process-body-inner" data-i18n="process.s4.body">I show up on time, get on with it, and don't make the day about me. For events I stay until it's done. For portraits and commercial work I'll flag if something isn't working so we can adjust on the spot.</div></div>
     </li>
     <li class="process-item">
       <div class="process-trigger">
@@ -958,7 +962,7 @@ footer{
         <span class="process-step-title" data-i18n="process.s5.title">Delivery</span>
         <span class="process-icon">+</span>
       </div>
-      <div class="process-body"><div class="process-body-inner" data-i18n="process.s5.body">Edited photos delivered via a private online gallery, usually within 2–3 weeks (weddings 5–7 weeks). You get everything in full resolution with a print licence. Sport and editorial jobs can be turned around in 48 hours if needed.</div></div>
+      <div class="process-body"><div class="process-body-inner" data-i18n="process.s5.body">Edited photos delivered via a private online gallery, usually within 2–3 weeks. You get everything in full resolution with a print licence. Sport and editorial jobs can be turned around in 48 hours if needed.</div></div>
     </li>
   </ul>
 </section>
@@ -976,8 +980,9 @@ footer{
       <div class="contact-detail">
         <div class="contact-detail-label" data-i18n="contact.avail.label">Availability</div>
         <div class="contact-detail-val">
-          <span class="availability-dot"></span><span data-i18n="contact.avail.val">Currently booking for 2025–2026</span>
+          <span class="availability-dot"></span><span data-i18n="contact.avail.val">Currently booking for 2026–2027</span>
         </div>
+
       </div>
       <div class="contact-detail">
         <div class="contact-detail-label" data-i18n="contact.base.label">Base</div>
@@ -990,6 +995,8 @@ footer{
     </div>
     <div class="contact-right reveal">
       <form id="contact-form" onsubmit="handleSubmit(event)">
+        <input type="hidden" name="access_key" value="3da1f7ac-99e9-49bd-8aa1-c3b621510613">
+        <input type="hidden" name="subject" value="New Photography Enquiry — Mann Photography">
         <div class="form-row">
           <div class="form-field">
             <input class="form-input" type="text" id="fname" name="fname" placeholder="x" autocomplete="off">
@@ -1224,41 +1231,59 @@ if(msgArea){
 // ── FORM SUBMIT ──
 function handleSubmit(e){
   e.preventDefault();
-  const status=document.getElementById('submit-status');
-  status.textContent='Sending…';
-  const successMsg = currentLang === 'fr'
-    ? '✓ Message reçu. Je vous répondrai bientôt.'
-    : '✓ Message received. I\'ll be in touch soon.';
-  setTimeout(()=>{
-    status.textContent=successMsg;
-    e.target.reset();
-    if(charCount)charCount.textContent='300';
-  },1000);
+  const status = document.getElementById('submit-status');
+  const btn = e.target.querySelector('.form-submit');
+  status.textContent = currentLang === 'fr' ? 'Envoi en cours…' : 'Sending…';
+  btn.disabled = true;
+
+  const data = Object.fromEntries(new FormData(e.target));
+
+  fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+    body: JSON.stringify(data)
+  })
+  .then(res => res.json())
+  .then(json => {
+    if (json.success) {
+      status.textContent = currentLang === 'fr'
+        ? '✓ Message reçu. Je vous répondrai bientôt.'
+        : '✓ Message received. I\'ll be in touch soon.';
+      e.target.reset();
+      if (charCount) charCount.textContent = '300';
+    } else {
+      status.textContent = currentLang === 'fr' ? 'Erreur. Réessayez.' : 'Error. Please try again.';
+    }
+  })
+  .catch(() => {
+    status.textContent = currentLang === 'fr' ? 'Erreur. Réessayez.' : 'Error. Please try again.';
+  })
+  .finally(() => { btn.disabled = false; });
 }
 // ── LANGUAGE TOGGLE ──
 const translations = {
   en: {
     'nav.about':'About','nav.services':'Services','nav.process':'Process',
     'nav.contact':'Contact','nav.cta':'Book Now',
-    'hero.kicker':'New York — Est. 2012',
-    'hero.desc':'Photography for people, sport, and brands.<br>Portraits, weddings, events &amp; commercial.<br>Based in New York. Travel welcome.',
-    'hero.meta':'Available 2025<br>12 Years Active<br>340+ Commissions<br><br>↓ Scroll to explore',
+    'hero.kicker':'Montréal',
+    'hero.desc':'Photography for people, sport, and brands.<br>Portraits, events &amp; commercial.',
+    'hero.meta':'Available 2026<br>3 Years Active<br>20+ Happy Clients<br><br>↓ Scroll to explore',
     'about.label':'About',
     'about.headline':'JUST ME,<br>A CAMERA,<br>AND YOUR<br>BRIEF',
-    'about.p1':'I\'m Elise Laurent — a photographer based in New York with twelve years of experience shooting weddings, portraits, sport, and commercial work across four continents.',
-    'about.p2':'I work on my own, which keeps things simple. No junior photographers, no account managers — you deal with me directly from the first email to the final gallery. I take the job seriously without making it weird.',
+    'about.p1':'I\'m Julien Mann — a photographer based in Montréal with three years of experience shooting events, portraits, sport, and travel work worldwide. I grew up around filmmakers and people in the industry, and learned early on what it takes to get a great shot.',
+    'about.p2':'I work on my own, which keeps things simple. No junior photographers, no account managers, you deal with me directly from the first email to the final gallery.',
     'about.p3':'If you need good photos taken reliably and professionally, get in touch.',
-    'about.stat1':'Years Active','about.stat2':'Commissions','about.stat3':'Countries Worked','about.stat4':'Awards',
-    'about.manifesto':'I started in sport photography, moved into weddings to pay the bills, and ended up doing all of it. Twelve years in, I still enjoy it.',
-    'services.label':'Services &amp; Pricing',
+    'about.stat1':'Years Active','about.stat2':'Happy Clients','about.stat3':'Countries Worked','about.stat4':'Awards',
+    'about.manifesto':'“Photography is an art of observation. It has little to do with the things you see and everything to do with the way you see them.” — Elliott Erwitt',
+    'services.label':'Services &amp; Pricing','services.pricing.note':'Pricing is per job and varies from shoot to shoot. Get in touch for a quote tailored to your project.',
     'services.tab.portraits':'Portraits','services.tab.events':'Events','services.tab.sport':'Sport','services.tab.commercial':'Commercial',
     'services.enquire':'Enquire Now →','services.included':'What\'s included',
     'services.portraits.title':'PORTRAITS',
-    'services.portraits.desc':'A 2-hour session at a location that works for you, or a studio if you prefer. Good for individuals, couples, families, and headshots. We\'ll have a quick chat beforehand so I know what you\'re after, and I\'ll be straight with you about what\'ll work and what won\'t.',
+    'services.portraits.desc':'A 2-hour session at a location that works for you. Good for individuals, couples, families, and headshots. We\'ll have a quick chat beforehand so I know what you\'re after, and I\'ll be straight with you about what\'ll work and what won\'t.',
     'services.portraits.i1':'Pre-shoot consultation call','services.portraits.i2':'2-hour session, 1 location','services.portraits.i3':'40+ fully retouched images','services.portraits.i4':'Private online gallery, 12 months','services.portraits.i5':'Commercial use available on request',
     'services.events.title':'EVENTS',
-    'services.events.desc':'Full coverage for weddings, corporate events, parties, and galas. I keep out of the way and focus on the moments that actually matter — candid, real, and uninterrupted. Available for half-day or full-day bookings.',
-    'services.events.i1':'Pre-event consultation + venue walkthrough','services.events.i2':'Half or full day coverage','services.events.i3':'400+ retouched images','services.events.i4':'Private online gallery, 12 months','services.events.i5':'Print release included',
+    'services.events.desc':'Full coverage for corporate and school events, parties, and galas. I keep out of the way and focus on the moments that actually matter, keeping it candid, real, and uninterrupted. Available for half-day or full-day bookings.',
+    'services.events.i1':'Pre-event consultation + venue walkthrough','services.events.i2':'Half or full day coverage','services.events.i3':'200+ retouched images','services.events.i4':'Private online gallery, 12 months','services.events.i5':'Print release included',
     'services.sport.title':'SPORT',
     'services.sport.desc':'Event coverage for races, matches, competitions, and training sessions. I shoot fast, move around the venue, and know where to be to get the good frames. Available for one-off events or ongoing season coverage. Fast turnaround as standard.',
     'services.sport.i1':'Pre-event venue walkthrough &amp; planning','services.sport.i2':'Full event day coverage','services.sport.i3':'150+ retouched selects delivered','services.sport.i4':'Fast turnaround — 48hr rush available','services.sport.i5':'Editorial &amp; commercial licensing options',
@@ -1270,39 +1295,40 @@ const translations = {
     'process.s2.title':'Consultation','process.s2.body':'A quick call to talk through what you need, where, and when. We\'ll cover the logistics, the look you\'re after, and the budget. No obligation — if it\'s not the right fit for either of us, that\'s fine too.',
     'process.s3.title':'Proposal &amp; Booking','process.s3.body':'I\'ll send over a short proposal with the scope, what\'s included, the timeline, and the price. A deposit secures the date. The paperwork is straightforward — a one-page agreement in plain language.',
     'process.s4.title':'The Shoot','process.s4.body':'I show up on time, get on with it, and don\'t make the day about me. For events and weddings I stay until it\'s done. For portraits and commercial work I\'ll flag if something isn\'t working so we can adjust on the spot.',
-    'process.s5.title':'Delivery','process.s5.body':'Edited photos delivered via a private online gallery, usually within 2–3 weeks (weddings 5–7 weeks). You get everything in full resolution with a print licence. Sport and editorial jobs can be turned around in 48 hours if needed.',
+    'process.s5.title':'Delivery','process.s5.body':'Edited photos delivered via a private online gallery, usually within 2–3 weeks. You get everything in full resolution with a print licence. Sport and editorial jobs can be turned around in 48 hours if needed.',
     'contact.label':'Get in Touch','contact.headline':'GET IN<br>TOUCH',
-    'contact.avail.label':'Availability','contact.avail.val':'Currently booking for 2025–2026',
+    'contact.avail.label':'Availability','contact.avail.val':'Currently booking for 2026–2027',
     'contact.email.label':'Email','contact.base.label':'Base','contact.base.sub':'Available worldwide',
     'contact.response.label':'Response Time','contact.response.val':'Within 24 hours',
     'contact.form.fname':'First Name','contact.form.lname':'Last Name','contact.form.email':'Email Address',
     'contact.form.select':'— Select a service','contact.form.other':'Other',
     'contact.form.message':'Your Message','contact.form.submit':'Send Enquiry',
     'contact.form.note':'All enquiries answered personally.',
-    'footer.copy':'© 2025 Mann Photography. All rights reserved. New York.',
+    'footer.copy':'© 2025 Mann Photography. All rights reserved. Montréal.',
   },
   fr: {
     'nav.about':'À propos','nav.services':'Services','nav.process':'Processus',
     'nav.contact':'Contact','nav.cta':'Réserver',
-    'hero.kicker':'New York — Fondé en 2012',
-    'hero.desc':'Photographie pour les personnes, le sport et les marques.<br>Portraits, mariages, événements &amp; commercial.<br>Basé à New York. Déplacements possibles.',
-    'hero.meta':'Disponible 2025<br>12 ans d\'activité<br>340+ commissions<br><br>↓ Défiler pour explorer',
+    'hero.kicker':'Montréal',
+    'hero.desc':'Photographie pour les personnes, le sport et les marques.<br>Portraits, événements &amp; commercial.',
+    'hero.meta':'Disponible 2026<br>3 ans d\'activité<br>20+ clients satisfaits<br><br>↓ Défiler pour explorer',
     'about.label':'À propos',
     'about.headline':'MOI, UN<br>APPAREIL,<br>ET VOTRE<br>BRIEF',
-    'about.p1':'Je suis Elise Laurent — photographe basée à New York avec douze ans d\'expérience dans les mariages, portraits, sport et travail commercial sur quatre continents.',
-    'about.p2':'Je travaille seule, ce qui simplifie les choses. Pas de photographes juniors, pas de chargés de compte — vous traitez directement avec moi, du premier e-mail à la galerie finale. Je prends le travail au sérieux sans le rendre compliqué.',
+    'about.p1':'Je suis Julien Mann — photographe basé à Montréal avec trois ans d\'expérience dans les événements, portraits, sport et reportages de voyage à travers le monde. J\'ai grandi entouré de cinéastes et de professionnels du milieu, et j\'ai appris tôt ce qu\'il faut pour obtenir une excellente photo.',
+    'about.p2':'Je travaille seul, ce qui simplifie les choses. Pas de photographes juniors, pas de personnes intermédiaires, vous communiquez directement avec moi, du premier e-mail à la galerie finale.',
     'about.p3':'Si vous avez besoin de bonnes photos prises de façon fiable et professionnelle, contactez-moi.',
-    'about.stat1':'Années d\'activité','about.stat2':'Commissions','about.stat3':'Pays couverts','about.stat4':'Récompenses',
-    'about.manifesto':'J\'ai commencé par la photographie sportive, je me suis tournée vers les mariages pour payer les factures, et j\'ai fini par tout faire. Douze ans plus tard, j\'aime toujours ça.',
-    'services.label':'Services &amp; Tarifs',
+    'about.stat1':'Années d\'activité','about.stat2':'Clients satisfaits','about.stat3':'Pays couverts','about.stat4':'Récompenses',
+    'about.manifesto':'« La photographie est un art de l’observation. Elle a peu à voir avec les choses que vous voyez et tout à voir avec la façon dont vous les voyez. » — Elliott Erwitt',
+
+    'services.label':'Services &amp; Tarifs','services.pricing.note':'Les tarifs sont établis au projet et varient d\'une séance à l\'autre — contactez-moi pour un devis adapté à votre projet.',
     'services.tab.portraits':'Portraits','services.tab.events':'Événements','services.tab.sport':'Sport','services.tab.commercial':'Commercial',
     'services.enquire':'Faire une demande →','services.included':'Ce qui est inclus',
     'services.portraits.title':'PORTRAITS',
-    'services.portraits.desc':'Une séance de 2 heures à un endroit qui vous convient, ou en studio si vous préférez. Idéal pour les individus, couples, familles et photos professionnelles. On discutera brièvement avant pour que je comprenne ce que vous cherchez.',
+    'services.portraits.desc':'Une séance de 2 heures à un endroit qui vous convient. Idéal pour les individus, couples, familles et photos professionnelles. On discutera brièvement avant pour que je comprenne ce que vous cherchez.',
     'services.portraits.i1':'Appel de consultation avant la séance','services.portraits.i2':'Séance 2h, 1 lieu','services.portraits.i3':'40+ photos retouchées','services.portraits.i4':'Galerie privée en ligne, 12 mois','services.portraits.i5':'Usage commercial disponible sur demande',
     'services.events.title':'ÉVÉNEMENTS',
-    'services.events.desc':'Couverture complète pour mariages, événements d\'entreprise, soirées et galas. Je reste discret et me concentre sur les moments qui comptent vraiment — spontanés, réels et non interrompus. Disponible à la demi-journée ou à la journée.',
-    'services.events.i1':'Consultation + visite du lieu avant l\'événement','services.events.i2':'Couverture demi-journée ou journée complète','services.events.i3':'400+ photos retouchées','services.events.i4':'Galerie privée en ligne, 12 mois','services.events.i5':'Droit d\'impression inclus',
+    'services.events.desc':'Couverture complète pour événements d\'entreprise et scolaires, soirées et galas. Je reste discret et me concentre sur les moments qui comptent vraiment, en gardant ça spontané, réel et non interrompu. Disponible à la demi-journée ou à la journée.',
+    'services.events.i1':'Consultation + visite du lieu avant l\'événement','services.events.i2':'Couverture demi-journée ou journée complète','services.events.i3':'200+ photos retouchées','services.events.i4':'Galerie privée en ligne, 12 mois','services.events.i5':'Droit d\'impression inclus',
     'services.sport.title':'SPORT',
     'services.sport.desc':'Couverture d\'événements : courses, matchs, compétitions et entraînements. Je travaille vite, me déplace sur le terrain et sais où me positionner pour obtenir les meilleures images. Disponible pour des événements uniques ou une couverture sur toute la saison.',
     'services.sport.i1':'Visite du lieu &amp; planification','services.sport.i2':'Couverture journée complète','services.sport.i3':'150+ sélections retouchées livrées','services.sport.i4':'Livraison rapide — urgence 48h disponible','services.sport.i5':'Options de licence éditoriale &amp; commerciale',
@@ -1313,17 +1339,17 @@ const translations = {
     'process.s1.title':'Première prise de contact','process.s1.body':'Remplissez le formulaire de contact ou envoyez-moi un e-mail directement. Dites-moi globalement ce dont vous avez besoin — même une idée vague suffit pour commencer. Je vous répondrai dans les 24 heures.',
     'process.s2.title':'Consultation','process.s2.body':'Un rapide appel pour discuter de ce dont vous avez besoin, où et quand. On abordera la logistique, le rendu souhaité et le budget. Sans engagement — si ça ne correspond pas à l\'un ou l\'autre, pas de problème.',
     'process.s3.title':'Proposition &amp; réservation','process.s3.body':'Je vous envoie une courte proposition avec le périmètre, ce qui est inclus, le calendrier et le tarif. Un acompte réserve la date. Les documents sont simples — un accord d\'une page en langage clair.',
-    'process.s4.title':'La séance','process.s4.body':'J\'arrive à l\'heure, je fais mon travail sans me mettre en avant. Pour les événements et mariages, je reste jusqu\'à la fin. Pour les portraits et travaux commerciaux, je signale si quelque chose ne fonctionne pas pour qu\'on puisse ajuster sur place.',
-    'process.s5.title':'Livraison','process.s5.body':'Photos retouchées livrées via une galerie privée en ligne, généralement sous 2–3 semaines (mariages 5–7 semaines). Vous recevez tout en haute résolution avec une licence d\'impression. Les travaux sportifs et éditoriaux peuvent être livrés en 48h si nécessaire.',
+    'process.s4.title':'La séance','process.s4.body':'J\'arrive à l\'heure, je fais mon travail sans me mettre en avant. Pour les événements, je reste jusqu\'à la fin. Pour les portraits et travaux commerciaux, je signale si quelque chose ne fonctionne pas pour qu\'on puisse ajuster sur place.',
+    'process.s5.title':'Livraison','process.s5.body':'Photos retouchées livrées via une galerie privée en ligne, généralement sous 2–3 semaines. Vous recevez tout en haute résolution avec une licence d\'impression. Les travaux sportifs et éditoriaux peuvent être livrés en 48h si nécessaire.',
     'contact.label':'Nous contacter','contact.headline':'PRENDRE<br>CONTACT',
-    'contact.avail.label':'Disponibilité','contact.avail.val':'Réservations ouvertes pour 2025–2026',
+    'contact.avail.label':'Disponibilité','contact.avail.val':'Réservations ouvertes pour 2026–2027',
     'contact.email.label':'E-mail','contact.base.label':'Base','contact.base.sub':'Disponible partout dans le monde',
     'contact.response.label':'Délai de réponse','contact.response.val':'Sous 24 heures',
     'contact.form.fname':'Prénom','contact.form.lname':'Nom','contact.form.email':'Adresse e-mail',
     'contact.form.select':'— Sélectionner un service','contact.form.other':'Autre',
     'contact.form.message':'Votre message','contact.form.submit':'Envoyer la demande',
     'contact.form.note':'Toutes les demandes reçoivent une réponse personnelle.',
-    'footer.copy':'© 2025 Mann Photography. Tous droits réservés. New York.',
+    'footer.copy':'© 2025 Mann Photography. Tous droits réservés. Montréal.',
   }
 };
 
