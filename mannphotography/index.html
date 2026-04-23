@@ -1477,16 +1477,18 @@ document.getElementById('lang-toggle').addEventListener('click', () => {
 
 
 document.querySelectorAll('.tab-gallery').forEach(gallery=>{
-  const label=gallery.querySelector('.gallery-label');
   const grid=gallery.querySelector('.gallery-grid');
+  if(!grid) return;
 
   const header=document.createElement('div');
   header.className='gallery-header';
-  label.parentNode.insertBefore(header,label);
+  const label=document.createElement('span');
+  label.className='gallery-label';
   header.appendChild(label);
+  gallery.insertBefore(header,grid);
 
   const btn=document.createElement('button');
-  const galleryLabel = () => (currentLang === 'fr' ? 'Photos exemple' : 'Example photos');
+  const galleryLabel=()=>(currentLang==='fr'?'Photos exemple':'Example photos');
   btn.className='gallery-toggle';
   grid.classList.add('hidden');
   btn.classList.add('collapsed');
