@@ -669,25 +669,73 @@ footer{
 }
 .gallery-thumb:hover img{transform:scale(1.05);filter:grayscale(0%);}
 
+/* ── TOUCH / NO-HOVER DEVICES ── */
+@media(hover:none){
+  html{cursor:auto;}
+  #cursor,#cursor-ring{display:none;}
+  a,button,.nav-cta,.form-submit,.tab-btn,.gallery-toggle{cursor:pointer;}
+}
+
+/* ── RESPONSIVE ── */
 @media(max-width:900px){
+  /* nav */
   .nav-inner{padding:.9rem 1.5rem;}
   .nav-links{display:none;}
-  #hero,.section-container,.section-header,.contact-grid,.about-grid{padding-left:1.5rem;padding-right:1.5rem;}
-  .about-grid,.contact-grid,.tab-content.active{grid-template-columns:1fr;}
-  .about-left,.about-right,.tab-left,.tab-right,.contact-left,.contact-right{padding:3rem 1.5rem;border-right:none;}
-  .services-pricing-note{
-  max-width:1600px;margin:0 auto;
-  padding:.9rem 3rem 0;
-  font-size:.72rem;letter-spacing:.08em;color:var(--mid);font-family:var(--mono);
-  border-top:1px solid var(--rule);
-}
-.tabs-row{padding:0 1.5rem;overflow-x:auto;}
+  .nav-right{gap:.75rem;}
+
+  /* hero */
+  #hero{padding-left:1.5rem;padding-right:1.5rem;}
+  .hero-bottom{grid-template-columns:1fr;gap:1.5rem;}
+  .hero-meta{text-align:left;}
+  .hero-typewriter{text-align:left;}
+
+  /* sections */
+  .section-container,.section-header{padding-left:1.5rem;padding-right:1.5rem;}
+
+  /* about */
+  .about-grid{grid-template-columns:1fr;}
+  .about-left{border-right:none;border-bottom:1px solid var(--rule);padding:2rem 1.5rem;}
+  .about-right{padding:2rem 1.5rem;}
+
+  /* services tabs */
+  .services-pricing-note{padding:.9rem 1.5rem 0;}
+  .tabs-row{padding:0 1.5rem;overflow-x:auto;}
+  .tab-top{flex-wrap:wrap;gap:1rem;padding:1.5rem 1.5rem;}
+  .tab-body{grid-template-columns:1fr;}
+  .tab-desc-col{padding:1.5rem 1.5rem;border-right:none;border-bottom:1px solid var(--rule);}
+  .tab-includes-col{padding:1.5rem 1.5rem;}
+  .tab-gallery{padding:0 1.5rem 1.5rem;}
+
+  /* gallery — 3 cols on tablet/mobile */
+  .gallery-grid{grid-template-columns:repeat(3,1fr);}
+
+  /* work list */
   .work-trigger{grid-template-columns:3rem 1fr;gap:1rem;}
   .work-cat,.work-year{display:none;}
   .work-detail-inner{grid-template-columns:3rem 1fr;}
   .work-detail-specs{display:none;}
-  .process-trigger,.process-body-inner{padding-left:1.5rem;padding-right:1.5rem;}
-  footer{flex-direction:column;gap:1.2rem;padding:2rem 1.5rem;}
+
+  /* process */
+  .process-trigger{padding-left:1.5rem;padding-right:1.5rem;gap:1.5rem;}
+  .process-body-inner{padding:0 1.5rem 2rem 1.5rem;}
+
+  /* contact */
+  .contact-grid{grid-template-columns:1fr;}
+  .contact-left{border-right:none;border-bottom:1px solid var(--rule);padding:2rem 1.5rem;}
+  .contact-right{padding:2rem 1.5rem;}
+  .form-row{grid-template-columns:1fr;}
+  .submit-row{flex-wrap:wrap;gap:1rem;}
+
+  /* footer */
+  footer{flex-direction:column;gap:1.2rem;padding:2rem 1.5rem;text-align:center;}
+  .footer-social{justify-content:center;}
+}
+
+/* ── SMALL PHONES (≤480px) ── */
+@media(max-width:480px){
+  .gallery-grid{grid-template-columns:repeat(2,1fr);}
+  .hero-title-main{font-size:clamp(5rem,18vw,22rem);}
+  .tab-btn{padding:.8rem 1rem;font-size:.62rem;}
 }
 </style>
 </head>
@@ -997,18 +1045,19 @@ footer{
       <form id="contact-form" onsubmit="handleSubmit(event)">
         <input type="hidden" name="access_key" value="3da1f7ac-99e9-49bd-8aa1-c3b621510613">
         <input type="hidden" name="subject" value="New Photography Enquiry — Mann Photography">
+        <input type="checkbox" name="botcheck" style="display:none;">
         <div class="form-row">
           <div class="form-field">
-            <input class="form-input" type="text" id="fname" name="fname" placeholder="x" autocomplete="off">
+            <input class="form-input" type="text" id="fname" name="fname" placeholder="x" autocomplete="off" required>
             <label class="form-label-float" for="fname" data-i18n="contact.form.fname">First Name</label>
           </div>
           <div class="form-field">
-            <input class="form-input" type="text" id="lname" name="lname" placeholder="x" autocomplete="off">
+            <input class="form-input" type="text" id="lname" name="lname" placeholder="x" autocomplete="off" required>
             <label class="form-label-float" for="lname" data-i18n="contact.form.lname">Last Name</label>
           </div>
         </div>
         <div class="form-field">
-          <input class="form-input" type="email" id="email" name="email" placeholder="x" autocomplete="off">
+          <input class="form-input" type="email" id="email" name="email" placeholder="x" autocomplete="off" required>
           <label class="form-label-float" for="email" data-i18n="contact.form.email">Email Address</label>
         </div>
         <div class="form-field">
@@ -1022,7 +1071,7 @@ footer{
           </select>
         </div>
         <div class="form-field" style="position:relative;">
-          <textarea class="form-textarea" id="message" name="message" placeholder="x" maxlength="300"></textarea>
+          <textarea class="form-textarea" id="message" name="message" placeholder="x" maxlength="300" required></textarea>
           <label class="form-label-float" for="message" data-i18n="contact.form.message">Your Message</label>
           <span class="char-count" id="char-count">300</span>
         </div>
