@@ -1385,6 +1385,7 @@ const translations = {
     'contact.form.select':'— Select a service','contact.form.other':'Other',
     'contact.form.message':'Your Message','contact.form.submit':'Send Enquiry',
     'contact.form.note':'All enquiries answered personally.',
+    'gallery.note':'More examples available on request.',
     'footer.copy':'© 2025 Mann Photography. All rights reserved. Montréal.',
   },
   fr: {
@@ -1430,6 +1431,7 @@ const translations = {
     'contact.form.select':'— Sélectionner un service','contact.form.other':'Autre',
     'contact.form.message':'Votre message','contact.form.submit':'Envoyer la demande',
     'contact.form.note':'Toutes les demandes reçoivent une réponse personnelle.',
+    'gallery.note':'Plus d\'exemples disponibles sur demande.',
     'footer.copy':'© 2025 Mann Photography. Tous droits réservés. Montréal.',
   }
 };
@@ -1484,6 +1486,7 @@ document.querySelectorAll('.tab-gallery').forEach(gallery=>{
 
   const note=document.createElement('p');
   note.className='gallery-note';
+  note.setAttribute('data-i18n','gallery.note');
   note.textContent='More examples available on request.';
   gallery.appendChild(note);
 
