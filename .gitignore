@@ -5,10 +5,19 @@ commercial examples/*.png
 commercial examples/*.PNG
 event examples/*.jpg
 event examples/*.png
+sport examples/*.jpg
+sport examples/*.jpeg
+sport examples/*.png
+people examples/*.jpg
+people examples/*.JPG
+people examples/*.jpeg
+people examples/*.png
 
 # Keep the compressed web/ subfolders
 !commercial examples/web/
 !event examples/web/
+!sport examples/web/
+!people examples/web/
 
 # macOS
 .DS_Store
