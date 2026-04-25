@@ -379,27 +379,19 @@ hr{border:none;border-top:1px solid var(--rule);margin:0;}
 
 .about-manifesto{
   margin-top:3rem;
-  padding:2rem 0;
-  border-top:1px solid rgba(196,146,42,.45);
-  border-bottom:1px solid rgba(196,146,42,.45);
+  padding:2rem;
+  border:1px solid rgba(196,146,42,.45);
+  outline:1px solid var(--rule);
+  outline-offset:5px;
+  font-family:var(--serif);font-style:italic;
+  font-size:1rem;line-height:1.8;color:var(--mid);
+  position:relative;
 }
 .about-manifesto::before{
-  content:'\201C';
+  content:'"';
+  font-size:5rem;line-height:.5;color:rgba(196,146,42,.3);
+  position:absolute;top:1.5rem;left:1.5rem;
   font-family:var(--serif);
-  font-size:3.5rem;line-height:1;
-  color:var(--accent);
-  display:block;margin-bottom:.4rem;
-}
-.manifesto-quote{
-  font-family:var(--serif);font-style:italic;
-  font-size:1.05rem;line-height:1.95;
-  color:var(--fg);
-}
-.manifesto-attr{
-  display:block;margin-top:1.1rem;
-  font-family:var(--mono);font-size:.58rem;
-  letter-spacing:.25em;text-transform:uppercase;
-  color:var(--accent);
 }
 
 /* ── SERVICES TABS ── */
@@ -869,9 +861,8 @@ footer{
         </div>
 
       </div>
-      <div class=”about-manifesto”>
-        <p class=”manifesto-quote” data-i18n=”about.manifesto.quote”>Photography is an art of observation. It has little to do with the things you see and everything to do with the way you see them.</p>
-        <span class=”manifesto-attr” data-i18n=”about.manifesto.attr”>— Elliott Erwitt</span>
+      <div class="about-manifesto" data-i18n="about.manifesto">
+        "Photography is an art of observation. It has little to do with the things you see and everything to do with the way you see them." — Elliott Erwitt
       </div>
     </div>
   </div>
@@ -1366,8 +1357,7 @@ const translations = {
     'about.p2':'I work on my own, which keeps things simple. No junior photographers, no account managers, you deal with me directly from the first email to the final gallery.',
     'about.p3':'If you need good photos taken reliably and professionally, get in touch.',
     'about.stat1':'Years Active','about.stat2':'Happy Clients','about.stat3':'Countries Worked','about.stat4':'Awards',
-    'about.manifesto.quote':'Photography is an art of observation. It has little to do with the things you see and everything to do with the way you see them.',
-    'about.manifesto.attr':'— Elliott Erwitt',
+    'about.manifesto':'"Photography is an art of observation. It has little to do with the things you see and everything to do with the way you see them." — Elliott Erwitt',
     'services.label':'Services','services.pricing.note':'Pricing is per job and varies from shoot to shoot. Get in touch for a quote tailored to your project.',
     'services.tab.portraits':'People','services.tab.events':'Events','services.tab.sport':'Sport','services.tab.commercial':'Commercial',
     'services.enquire':'Enquire Now →','services.included':'What\'s included',
@@ -1412,8 +1402,7 @@ const translations = {
     'about.p2':'Je travaille seul, ce qui simplifie les choses. Pas de photographes juniors, pas de personnes intermédiaires, vous communiquez directement avec moi, du premier e-mail à la galerie finale.',
     'about.p3':'Si vous avez besoin de bonnes photos prises de façon fiable et professionnelle, contactez-moi.',
     'about.stat1':'Années d\'activité','about.stat2':'Clients satisfaits','about.stat3':'Pays couverts','about.stat4':'Récompenses',
-    'about.manifesto.quote':'La photographie est un art de l'observation. Elle a peu à voir avec les choses que vous voyez et tout à voir avec la façon dont vous les voyez.',
-    'about.manifesto.attr':'— Elliott Erwitt',
+    'about.manifesto':'« La photographie est un art de l’observation. Elle a peu à voir avec les choses que vous voyez et tout à voir avec la façon dont vous les voyez. » — Elliott Erwitt',
 
     'services.label':'Services','services.pricing.note':'Les tarifs sont établis au projet et varient d\'une séance à l\'autre — contactez-moi pour un devis adapté à votre projet.',
     'services.tab.portraits':'Personnes','services.tab.events':'Événements','services.tab.sport':'Sport','services.tab.commercial':'Commercial',
