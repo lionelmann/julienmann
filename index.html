@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <!-- Google tag (gtag.js) -->
@@ -18,50 +18,42 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 
 :root{
-  --bg:#ffffff;
-  --fg:#000000;
-  --mid:#888888;
-  --light:#eeeeee;
-  --rule:rgba(0,0,0,0.15);
+  --bg:#0d0b09;
+  --fg:#ede8d5;
+  --mid:#8a7f6e;
+  --accent:#c4922a;
+  --light:#1a1712;
+  --rule:rgba(237,232,213,.1);
+  --rule-accent:rgba(196,146,42,.35);
   --bebas:'Bebas Neue',sans-serif;
   --mono:'IBM Plex Mono',monospace;
   --serif:'Playfair Display',serif;
 }
-[data-theme="dark"]{
-  --bg:#000000;
-  --fg:#ffffff;
-  --mid:#b0aba0;
-  --light:#111111;
-  --rule:rgba(255,255,255,0.15);
-}
 
 /* ── CURSOR ── */
 #cursor{
-  position:fixed;width:12px;height:12px;
-  border-radius:50%;background:var(--fg);
+  position:fixed;width:10px;height:10px;
+  border-radius:50%;background:var(--accent);
   pointer-events:none;z-index:9999;
   transform:translate(-50%,-50%);
-  transition:width .2s,height .2s,opacity .2s;
-  box-shadow:0 0 0 1.5px var(--bg);
+  transition:width .2s,height .2s;
 }
 #cursor-ring{
-  position:fixed;width:36px;height:36px;border-radius:50%;
-  border:1.5px solid var(--fg);pointer-events:none;z-index:9998;
-  transform:translate(-50%,-50%);opacity:.6;
+  position:fixed;width:32px;height:32px;border-radius:50%;
+  border:1px solid var(--accent);pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);opacity:.45;
   transition:width .3s,height .3s,opacity .3s;
 }
-body.cursor-hover #cursor{width:6px;height:6px;}
-body.cursor-hover #cursor-ring{width:52px;height:52px;opacity:.3;}
-body.cursor-active #cursor{width:18px;height:18px;}
+body.cursor-hover #cursor{width:5px;height:5px;}
+body.cursor-hover #cursor-ring{width:48px;height:48px;opacity:.2;}
+body.cursor-active #cursor{width:16px;height:16px;}
 
 /* ── NOISE OVERLAY ── */
 #noise{
-  position:fixed;inset:0;z-index:9990;pointer-events:none;opacity:.04;
+  position:fixed;inset:0;z-index:9990;pointer-events:none;opacity:.06;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-repeat:repeat;background-size:128px;
 }
-
-
 
 /* ── GLOBAL ── */
 html{scroll-behavior:smooth;cursor:none;}
@@ -70,333 +62,195 @@ body{
   font-family:var(--mono);font-weight:300;
   font-size:14px;line-height:1.7;
   overflow-x:hidden;
-  transition:background .3s,color .3s;
 }
-::selection{background:var(--fg);color:var(--bg);}
+::selection{background:var(--accent);color:var(--bg);}
 a{color:inherit;text-decoration:none;}
-hr{border:none;border-top:1px solid var(--rule);margin:0;}
 
-/* ── HIRE ME BUTTON ── */
+/* ── FIXED UI ── */
 .hire-btn{
-  position:fixed;top:2rem;right:2.5rem;z-index:500;
-  font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;
+  position:fixed;top:1.5rem;right:2rem;z-index:500;
+  font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;
   font-family:var(--mono);
-  border:1px solid rgba(255,255,255,0.6);
-  padding:.55rem 1.4rem;
-  color:#fff;
-  background:rgba(0,0,0,0.25);
-  backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);
+  border:1px solid var(--rule-accent);
+  padding:.5rem 1.2rem;
+  color:var(--fg);
+  background:rgba(13,11,9,.75);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   transition:background .25s,color .25s,border-color .25s;
   cursor:none;
 }
-.hire-btn:hover{background:#fff;color:#000;border-color:#fff;}
+.hire-btn:hover{background:var(--accent);color:var(--bg);border-color:var(--accent);}
 
-/* ── LANG TOGGLE ── */
 #lang-toggle{
-  position:fixed;top:2rem;left:2.5rem;z-index:500;
-  font-size:.62rem;letter-spacing:.18em;font-family:var(--mono);
-  color:rgba(255,255,255,.7);background:rgba(0,0,0,.25);
-  border:1px solid rgba(255,255,255,.4);
-  padding:.55rem .9rem;cursor:none;
+  position:fixed;top:1.5rem;left:2rem;z-index:500;
+  font-size:.58rem;letter-spacing:.2em;font-family:var(--mono);
+  color:var(--mid);background:rgba(13,11,9,.75);
+  border:1px solid var(--rule-accent);
+  padding:.5rem .8rem;cursor:none;
   backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   transition:color .25s,border-color .25s,background .25s;
   text-transform:uppercase;
 }
-#lang-toggle:hover,#lang-toggle.active{color:#fff;border-color:rgba(255,255,255,.8);}
+#lang-toggle:hover,#lang-toggle.active{color:var(--fg);border-color:var(--accent);}
 
-
-
-/* ── HERO ── */
-#hero-wrapper{
-  position:relative;
-  width:100%;
-  overflow:hidden;
+/* ── MASTHEAD ── */
+.masthead{
+  max-width:1400px;margin:0 auto;
+  padding:5.5rem 3rem 0;
 }
-#hero-bg{
-  position:absolute;inset:0;
-  background:url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1800&auto=format&fit=crop') center/cover no-repeat;
-  z-index:0;
-}
-#hero-bg::after{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(to top, rgba(0,0,0,.85) 0%, rgba(0,0,0,.45) 50%, rgba(0,0,0,.3) 100%);
-}
-#hero{
-  min-height:100vh;display:flex;flex-direction:column;
-  justify-content:flex-end;
-  padding:4vw 3rem 3.5rem;
-  max-width:1600px;margin:0 auto;
-  position:relative;z-index:1;
-}
-.hero-kicker{
-  font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;
-  color:var(--mid);margin-bottom:2rem;
-  display:flex;align-items:center;gap:1.5rem;
-}
-.hero-kicker::before{
-  content:'';display:block;width:3rem;height:1px;background:var(--mid);
-}
-.hero-title-top{
-  display:flex;align-items:baseline;justify-content:space-between;
-  overflow:hidden;margin-bottom:.2rem;
-}
-.hero-title-top-word{
-  font-family:var(--serif);
-  font-size:clamp(1.3rem,3.4vw,3.6rem);
-  font-style:italic;font-weight:300;
-  letter-spacing:.12em;text-transform:lowercase;
-  line-height:1;color:var(--mid);
-  transform:translateY(110%);display:block;
-  animation:slideUp .7s cubic-bezier(.16,1,.3,1) .05s forwards;
-}
-.hero-title-main{
+.rule-band{display:flex;flex-direction:column;gap:4px;margin:.55rem 0;}
+.rule-band .r-thick{height:3px;background:var(--accent);}
+.rule-band .r-thin{height:1px;background:var(--rule-accent);}
+.masthead-name{
   font-family:var(--bebas);
-  font-size:clamp(7rem,21vw,22rem);
-  letter-spacing:-.02em;line-height:.82;display:block;
-  transform:translateY(105%);
-  animation:slideUp 1s cubic-bezier(.16,1,.3,1) .12s forwards;
-  overflow:hidden;
-}
-.hero-title-word{display:block;overflow:hidden;}
-.hero-title-inner{display:block;transform:translateY(100%);animation:slideUp .8s cubic-bezier(.16,1,.3,1) forwards;}
-@keyframes slideUp{to{transform:translateY(0);}}
-.hero-bottom{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:6rem;
-  margin-top:4rem;padding-top:2rem;
-  border-top:1px solid var(--rule);
-}
-.hero-desc{font-size:.88rem;line-height:1.9;color:var(--mid);}
-.hero-arrow{
-  display:flex;align-items:center;gap:1rem;
-  border:1px solid var(--rule);
-  padding:.9rem 1.4rem;
-  flex-shrink:0;
-  transition:background .25s,color .25s,border-color .25s;
+  font-size:clamp(4.5rem,13vw,14rem);
+  letter-spacing:.06em;line-height:.88;
+  text-align:center;
+  padding:.5rem 0;
   color:var(--fg);
 }
-.hero-arrow:hover{background:var(--fg);color:var(--bg);border-color:var(--fg);}
-.hero-arrow:hover .hero-arrow-icon{transform:translateX(3px) translateY(-3px);}
-.hero-arrow-label{
-  font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;
-  font-family:var(--mono);
-}
-.hero-arrow-icon{
-  font-size:1.1rem;line-height:1;
-  transition:transform .25s;
-}
-
-.section-container{padding:0 3rem;max-width:1600px;margin:0 auto;}
-
-/* ── ABOUT ── */
-#about{padding:3rem 0 6rem;}
-.about-grid{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:0;
-}
-.about-left{
-  padding:2.5rem 3rem;
-  border-right:1px solid var(--rule);
-}
-.about-right{padding:2.5rem 3rem;}
-.about-headline{
-  font-family:var(--bebas);
-  font-size:clamp(3rem,6vw,6rem);
-  line-height:.95;margin-bottom:3rem;
-}
-.about-body{font-size:.9rem;color:var(--mid);line-height:1.95;}
-.about-body p+p{margin-top:1.2rem;}
-.about-sig{
+.masthead-tagline{
+  text-align:center;
   font-family:var(--serif);font-style:italic;
-  font-size:1.6rem;margin-top:2.5rem;
+  font-size:clamp(.85rem,1.4vw,1.2rem);
+  color:var(--mid);
+  padding:.9rem 0;
+  border-top:1px solid var(--rule);
+  letter-spacing:.06em;
 }
 
-.stats-grid{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:0;border:1px solid var(--rule);
+/* ── EDITORIAL GRID ── */
+.editorial{
+  display:grid;
+  grid-template-columns:5fr 7fr;
+  max-width:1400px;margin:.6rem auto 0;
+  padding:0 3rem;
+  border-top:1px solid var(--rule);
+  align-items:stretch;
 }
-.stat-box{
-  padding:2.5rem 2rem;
+.editorial-photo-col{
+  padding:2.5rem 2.5rem 2.5rem 0;
   border-right:1px solid var(--rule);
+}
+.photo-frame img{
+  width:100%;height:auto;display:block;
+  filter:grayscale(18%) sepia(22%) contrast(1.07) brightness(.9);
+  outline:1px solid rgba(196,146,42,.2);
+  outline-offset:-8px;
+}
+.photo-caption{
+  font-family:var(--mono);font-size:.55rem;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--mid);text-align:center;
+  padding:.75rem 0 0;
+  border-top:1px solid var(--rule);
+  margin-top:.8rem;
+}
+.editorial-text-col{
+  padding:2.5rem 0 4rem 3rem;
+  display:flex;flex-direction:column;
+}
+.editorial-hed{
+  font-family:var(--serif);font-style:italic;
+  font-size:clamp(1.5rem,2.8vw,2.6rem);
+  font-weight:400;line-height:1.15;
+  margin-bottom:.9rem;
+  letter-spacing:.01em;
+}
+.editorial-byline{
+  font-family:var(--mono);font-size:.57rem;
+  letter-spacing:.25em;text-transform:uppercase;
+  color:var(--mid);padding:.65rem 0;
+  border-top:1px solid var(--rule);
   border-bottom:1px solid var(--rule);
+  margin-bottom:1.8rem;
 }
-.stat-box:nth-child(even){border-right:none;}
-.stat-box:nth-child(3),.stat-box:nth-child(4){border-bottom:none;}
-.stat-num{
-  font-family:var(--bebas);
-  font-size:clamp(3rem,5vw,5rem);
-  line-height:1;display:block;
+.editorial-dinkus{
+  font-family:var(--serif);color:var(--accent);
+  font-size:.75rem;letter-spacing:.5em;
+  margin-bottom:1.6rem;display:block;
 }
-.stat-label{
-  font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--mid);margin-top:.5rem;display:block;
+.editorial-body{
+  font-size:.86rem;line-height:2.05;
+  color:var(--mid);font-family:var(--mono);
 }
-
-.about-manifesto{
-  margin-top:3rem;padding:2rem;
-  border:1px solid var(--rule);
-  font-family:var(--serif);font-style:italic;
-  font-size:1rem;line-height:1.8;color:var(--mid);
+/* ── QUALITIES BOX ── */
+.qualities-box{
+  margin-top:2.5rem;
+  border:1px solid var(--rule-accent);
+  padding:0;
   position:relative;
+  flex:1;
+  min-height:150px;
+  overflow:hidden;
 }
-.about-manifesto::before{
-  content:'"';font-size:5rem;line-height:.5;color:var(--light);
-  position:absolute;top:1.5rem;left:1.5rem;
-  font-family:var(--serif);
+.qualities-box::before{
+  content:'';position:absolute;inset:4px;
+  border:1px solid var(--rule);pointer-events:none;z-index:1;
 }
-
-/* ── SKILLS ── */
-#skills{padding:3rem 0 6rem;}
-.skills-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:0;border:1px solid var(--rule);
-  margin-top:1rem;
-}
-.skill-group{
-  padding:2.5rem 2.5rem;
-  border-right:1px solid var(--rule);
-  border-bottom:1px solid var(--rule);
-}
-.skill-group:nth-child(3n){border-right:none;}
-.skill-group:nth-child(4),.skill-group:nth-child(5),.skill-group:nth-child(6){border-bottom:none;}
-.skill-group-title{
-  font-family:var(--bebas);font-size:1.5rem;
-  letter-spacing:.06em;margin-bottom:1.5rem;
-}
-.skill-list{list-style:none;}
-.skill-list li{
-  font-size:.78rem;letter-spacing:.08em;
-  color:var(--mid);padding:.55rem 0;
-  border-bottom:1px solid var(--rule);
-  display:flex;align-items:center;gap:.8rem;
-  transition:color .25s;
-}
-.skill-list li:last-child{border-bottom:none;}
-.skill-list li::before{
-  content:'';display:block;width:.3rem;height:.3rem;
-  border-radius:50%;background:var(--mid);flex-shrink:0;
-  transition:background .25s;
-}
-.skill-list li:hover{color:var(--fg);}
-.skill-list li:hover::before{background:var(--fg);}
-
-/* ── CONTACT ── */
-#contact{padding:3rem 0 6rem;}
-.contact-grid{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:0;
-}
-.contact-left{
-  padding:2.5rem 3rem;
-  border-right:1px solid var(--rule);
-}
-.contact-right{padding:2.5rem 3rem;}
-.contact-headline{
+.q-word{
+  position:absolute;
   font-family:var(--bebas);
-  font-size:clamp(3rem,6vw,6rem);
-  line-height:.95;margin-bottom:3rem;
+  color:var(--accent);
+  letter-spacing:.06em;
+  line-height:1;
+  white-space:nowrap;
+  transition:opacity .5s ease;
+  user-select:none;
 }
-.contact-meta-row{
-  display:flex;justify-content:space-between;
-  padding:1.2rem 0;border-bottom:1px solid var(--rule);
-  font-size:.72rem;
-}
-.contact-meta-row:first-child{border-top:1px solid var(--rule);}
-.contact-meta-key{letter-spacing:.18em;text-transform:uppercase;color:var(--mid);}
-.contact-meta-val{color:var(--fg);text-align:right;}
 
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1.2rem;}
-.form-group{display:flex;flex-direction:column;gap:.5rem;}
-.form-group.full{grid-column:1/-1;}
-.form-label{font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:var(--mid);}
-.form-input,.form-textarea{
-  background:transparent;border:none;border-bottom:1px solid var(--rule);
-  color:var(--fg);font-family:var(--mono);font-size:.82rem;font-weight:300;
-  padding:.6rem 0;outline:none;transition:border-color .25s;
-  width:100%;
-}
-.form-input:focus,.form-textarea:focus{border-bottom-color:var(--fg);}
-.form-textarea{resize:none;height:100px;}
-.form-submit{
-  margin-top:2rem;
-  font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;
-  border:1px solid var(--fg);padding:.75rem 2.5rem;
-  background:transparent;color:var(--fg);
-  font-family:var(--mono);cursor:none;
+.retro-cta{
+  display:flex;align-items:center;justify-content:center;gap:.9rem;
+  margin-top:2.8rem;
+  font-family:var(--mono);font-size:.64rem;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--fg);
+  border:1px solid var(--accent);
+  padding:.75rem 1.6rem;
   transition:background .25s,color .25s;
+  cursor:none;
 }
-.form-submit:hover{background:var(--fg);color:var(--bg);}
-.form-note{
-  margin-top:1rem;font-size:.62rem;letter-spacing:.12em;color:var(--mid);
-}
+.retro-cta:hover{background:var(--accent);color:var(--bg);}
+.retro-cta-arrow{font-size:.9rem;}
 
 /* ── FOOTER ── */
-
-
+footer{border-top:1px solid var(--rule);margin-top:3rem;background:var(--bg);}
 #footer{
-  border-top:1px solid var(--rule);
-  padding:2rem 3rem;
+  padding:1.8rem 3rem;
   display:flex;justify-content:space-between;align-items:center;
-  max-width:1600px;margin:0 auto;
+  max-width:1400px;margin:0 auto;
 }
-footer{background:var(--bg);}
-.footer-copy{font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--fg);}
+.footer-copy{font-size:.57rem;letter-spacing:.15em;text-transform:uppercase;color:var(--mid);}
 .footer-links{display:flex;gap:2rem;list-style:none;}
 .footer-links a{
-  font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;
-  color:var(--fg);transition:color .25s;
-  border-bottom:1px solid var(--rule);
-  padding-bottom:.2rem;
+  font-size:.57rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--mid);transition:color .25s;
+  border-bottom:1px solid var(--rule-accent);padding-bottom:.2rem;
 }
-.footer-links a:hover{border-bottom-color:var(--fg);}
+.footer-links a:hover{color:var(--fg);}
 
-/* ── TOUCH / NO-HOVER DEVICES ── */
+/* ── TOUCH DEVICES ── */
 @media(hover:none){
   html{cursor:auto;}
   #cursor,#cursor-ring{display:none;}
-  a,button,.hire-btn,.form-submit,.confirm-close{cursor:pointer;}
+  a,button,.hire-btn,.form-submit,.confirm-close,.retro-cta{cursor:pointer;}
 }
 
 /* ── RESPONSIVE ── */
 @media(max-width:768px){
-  /* nav */
-  .nav-links{display:none;}
-  .nav-inner{padding:.9rem 1.5rem;}
-
-  /* fixed ui buttons — keep at top, shrink to fit */
-  .hire-btn{top:1.25rem;right:1.25rem;font-size:.6rem;padding:.45rem .9rem;}
-  #lang-toggle{top:1.25rem;left:1.25rem;font-size:.6rem;padding:.45rem .7rem;}
-
-  /* hero */
-  #hero{padding:calc(60px + 4vw) 1.5rem 7rem;}
-  .hero-bottom{flex-direction:column;gap:1.5rem;}
-  .hero-meta{text-align:left;}
-
-  /* sections */
-  .section-header,.section-container{padding-left:1.5rem;padding-right:1.5rem;}
-
-  /* about */
-  .about-grid{grid-template-columns:1fr;}
-  .about-left{border-right:none;border-bottom:1px solid var(--rule);padding:2rem 1.5rem;}
-  .about-right{padding:2rem 1.5rem;}
-
-  /* skills */
-  .skills-grid{grid-template-columns:1fr;}
-  .skill-group{border-right:none;}
-  .skill-group:nth-child(n){border-bottom:1px solid var(--rule);}
-  .skill-group:last-child{border-bottom:none;}
-
-  /* contact */
-  .contact-grid{grid-template-columns:1fr;}
-  .contact-left{border-right:none;border-bottom:1px solid var(--rule);padding:2rem 1.5rem;}
-  .contact-right{padding:2rem 1.5rem;}
-  .form-row{grid-template-columns:1fr;}
-
-  /* footer */
-  #footer{flex-direction:column;gap:1.5rem;text-align:center;padding:2rem 1.5rem;}
-
-  /* modal */
+  .hire-btn{top:1.1rem;right:1.1rem;font-size:.57rem;padding:.4rem .8rem;}
+  #lang-toggle{top:1.1rem;left:1.1rem;font-size:.57rem;padding:.4rem .65rem;}
+  .masthead{padding:4.5rem 1.5rem 0;}
+  .masthead-tagline{font-size:.8rem;padding:.7rem 0;}
+  .editorial{grid-template-columns:1fr;padding:0 1.5rem;}
+  .editorial-photo-col{
+    border-right:none;border-bottom:1px solid var(--rule);
+    padding:2rem 0;
+  }
+  .editorial-text-col{padding:2rem 0 2rem;display:flex;flex-direction:column;}
+  .qualities-box{flex:none;height:180px;margin-top:2rem;}
+  .retro-cta{margin-top:2rem;}
+  #footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem;}
   #modal{padding:2rem 1.25rem;width:92vw;}
   .modal-form .form-row{grid-template-columns:1fr;}
 }
@@ -405,35 +259,29 @@ footer{background:var(--bg);}
 #modal-overlay{
   position:fixed;inset:0;z-index:8000;
   background:rgba(0,0,0,0);
-  backdrop-filter:blur(0px);
-  -webkit-backdrop-filter:blur(0px);
+  backdrop-filter:blur(0px);-webkit-backdrop-filter:blur(0px);
   pointer-events:none;
   transition:background .35s,backdrop-filter .35s;
 }
 #modal-overlay.open{
-  background:rgba(0,0,0,.7);
-  backdrop-filter:blur(6px);
-  -webkit-backdrop-filter:blur(6px);
+  background:rgba(0,0,0,.78);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
   pointer-events:all;
 }
 #modal{
   position:fixed;top:50%;left:50%;
   transform:translate(-50%,-44%);
-  opacity:0;
-  z-index:8001;
+  opacity:0;z-index:8001;
   background:var(--bg);
-  border:1px solid var(--rule);
+  border:1px solid var(--rule-accent);
   padding:3rem;
   width:min(680px,92vw);
   transition:opacity .35s,transform .35s;
   pointer-events:none;
 }
 #modal-overlay.open #modal{
-  opacity:1;
-  transform:translate(-50%,-50%);
-  pointer-events:all;
+  opacity:1;transform:translate(-50%,-50%);pointer-events:all;
 }
-
 .modal-header{
   display:flex;justify-content:space-between;align-items:baseline;
   margin-bottom:2rem;
@@ -443,61 +291,50 @@ footer{background:var(--bg);}
 }
 #close-modal{
   background:none;border:none;cursor:none;
-  font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
+  font-family:var(--mono);font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;
   color:var(--mid);transition:color .25s;padding:0;
 }
 #close-modal:hover{color:var(--fg);}
 .modal-form .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1.2rem;}
 .modal-form .form-group{display:flex;flex-direction:column;gap:.5rem;}
 .modal-form .form-group.full{grid-column:1/-1;}
-.modal-form .form-label{font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:var(--mid);}
+.modal-form .form-label{font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:var(--mid);}
 .modal-form .form-input,.modal-form .form-textarea{
   background:transparent;border:none;border-bottom:1px solid var(--rule);
   color:var(--fg);font-family:var(--mono);font-size:.82rem;font-weight:300;
   padding:.6rem 0;outline:none;transition:border-color .25s;width:100%;
 }
-.modal-form .form-input:focus,.modal-form .form-textarea:focus{border-bottom-color:var(--fg);}
+.modal-form .form-input:focus,.modal-form .form-textarea:focus{border-bottom-color:var(--accent);}
 .modal-form .form-textarea{resize:none;height:90px;}
 .modal-form .form-submit{
   margin-top:2rem;
-  font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;
-  border:1px solid var(--fg);padding:.75rem 2.5rem;
+  font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;
+  border:1px solid var(--accent);padding:.75rem 2.5rem;
   background:transparent;color:var(--fg);
   font-family:var(--mono);cursor:none;
   transition:background .25s,color .25s;
 }
-.modal-form .form-submit:hover{background:var(--fg);color:var(--bg);}
-.modal-form .form-note{margin-top:1rem;font-size:.62rem;letter-spacing:.12em;color:var(--mid);}
+.modal-form .form-submit:hover{background:var(--accent);color:var(--bg);}
+.modal-form .form-note{margin-top:1rem;font-size:.6rem;letter-spacing:.12em;color:var(--mid);}
 
 /* ── MODAL CONFIRMATION ── */
 #modal-confirm{
-  display:none;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:3rem 1rem;
-  gap:1.5rem;
+  display:none;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;padding:3rem 1rem;gap:1.5rem;
 }
 #modal-confirm.visible{display:flex;}
-.confirm-icon{
-  font-size:2.5rem;line-height:1;
-}
-.confirm-title{
-  font-family:var(--bebas);font-size:2.8rem;letter-spacing:.03em;line-height:1;
-}
-.confirm-sub{
-  font-size:.78rem;letter-spacing:.12em;color:var(--mid);line-height:1.9;
-}
+.confirm-icon{font-size:2.5rem;line-height:1;color:var(--accent);}
+.confirm-title{font-family:var(--bebas);font-size:2.8rem;letter-spacing:.03em;line-height:1;}
+.confirm-sub{font-size:.78rem;letter-spacing:.12em;color:var(--mid);line-height:1.9;}
 .confirm-close{
   margin-top:1rem;
-  font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;
-  border:1px solid var(--fg);padding:.75rem 2.5rem;
+  font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;
+  border:1px solid var(--accent);padding:.75rem 2.5rem;
   background:transparent;color:var(--fg);
   font-family:var(--mono);cursor:none;
   transition:background .25s,color .25s;
 }
-.confirm-close:hover{background:var(--fg);color:var(--bg);}
+.confirm-close:hover{background:var(--accent);color:var(--bg);}
 </style>
 </head>
 <body>
@@ -505,28 +342,35 @@ footer{background:var(--bg);}
 <div id="cursor"></div>
 <div id="cursor-ring"></div>
 <div id="noise"></div>
-<!-- HIRE ME -->
+
 <button id="lang-toggle">FR</button>
 <button class="hire-btn" id="open-modal" data-i18n="btn.contact">Contact Me</button>
 
-<!-- HERO -->
-<div id="hero-wrapper">
-<div id="hero-bg"></div>
-<section id="hero">
-  <div class="hero-title-main">
-    <div class="hero-title-word"><span class="hero-title-inner">JULIEN</span></div>
-    <div class="hero-title-word"><span class="hero-title-inner">MANN</span></div>
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="rule-band"><div class="r-thick"></div><div class="r-thin"></div></div>
+  <h1 class="masthead-name">Julien Mann</h1>
+  <div class="rule-band"><div class="r-thin"></div><div class="r-thick"></div></div>
+  <p class="masthead-tagline" data-i18n="tagline">Student · Photographer · Adventurer</p>
+</header>
+
+<!-- EDITORIAL -->
+<div class="editorial">
+  <div class="editorial-photo-col">
+    <figure class="photo-frame">
+      <img src="coverphoto.jpeg" alt="Julien Mann" loading="eager">
+      <figcaption class="photo-caption" data-i18n="photo.caption">Julien Mann — 2011</figcaption>
+    </figure>
   </div>
-  <div class="hero-bottom">
-    <div class="hero-desc">
-<span data-i18n="hero.bio">I'm a cégep student at the crossroads of sciences, literature and the arts, a combination that reflects my genuine desire to understand the world from multiple angles. Outside of academics, I invest my time in climbing, mountain biking, sailing and mountaineering, disciplines that have taught me focus, resilience and how to perform under pressure. Photography and filmmaking run alongside all of it, driven by an interest in storytelling and a habit of paying close attention to my surroundings. I bring that same curiosity and dedication to everything I take on.</span>
-    </div>
-    <a href="/mannphotography" class="hero-arrow">
-      <span class="hero-arrow-label" data-i18n="arrow.label">Photography</span>
-      <span class="hero-arrow-icon">&#8599;</span>
+  <div class="editorial-text-col">
+    <h2 class="editorial-hed" data-i18n="hed">About</h2>
+    <p class="editorial-body"><span data-i18n="hero.bio">I'm a cégep student at the crossroads of sciences, literature and the arts, a combination that reflects my genuine desire to understand the world from multiple angles. Outside of academics, I invest my time in climbing, mountain biking, sailing, mountaineering and reading, disciplines that have taught me focus, resilience and how to perform under pressure. Photography and filmmaking run alongside all of it, driven by an interest in storytelling and a habit of paying close attention to my surroundings. I bring that same curiosity and dedication to everything I take on.</span></p>
+    <a href="/mannphotography" class="retro-cta">
+      <span class="retro-cta-label" data-i18n="arrow.label">For everything photography</span>
+      <span class="retro-cta-arrow">&#8594;</span>
     </a>
+    <div class="qualities-box" id="qualities-box"></div>
   </div>
-</section>
 </div>
 
 <footer>
@@ -598,17 +442,12 @@ function animRing(){
   requestAnimationFrame(animRing);
 }
 animRing();
-document.querySelectorAll('a,button,.nav-cta,.form-submit').forEach(el=>{
+document.querySelectorAll('a,button,.retro-cta,.form-submit').forEach(el=>{
   el.addEventListener('mouseenter',()=>document.body.classList.add('cursor-hover'));
   el.addEventListener('mouseleave',()=>document.body.classList.remove('cursor-hover'));
 });
 document.addEventListener('mousedown',()=>document.body.classList.add('cursor-active'));
 document.addEventListener('mouseup',()=>document.body.classList.remove('cursor-active'));
-
-
-
-
-
 
 /* ── MODAL ── */
 const overlay = document.getElementById('modal-overlay');
@@ -622,7 +461,6 @@ document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal();
 function closeModal(){
   overlay.classList.remove('open');
   document.body.style.overflow = '';
-  // reset form after close animation
   setTimeout(() => {
     document.getElementById('modal-confirm').classList.remove('visible');
     document.querySelector('.modal-form').style.display = '';
@@ -663,8 +501,13 @@ document.getElementById('confirm-close-btn').addEventListener('click', closeModa
 const translations = {
   en: {
     'btn.contact': 'Contact Me',
-    'hero.bio': "I'm a cégep student at the crossroads of sciences, literature and the arts, a combination that reflects my genuine desire to understand the world from multiple angles. Outside of academics, I invest my time in climbing, mountain biking, sailing and mountaineering, disciplines that have taught me focus, resilience and how to perform under pressure. Photography and filmmaking run alongside all of it, driven by an interest in storytelling and a habit of paying close attention to my surroundings. I bring that same curiosity and dedication to everything I take on.",
-    'arrow.label': 'Photography',
+    'tagline': 'Student · Photographer · Adventurer',
+    'hed': 'About',
+    'byline': 'By Julien Mann',
+    'photo.caption': 'Julien Mann — 2011',
+    'hero.bio': "I'm a cégep student at the crossroads of sciences, literature and the arts, a combination that reflects my genuine desire to understand the world from multiple angles. Outside of academics, I invest my time in climbing, mountain biking, sailing, mountaineering and reading, disciplines that have taught me focus, resilience and how to perform under pressure. Photography and filmmaking run alongside all of it, driven by an interest in storytelling and a habit of paying close attention to my surroundings. I bring that same curiosity and dedication to everything I take on.",
+    'qualities.label': 'Qualities',
+    'arrow.label': 'For everything photography',
     'footer.copy': '© 2025 Julien Mann. All rights reserved.',
     'modal.title': "LET'S TALK",
     'modal.close': 'Close ✕',
@@ -680,8 +523,13 @@ const translations = {
   },
   fr: {
     'btn.contact': 'Me contacter',
-    'hero.bio': "Je suis étudiant au cégep à la croisée des sciences, de la littérature et des arts, une combinaison qui reflète mon désir sincère de comprendre le monde sous différents angles. En dehors des études, je consacre mon temps à l'escalade, au vélo de montagne, à la voile et à l'alpinisme — des disciplines qui m'ont appris la concentration, la résilience et la capacité à performer sous pression. La photographie et la réalisation accompagnent tout cela, portées par un intérêt pour la narration et une habitude d'observer attentivement mon environnement. J'apporte cette même curiosité et cette même détermination à tout ce que j'entreprends.",
-    'arrow.label': 'Photographie',
+    'tagline': 'Étudiant · Photographe · Aventurier',
+    'hed': 'À propos',
+    'byline': 'Par Julien Mann',
+    'photo.caption': 'Julien Mann — 2011',
+    'hero.bio': "Je suis étudiant au cégep à la croisée des sciences, de la littérature et des arts, une combinaison qui reflète mon désir sincère de comprendre le monde sous différents angles. En dehors des études, je consacre mon temps à l'escalade, au vélo de montagne, à la voile, à l'alpinisme et à la lecture — des disciplines qui m'ont appris la concentration, la résilience et la capacité à performer sous pression. La photographie et la réalisation accompagnent tout cela, portées par un intérêt pour la narration et une habitude d'observer attentivement mon environnement. J'apporte cette même curiosité et cette même détermination à tout ce que j'entreprends.",
+    'qualities.label': 'Qualités',
+    'arrow.label': 'Pour tout ce qui est photographie',
     'footer.copy': '© 2025 Julien Mann. Tous droits réservés.',
     'modal.title': 'PARLONS-EN',
     'modal.close': 'Fermer ✕',
@@ -717,6 +565,54 @@ document.getElementById('lang-toggle').addEventListener('click', () => {
   btn.textContent = currentLang === 'en' ? 'FR' : 'EN';
   btn.classList.toggle('active', currentLang === 'fr');
   applyLang(currentLang);
+  // update visible quality words immediately
+  document.querySelectorAll('.q-word').forEach(el => {
+    const i = parseInt(el.dataset.qi);
+    el.textContent = (currentLang === 'fr' ? qualitiesFR : qualitiesEN)[i];
+  });
+});
+
+/* ── QUALITIES ── */
+const qualitiesEN = ['Curious','Creative','Driven','Resilient','Focused','Observant','Dedicated','Adventurous','Precise','Adaptable','Sharp','Tenacious','Methodical','Versatile','Grounded','Rational'];
+const qualitiesFR = ['Curieux','Créatif','Déterminé','Résilient','Concentré','Observateur','Dévoué','Aventurier','Précis','Adaptable','Perspicace','Tenace','Méthodique','Polyvalent','Ancré','Rationnel'];
+
+// Each slot: top%, left%, font-size, opacity, rotation, cycle-interval(ms), initial-delay(ms)
+const mobile = window.innerWidth < 600;
+const SLOTS = [
+  { top:8,  left:4,  size: mobile?'1.8rem':'3rem',   opacity:.88, rot:'-2deg',  interval:3200, delay:0    },
+  { top:6,  left:52, size: mobile?'1.1rem':'1.6rem',  opacity:.38, rot:'1.5deg', interval:2800, delay:600  },
+  { top:38, left:8,  size: mobile?'1rem':'1.4rem',    opacity:.32, rot:'-1deg',  interval:3600, delay:1100 },
+  { top:33, left:44, size: mobile?'2rem':'3.4rem',    opacity:.82, rot:'2deg',   interval:2600, delay:400  },
+  { top:65, left:3,  size: mobile?'1.2rem':'1.9rem',  opacity:.5,  rot:'0deg',   interval:3000, delay:900  },
+  { top:60, left:48, size: mobile?'1.5rem':'2.5rem',  opacity:.65, rot:'-1.5deg',interval:3400, delay:200  },
+];
+
+const qBox = document.getElementById('qualities-box');
+// Shuffle indices so slots start on different words
+const startIndices = [...Array(qualitiesEN.length).keys()].sort(() => Math.random() - .5);
+
+SLOTS.forEach((s, i) => {
+  const span = document.createElement('span');
+  span.className = 'q-word';
+  const qi = startIndices[i % startIndices.length];
+  span.dataset.qi = qi;
+  span.textContent = qualitiesEN[qi];
+  span.style.cssText = `top:${s.top}%;left:${s.left}%;font-size:${s.size};opacity:${s.opacity};transform:rotate(${s.rot});`;
+  qBox.appendChild(span);
+
+  setTimeout(() => {
+    setInterval(() => {
+      span.style.opacity = 0;
+      setTimeout(() => {
+        let next;
+        do { next = Math.floor(Math.random() * qualitiesEN.length); }
+        while (next === parseInt(span.dataset.qi));
+        span.dataset.qi = next;
+        span.textContent = (currentLang === 'fr' ? qualitiesFR : qualitiesEN)[next];
+        span.style.opacity = s.opacity;
+      }, 500);
+    }, s.interval);
+  }, s.delay);
 });
 </script>
 </body>
