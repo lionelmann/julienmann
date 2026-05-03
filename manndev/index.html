@@ -303,9 +303,8 @@ a{color:inherit;text-decoration:none;}
 
 .process-container{
   display:grid;
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:56fr 44fr;
   max-width:1600px;margin:0 auto;
-  gap:0;
   border-top:1px solid var(--rule);
 }
 
@@ -313,16 +312,17 @@ a{color:inherit;text-decoration:none;}
 .process-steps-col{
   border-right:1px solid var(--rule);
 }
-
 .process-step{
   padding:4.5rem 3rem;
   border-bottom:1px solid var(--rule);
   position:relative;
-  cursor:none;
-  transition:background .4s;
+  cursor:pointer;
+  transition:background .4s,border-bottom-color .4s;
   min-height:52vh;
   display:flex;flex-direction:column;justify-content:center;
 }
+.process-step:hover,.process-step.is-active{background:rgba(196,146,42,.06);}
+.process-step:hover .ps-title,.process-step:hover .ps-tag{transform:translateY(-.25rem);}
 .process-step::before{
   content:'';
   position:absolute;left:0;top:0;bottom:0;width:3px;
@@ -331,7 +331,8 @@ a{color:inherit;text-decoration:none;}
   transition:transform .5s ease;
 }
 .process-step.is-active::before{transform:scaleY(1);}
-.process-step.is-active{background:rgba(196,146,42,.03);}
+.process-step:hover::before{transform:scaleY(1);}
+.process-step.is-active{border-bottom-color:rgba(196,146,42,.6);}
 
 .ps-num{
   font-family:var(--bebas);font-size:3.5rem;line-height:1;
@@ -339,9 +340,11 @@ a{color:inherit;text-decoration:none;}
   transition:color .4s;
 }
 .process-step.is-active .ps-num{color:var(--accent);}
+.process-step:hover .ps-num{color:var(--mid);}
 .ps-title{
   font-family:var(--bebas);font-size:clamp(2rem,3.5vw,3.2rem);
   line-height:1;margin-bottom:1.2rem;letter-spacing:.02em;
+  transition:transform .3s,margin-bottom .3s;
 }
 .ps-body{font-size:.88rem;color:var(--mid);line-height:1.95;max-width:440px;}
 .ps-tag{
@@ -349,6 +352,7 @@ a{color:inherit;text-decoration:none;}
   font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;
   border:1px solid var(--rule-accent);padding:.3rem .8rem;
   color:var(--accent);
+  transition:transform .3s,color .4s;
 }
 
 /* Right: sticky visual panel */
@@ -369,22 +373,9 @@ a{color:inherit;text-decoration:none;}
   box-shadow:0 0 60px rgba(196,146,42,.07);
   position:relative;will-change:transform;
 }
-.pcanvas-hd{
-  padding:1rem 1.5rem;
-  border-bottom:2px solid var(--accent);
-  display:flex;align-items:baseline;gap:1rem;
-  background:#0d0b09;
-}
-.pcanvas-num{
-  font-family:var(--bebas);font-size:1.4rem;letter-spacing:.08em;
-  color:var(--accent);line-height:1;flex-shrink:0;
-}
-.pcanvas-name{
-  font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--mid);
-}
+.pcanvas-num,.pcanvas-name{display:none;}
 .pcanvas-body{
-  position:relative;min-height:340px;overflow:hidden;
+  position:relative;min-height:340px;
 }
 
 /* All stages stacked, only active one visible */
@@ -565,7 +556,6 @@ footer{border-top:1px solid var(--rule);padding:2rem 3rem;display:flex;justify-c
 @media(max-width:1024px){
   #hero{grid-template-columns:1fr;}
   .hero-right{display:none;}
-  .process-container{grid-template-columns:1fr;}
   .process-visual-col{display:none;}
 }
 @media(max-width:900px){
@@ -814,12 +804,12 @@ footer{border-top:1px solid var(--rule);padding:2rem 3rem;display:flex;justify-c
         <span class="ps-tag">Deployed · Yours to keep</span>
       </div>
 
-    </div>
+    </div><!-- /process-steps-col -->
 
     <!-- RIGHT: Sticky visual panel -->
     <div class="process-visual-col" id="process-visual-col">
       <div class="pcanvas" id="pscreen">
-        <div class="pcanvas-hd">
+        <div class="pcanvas-hd" aria-hidden="true">
           <span class="pcanvas-num" id="pscreen-num">01</span>
           <span class="pcanvas-name" id="pscreen-url">Brief &amp; Discovery</span>
         </div>
@@ -834,20 +824,10 @@ footer{border-top:1px solid var(--rule);padding:2rem 3rem;display:flex;justify-c
             <div class="brief-row"><span class="brief-key">Timeline</span><span class="brief-val">2 weeks from deposit</span></div>
             <div class="brief-wf">
               <div class="brief-wf-label">Page structure</div>
-              <div class="wf-row">
-                <div class="wf-block" style="flex:1;height:8px;"></div>
-                <div class="wf-block" style="width:55px;height:8px;"></div>
-              </div>
+              <div class="wf-row"><div class="wf-block" style="flex:1;height:8px;"></div><div class="wf-block" style="width:55px;height:8px;"></div></div>
               <div class="wf-row"><div class="wf-block" style="flex:1;height:38px;"></div></div>
-              <div class="wf-row">
-                <div class="wf-block" style="flex:1;height:20px;"></div>
-                <div class="wf-block" style="flex:1;height:20px;"></div>
-                <div class="wf-block" style="flex:1;height:20px;"></div>
-              </div>
-              <div class="wf-row">
-                <div class="wf-block" style="flex:2;height:26px;"></div>
-                <div class="wf-block" style="flex:1;height:26px;"></div>
-              </div>
+              <div class="wf-row"><div class="wf-block" style="flex:1;height:20px;"></div><div class="wf-block" style="flex:1;height:20px;"></div><div class="wf-block" style="flex:1;height:20px;"></div></div>
+              <div class="wf-row"><div class="wf-block" style="flex:2;height:26px;"></div><div class="wf-block" style="flex:1;height:26px;"></div></div>
             </div>
           </div>
 
@@ -868,10 +848,7 @@ footer{border-top:1px solid var(--rule);padding:2rem 3rem;display:flex;justify-c
             </div>
             <div class="layout-grid">
               <div class="lg-block"></div>
-              <div class="lg-sidebar">
-                <div class="lg-block"></div>
-                <div class="lg-block"></div>
-              </div>
+              <div class="lg-sidebar"><div class="lg-block"></div><div class="lg-block"></div></div>
             </div>
           </div>
 
@@ -889,10 +866,7 @@ footer{border-top:1px solid var(--rule);padding:2rem 3rem;display:flex;justify-c
               <span class="code-line">}</span>
             </div>
             <div class="code-stack">
-              <span class="code-stack-tag">Next.js</span>
-              <span class="code-stack-tag">TypeScript</span>
-              <span class="code-stack-tag">Tailwind</span>
-              <span class="code-stack-tag">Vercel</span>
+              <span class="code-stack-tag">Next.js</span><span class="code-stack-tag">TypeScript</span><span class="code-stack-tag">Tailwind</span><span class="code-stack-tag">Vercel</span>
             </div>
           </div>
 
