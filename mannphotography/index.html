@@ -776,6 +776,7 @@ footer{
   .hero-title-main{font-size:clamp(5rem,18vw,22rem);}
   .tab-btn{padding:.8rem 1rem;font-size:.62rem;}
 }
+
 </style>
 </head>
 <body>
@@ -1269,6 +1270,7 @@ const revObs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
 },{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
+
 
 // ── TEXT SCRAMBLE ──
 const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%';
