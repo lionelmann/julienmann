@@ -274,10 +274,11 @@ a{color:inherit;text-decoration:none;}
 /* ── SERVICES ── */
 #services{padding:3rem 0;}
 .services-pricing-note{max-width:1600px;margin:0 auto;padding:.9rem 3rem 0;font-size:.72rem;letter-spacing:.08em;color:var(--mid);font-family:var(--mono);border-top:1px solid var(--rule);}
-.tabs-row{display:flex;gap:0;border-bottom:1px solid var(--rule);max-width:1600px;margin:0 auto;padding:0 3rem;}
+.tabs-row{display:flex;gap:0;border-bottom:1px solid var(--rule);max-width:1600px;margin:0 auto;padding:0 3rem;position:relative;}
 .tab-btn{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;padding:1rem 2rem;cursor:none;border-bottom:2px solid transparent;margin-bottom:-1px;color:var(--mid);transition:color .3s,border-color .3s;background:none;border-top:none;border-left:none;border-right:none;font-family:var(--mono);}
 .tab-btn:hover{color:var(--fg);border-bottom-color:rgba(196,146,42,.3);}
-.tab-btn.active{color:var(--fg);border-bottom-color:var(--accent);}
+.tab-btn.active{color:var(--fg);border-bottom-color:transparent;}
+.tab-indicator{position:absolute;bottom:-1px;height:2px;background:var(--accent);pointer-events:none;will-change:left,width;}
 .tab-content{display:none;}
 .tab-content.active{display:block;}
 .tab-top{display:flex;justify-content:space-between;align-items:baseline;padding:2.5rem 3rem 1.5rem;border-bottom:1px solid var(--rule);}
@@ -644,9 +645,6 @@ footer{border-top:1px solid var(--rule);padding:2rem 3rem;display:flex;justify-c
     <div class="hero-bottom">
       <p class="hero-desc">Websites &amp; web apps built for people who take their business seriously.<br>Clean code. No templates.</p>
       <div class="hero-meta">
-        Available 2026<br>
-        3 Years Building<br>
-        15+ Sites Launched<br><br>
         ↓ Scroll
       </div>
     </div>
@@ -929,7 +927,7 @@ footer{border-top:1px solid var(--rule);padding:2rem 3rem;display:flex;justify-c
   <div class="tabs-row">
     <button class="tab-btn active" data-tab="landing">Landing Page</button>
     <button class="tab-btn" data-tab="website">Full Website</button>
-    <button class="tab-btn" data-tab="webapp">Web App</button>
+    <button class="tab-btn" data-tab="webapp">AI Automation</button>
     <button class="tab-btn" data-tab="maintenance">Maintenance</button>
   </div>
   <p class="services-pricing-note">Pricing is per project and depends on scope. Get in touch for a quote tailored to what you need.</p>
@@ -950,7 +948,8 @@ footer{border-top:1px solid var(--rule);padding:2rem 3rem;display:flex;justify-c
         <div class="include-item">Fully responsive, mobile-first build</div>
         <div class="include-item">Contact form or CTA integration</div>
         <div class="include-item">Performance-optimised &amp; SEO-ready</div>
-        <div class="include-item">Deployed &amp; live within 2 weeks</div>
+        <div class="include-item">Deployed &amp; live within a few days</div>
+        <div class="include-item">Free month of hosting &amp; maintenance</div>
       </div>
     </div>
     <div class="tab-stack">
@@ -989,27 +988,27 @@ footer{border-top:1px solid var(--rule);padding:2rem 3rem;display:flex;justify-c
 
   <div class="tab-content" id="tab-webapp">
     <div class="tab-top">
-      <h3 class="tab-title">WEB APP</h3>
+      <h3 class="tab-title">AI AUTOMATION</h3>
       <a href="#contact" class="tab-cta magnetic">Enquire Now →</a>
     </div>
     <div class="tab-body">
       <div class="tab-desc-col">
-        <p class="tab-desc">Custom web applications — dashboards, booking systems, client portals, internal tools. I can take you from idea to deployed product. Scope is agreed upfront and I keep you in the loop at every stage. No surprise invoices at the end.</p>
+        <p class="tab-desc">AI-powered workflows and automations built into your existing tools or as standalone systems. Chatbots, document processing, lead qualification, internal assistants. Custom-built to your process — not a plugin, not a template.</p>
       </div>
       <div class="tab-includes-col">
         <span class="tab-includes-label">What's included</span>
-        <div class="include-item">Technical scoping &amp; architecture</div>
-        <div class="include-item">UI/UX design &amp; prototyping</div>
-        <div class="include-item">Full-stack development</div>
-        <div class="include-item">Authentication &amp; database setup</div>
-        <div class="include-item">API integrations as required</div>
-        <div class="include-item">Testing, deployment &amp; documentation</div>
+        <div class="include-item">Discovery call &amp; workflow mapping</div>
+        <div class="include-item">Custom AI model or API integration</div>
+        <div class="include-item">Automation logic &amp; pipeline build</div>
+        <div class="include-item">Connect to your existing tools</div>
+        <div class="include-item">Testing &amp; iterative refinement</div>
+        <div class="include-item">Handoff with documentation</div>
       </div>
     </div>
     <div class="tab-stack">
-      <span class="stack-tag">Next.js</span><span class="stack-tag">TypeScript</span>
-      <span class="stack-tag">PostgreSQL</span><span class="stack-tag">Supabase</span>
-      <span class="stack-tag">Stripe</span><span class="stack-tag">Vercel</span>
+      <span class="stack-tag">OpenAI / Anthropic</span><span class="stack-tag">LangChain</span>
+      <span class="stack-tag">Python</span><span class="stack-tag">n8n / Make</span>
+      <span class="stack-tag">Supabase</span><span class="stack-tag">Vercel</span>
     </div>
   </div>
 
@@ -1030,6 +1029,7 @@ footer{border-top:1px solid var(--rule);padding:2rem 3rem;display:flex;justify-c
         <div class="include-item">Bug fixes &amp; browser testing</div>
         <div class="include-item">New feature additions</div>
         <div class="include-item">Priority response — within 24hrs</div>
+        <div class="include-item">Uptime monitoring — checked every 5 min</div>
       </div>
     </div>
     <div class="tab-stack">
@@ -1086,7 +1086,7 @@ footer{border-top:1px solid var(--rule);padding:2rem 3rem;display:flex;justify-c
             <option value="" disabled selected>— Select a service</option>
             <option>Landing Page</option>
             <option>Full Website</option>
-            <option>Web App</option>
+            <option>AI Automation</option>
             <option>Maintenance</option>
             <option>Not sure yet</option>
           </select>
@@ -1155,10 +1155,11 @@ document.addEventListener('mouseup',    () => document.body.classList.remove('cu
 const progressBar = document.getElementById('progress-bar');
 const nav = document.getElementById('nav');
 const setBarScale = gsap.quickSetter(progressBar, 'scaleX');
-let lastScroll = 0, navHidden = false;
+let lastScroll = 0, navHidden = false, scrollDir = 1;
 
 window.addEventListener('scroll', () => {
   const s = window.scrollY;
+  scrollDir = s > lastScroll ? 1 : -1;
   setBarScale(s / (document.documentElement.scrollHeight - window.innerHeight));
   const shouldHide = s > lastScroll && s > 100;
   if (shouldHide !== navHidden) {
@@ -1257,25 +1258,57 @@ function handleSubmit(e) {
 }
 
 /* ─────────────────────────────────────────────
-   TABS
+   TABS — sliding indicator + animated reveals
 ───────────────────────────────────────────── */
+const tabsRowEl = document.querySelector('.tabs-row');
+const tabIndicatorEl = document.createElement('div');
+tabIndicatorEl.className = 'tab-indicator';
+tabsRowEl.appendChild(tabIndicatorEl);
+
+function positionIndicator(btn, animate) {
+  const btnRect = btn.getBoundingClientRect();
+  const rowRect = tabsRowEl.getBoundingClientRect();
+  const props = { left: btnRect.left - rowRect.left, width: btnRect.width };
+  animate
+    ? gsap.to(tabIndicatorEl, { ...props, duration: 0.38, ease: 'power3.out' })
+    : gsap.set(tabIndicatorEl, props);
+}
+
+function revealTabContent(content, delay = 0) {
+  gsap.fromTo(content.querySelector('.tab-title'),
+    { autoAlpha: 0, y: -10 },
+    { autoAlpha: 1, y: 0, duration: 0.38, ease: 'power3.out', delay, overwrite: 'auto' }
+  );
+  gsap.fromTo(content.querySelector('.tab-desc'),
+    { autoAlpha: 0, y: 12 },
+    { autoAlpha: 1, y: 0, duration: 0.42, ease: 'power2.out', delay: delay + 0.05, overwrite: 'auto' }
+  );
+  gsap.fromTo(content.querySelectorAll('.include-item'),
+    { autoAlpha: 0, x: -14 },
+    { autoAlpha: 1, x: 0, stagger: 0.05, duration: 0.32, ease: 'power2.out', delay: delay + 0.1, overwrite: 'auto' }
+  );
+  // starts after items finish staggering (7 items × 0.05 + 0.32 ≈ 0.67 total — 0.38 gives intentional overlap)
+  gsap.fromTo(content.querySelectorAll('.stack-tag'),
+    { autoAlpha: 0, y: 10 },
+    { autoAlpha: 1, y: 0, stagger: 0.045, duration: 0.28, ease: 'power2.out', delay: delay + 0.38, overwrite: 'auto' }
+  );
+}
+
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
     btn.classList.add('active');
+    positionIndicator(btn, true);
     const content = document.getElementById('tab-' + btn.dataset.tab);
     content.classList.add('active');
-    gsap.fromTo(content.querySelectorAll('.include-item'),
-      { autoAlpha: 0, x: -14 },
-      { autoAlpha: 1, x: 0, stagger: 0.055, duration: 0.35, ease: 'power2.out', delay: 0.08 }
-    );
-    gsap.fromTo(content.querySelectorAll('.stack-tag'),
-      { autoAlpha: 0, y: 10 },
-      { autoAlpha: 1, y: 0, stagger: 0.05, duration: 0.3, ease: 'power2.out', delay: 0.36 }
-    );
+    revealTabContent(content, 0);
   });
 });
+
+// Init indicator on active tab
+const initActiveBtn = tabsRowEl.querySelector('.tab-btn.active');
+if (initActiveBtn) positionIndicator(initActiveBtn, false);
 
 /* ═════════════════════════════════════════════
    PROCESS — ScrollTrigger step activation
@@ -1310,28 +1343,31 @@ function activateStep(stepIndex) {
   processSteps.forEach((s, i) => s.classList.toggle('is-active', i === stepIndex));
 
   const nextStage = pstageEls[stepIndex];
-  gsap.to(allStagesEls, { autoAlpha: 0, y: -12, duration: 0.3, ease: 'power2.in', overwrite: true,
+  const exitY  = scrollDir === 1 ? -18 : 18;
+  const enterY = scrollDir === 1 ?  22 : -22;
+
+  gsap.to(allStagesEls, { autoAlpha: 0, y: exitY, duration: 0.22, ease: 'power2.in', overwrite: true,
     onComplete() {
       allStagesEls.forEach(s => { s.classList.remove('is-active'); s.style.pointerEvents = 'none'; });
       nextStage.classList.add('is-active');
       gsap.fromTo(nextStage,
-        { autoAlpha: 0, y: 18 },
-        { autoAlpha: 1, y: 0, duration: 0.45, ease: 'power2.out' }
+        { autoAlpha: 0, y: enterY },
+        { autoAlpha: 1, y: 0, duration: 0.42, ease: 'power3.out' }
       );
     }
   });
 
-  gsap.to([urlEl, numEl], { autoAlpha: 0, duration: 0.2, onComplete() {
+  gsap.to([urlEl, numEl], { autoAlpha: 0, duration: 0.16, onComplete() {
     urlEl.textContent = STAGE_NAMES[stepIndex];
     numEl.textContent = STAGE_NUMS[stepIndex];
-    gsap.to([urlEl, numEl], { autoAlpha: 1, duration: 0.3 });
+    gsap.to([urlEl, numEl], { autoAlpha: 1, duration: 0.26 });
   }});
 
   progressDots.forEach((d, i) => d.classList.toggle('is-active', i === stepIndex));
 
   gsap.fromTo('#pscreen',
-    { scale: 0.97 },
-    { scale: 1, duration: 0.5, ease: 'back.out(1.4)' }
+    { scale: 0.975 },
+    { scale: 1, duration: 0.42, ease: 'power3.out' }
   );
 }
 
@@ -1483,7 +1519,7 @@ mm.add({
   ScrollTrigger.create({
     trigger: '#stats-grid', start: 'top 78%', once: true,
     onEnter() {
-      gsap.to('.stat-box', { autoAlpha: 1, scale: 1, y: 0, stagger: 0.1, duration: full ? 0.7 : 0, ease: 'back.out(1.7)' });
+      gsap.to('.stat-box', { autoAlpha: 1, scale: 1, y: 0, stagger: 0.12, duration: full ? 0.65 : 0, ease: 'expo.out' });
       document.querySelectorAll('.counter').forEach(el => {
         const target = +el.dataset.target;
         const obj = { val: 0 };
@@ -1502,23 +1538,15 @@ mm.add({
     scrollTrigger: { trigger: '#about-manifesto', start: 'top 85%' }
   });
 
-  /* ── PROCESS STEPS (left col) — stagger in ── */
-  document.querySelectorAll('.process-step').forEach((step, i) => {
-    gsap.from(step.querySelector('.ps-num'), {
-      autoAlpha: 0, x: full ? -30 : 0,
-      duration: full ? 0.6 : 0, ease: 'power2.out',
-      scrollTrigger: { trigger: step, start: 'top 82%' }
+  /* ── PROCESS STEPS (left col) — sequential timeline per step ── */
+  document.querySelectorAll('.process-step').forEach((step) => {
+    const tl = gsap.timeline({
+      scrollTrigger: { trigger: step, start: 'top 80%', once: true }
     });
-    gsap.from(step.querySelector('.ps-title'), {
-      autoAlpha: 0, x: full ? -20 : 0,
-      duration: full ? 0.6 : 0, ease: 'power2.out', delay: 0.1,
-      scrollTrigger: { trigger: step, start: 'top 82%' }
-    });
-    gsap.from(step.querySelector('.ps-body'), {
-      autoAlpha: 0, y: full ? 16 : 0,
-      duration: full ? 0.55 : 0, ease: 'power2.out', delay: 0.2,
-      scrollTrigger: { trigger: step, start: 'top 82%' }
-    });
+    tl.from(step.querySelector('.ps-num'),   { autoAlpha: 0, x: -28, duration: 0.48, ease: 'power3.out' })
+      .from(step.querySelector('.ps-title'), { autoAlpha: 0, x: -16, duration: 0.42, ease: 'power3.out' }, '-=0.28')
+      .from(step.querySelector('.ps-body'),  { autoAlpha: 0, y: 16,  duration: 0.48, ease: 'power2.out' }, '-=0.24')
+      .from(step.querySelector('.ps-tag'),   { autoAlpha: 0, y: 10,  duration: 0.35, ease: 'power2.out' }, '-=0.18');
   });
 
   /* ── PROCESS VISUAL — screen float in ── */
@@ -1527,6 +1555,14 @@ mm.add({
     duration: full ? 0.9 : 0, ease: 'power3.out',
     scrollTrigger: { trigger: '#process', start: 'top 75%' }
   });
+
+  /* ── PROCESS VISUAL — depth scrub as steps scroll ── */
+  if (full) {
+    gsap.to('#pscreen', {
+      y: -28, ease: 'none',
+      scrollTrigger: { trigger: '#process-container', start: 'top bottom', end: 'bottom top', scrub: 2 }
+    });
+  }
 
   /* ── CONTACT ── */
   gsap.from('.contact-headline', {
@@ -1563,6 +1599,15 @@ mm.add({
     duration: full ? 0.6 : 0, ease: 'power2.out',
     scrollTrigger: { trigger: '.tabs-row', start: 'top 85%' }
   });
+  if (full) {
+    ScrollTrigger.create({
+      trigger: '.tabs-row', start: 'top 82%', once: true,
+      onEnter() {
+        const activeContent = document.querySelector('.tab-content.active');
+        if (activeContent) revealTabContent(activeContent, 0.2);
+      }
+    });
+  }
 
   return () => {
     if (_marqueePause) {
