@@ -80,9 +80,14 @@ button{font-family:var(--sans);cursor:pointer;}
 .page{max-width:1200px;margin:0 auto;padding:0 2rem;}
 
 /* ── PERIOD BAR ── */
-.period-bar{padding:1.25rem 0 .5rem;display:flex;align-items:baseline;gap:.75rem;}
+.period-bar{padding:1.25rem 0 .5rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap;}
+.period-bar-left{display:flex;align-items:baseline;gap:.75rem;}
 .period-title{font-size:1.1rem;font-weight:700;color:var(--fg);}
 .period-sub{font-size:.8rem;color:var(--mid);}
+.period-seg{display:flex;background:var(--bg);border:1.5px solid var(--border);border-radius:99px;padding:2px;gap:1px;flex-shrink:0;}
+.period-btn{padding:.26rem .75rem;font-size:.7rem;font-weight:600;background:transparent;border:none;color:var(--mid);cursor:pointer;transition:all .15s;border-radius:99px;white-space:nowrap;}
+.period-btn:hover{color:var(--fg);}
+.period-btn.active{background:var(--orange);color:#fff;}
 
 /* ── SPORT TABS ── */
 .sport-tabs{display:flex;gap:.4rem;padding-bottom:1rem;overflow-x:auto;}
@@ -261,8 +266,15 @@ footer{border-top:1px solid var(--border);background:var(--card);}
   <div class="page">
 
     <div class="period-bar">
-      <span class="period-title"><span id="period-sport">Running</span> — Year to Date</span>
-      <span class="period-sub" id="current-year"></span>
+      <div class="period-bar-left">
+        <span class="period-title"><span id="period-sport">Running</span> — <span id="period-label">Year to Date</span></span>
+        <span class="period-sub" id="current-year"></span>
+      </div>
+      <div class="period-seg">
+        <button class="period-btn" data-period="wtd">Week</button>
+        <button class="period-btn" data-period="mtd">Month</button>
+        <button class="period-btn active" data-period="ytd">Year</button>
+      </div>
     </div>
 
     <!-- SPORT TABS -->
@@ -324,7 +336,7 @@ footer{border-top:1px solid var(--border);background:var(--card);}
       <div class="chart-card">
         <div class="chart-card-header">
           <div class="chart-card-title" id="chart-title">Weekly Running Distance</div>
-          <div class="chart-card-legend">Last 8 weeks · km</div>
+          <div class="chart-card-legend" id="chart-legend">Last 8 weeks · km</div>
         </div>
         <div class="chart-bars" id="chart-bars"></div>
       </div>
@@ -333,7 +345,7 @@ footer{border-top:1px solid var(--border);background:var(--card);}
     <!-- ACTIVITIES -->
     <div class="activities-card">
       <div class="activities-card-header">
-        <div class="activities-card-title">Recent Activities</div>
+        <div class="activities-card-title" id="activities-card-title">Recent Activities</div>
         <div class="activities-card-meta" id="activities-meta">—</div>
       </div>
       <div class="table-wrap">
@@ -374,14 +386,21 @@ footer{border-top:1px solid var(--border);background:var(--card);}
 const STORAGE_KEY = 'jm_strava_v1';
 let gAthlete, gStats, gActivities, gCfg;
 let gSport = 'run';
+let gPeriod = 'ytd';
 const gDetailCache = {};
+
+const PERIODS = {
+  wtd: { label:'Week to Date' },
+  mtd: { label:'Month to Date' },
+  ytd: { label:'Year to Date' },
+};
 
 // ── SPORT CONFIG ──
 const SPORTS = {
-  run:  { types:['Run','TrailRun'],                                                   label:'Running',  countLabel:'Runs',  longestLabel:'Longest Run · YTD',  ytdKey:'ytd_run_totals'  },
-  ride: { types:['Ride','VirtualRide','EBikeRide','GravelRide','MountainBikeRide'],   label:'Cycling',  countLabel:'Rides', longestLabel:'Longest Ride · YTD', ytdKey:'ytd_ride_totals' },
-  swim: { types:['Swim'],                                                             label:'Swimming', countLabel:'Swims', longestLabel:'Longest Swim · YTD', ytdKey:'ytd_swim_totals' },
-  hike: { types:['Hike','Walk'],                                                      label:'Hiking',   countLabel:'Hikes', longestLabel:'Longest Hike · YTD', ytdKey:null              },
+  run:  { types:['Run','TrailRun'],                                                   label:'Running',  countLabel:'Runs',  longestLabel:'Longest Run',  ytdKey:'ytd_run_totals'  },
+  ride: { types:['Ride','VirtualRide','EBikeRide','GravelRide','MountainBikeRide'],   label:'Cycling',  countLabel:'Rides', longestLabel:'Longest Ride', ytdKey:'ytd_ride_totals' },
+  swim: { types:['Swim'],                                                             label:'Swimming', countLabel:'Swims', longestLabel:'Longest Swim', ytdKey:'ytd_swim_totals' },
+  hike: { types:['Hike','Walk'],                                                      label:'Hiking',   countLabel:'Hikes', longestLabel:'Longest Hike', ytdKey:null              },
 };
 
 // ── CONFIG ──
@@ -474,45 +493,100 @@ function typeLabel(t) {
   return map[t] || t;
 }
 
-// ── YTD STATS BY SPORT ──
-function getYtdStats(sport) {
-  const cfg = SPORTS[sport];
-  if (cfg.ytdKey) return gStats[cfg.ytdKey] || {};
-  const yr = new Date().getFullYear();
-  const acts = gActivities.filter(a => cfg.types.includes(a.type) && new Date(a.start_date).getFullYear() === yr);
+// ── PERIOD HELPERS ──
+function getPeriodRange(period) {
+  const now = new Date();
+  if (period === 'wtd') {
+    const dow = (now.getDay()+6)%7;
+    const start = new Date(now); start.setDate(start.getDate()-dow); start.setHours(0,0,0,0);
+    return {start, end:now};
+  }
+  if (period === 'mtd') return {start:new Date(now.getFullYear(),now.getMonth(),1), end:now};
+  return {start:new Date(now.getFullYear(),0,1), end:now};
+}
+
+function getPeriodSub(period) {
+  const now = new Date();
+  if (period === 'ytd') return String(now.getFullYear());
+  if (period === 'mtd') return now.toLocaleDateString('en-CA',{month:'long',year:'numeric'});
+  const dow = (now.getDay()+6)%7;
+  const mon = new Date(now); mon.setDate(mon.getDate()-dow); mon.setHours(0,0,0,0);
+  const sun = new Date(mon); sun.setDate(sun.getDate()+6);
+  const o = {month:'short',day:'numeric'};
+  return mon.toLocaleDateString('en-CA',o)+'–'+sun.toLocaleDateString('en-CA',o);
+}
+
+function getFilteredActs(sport, period) {
+  const {start, end} = getPeriodRange(period);
+  return gActivities.filter(a => SPORTS[sport].types.includes(a.type) && new Date(a.start_date) >= start && new Date(a.start_date) <= end);
+}
+
+function getPeriodStats(sport, period) {
+  // For YTD, use Strava's pre-computed totals (more accurate than our 60-activity window)
+  if (period === 'ytd' && SPORTS[sport].ytdKey) return gStats[SPORTS[sport].ytdKey] || {};
+  const acts = getFilteredActs(sport, period);
   return {
     count: acts.length,
-    distance: acts.reduce((s,a) => s + a.distance, 0),
-    elevation_gain: acts.reduce((s,a) => s + (a.total_elevation_gain||0), 0),
-    moving_time: acts.reduce((s,a) => s + a.moving_time, 0),
+    distance: acts.reduce((s,a) => s+a.distance, 0),
+    elevation_gain: acts.reduce((s,a) => s+(a.total_elevation_gain||0), 0),
+    moving_time: acts.reduce((s,a) => s+a.moving_time, 0),
   };
 }
 
 // ── CHART ──
-function renderChart(sport) {
+function renderChart(sport, period) {
   const types = SPORTS[sport].types;
   const now = new Date();
-  const weeks = [];
-  for (let i = 0; i < 8; i++) {
-    const start = new Date(now);
-    const dow = (start.getDay()+6)%7;
-    start.setDate(start.getDate() - dow - i*7);
-    start.setHours(0,0,0,0);
-    const end = new Date(start); end.setDate(end.getDate()+7);
-    weeks.push({ start, end, label:start.toLocaleDateString('en-CA',{month:'short',day:'numeric'}), distance:0, isCurrent:i===0 });
+  let bars = [];
+
+  if (period === 'wtd') {
+    // Daily bars Mon → today
+    const dow = (now.getDay()+6)%7;
+    for (let i = 0; i <= dow; i++) {
+      const d = new Date(now); d.setDate(d.getDate()-dow+i); d.setHours(0,0,0,0);
+      const next = new Date(d); next.setDate(next.getDate()+1);
+      bars.push({start:d, end:next, label:d.toLocaleDateString('en-CA',{weekday:'short'}), distance:0, isCurrent:i===dow});
+    }
+    document.getElementById('chart-title').textContent = `Daily ${SPORTS[sport].label} Distance`;
+    document.getElementById('chart-legend').textContent = 'This week · km';
+  } else if (period === 'mtd') {
+    // Weekly bars covering this month
+    const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+    const dow = (monthStart.getDay()+6)%7;
+    let cursor = new Date(monthStart); cursor.setDate(cursor.getDate()-dow);
+    while (cursor <= now) {
+      const wStart = new Date(cursor);
+      const wEnd = new Date(cursor); wEnd.setDate(wEnd.getDate()+7);
+      bars.push({start:wStart, end:wEnd, label:wStart.toLocaleDateString('en-CA',{month:'short',day:'numeric'}), distance:0, isCurrent:wEnd > now});
+      cursor.setDate(cursor.getDate()+7);
+    }
+    document.getElementById('chart-title').textContent = `Weekly ${SPORTS[sport].label} Distance`;
+    document.getElementById('chart-legend').textContent = 'This month · km';
+  } else {
+    // YTD: last 8 weeks
+    for (let i = 0; i < 8; i++) {
+      const start = new Date(now);
+      const dow = (start.getDay()+6)%7;
+      start.setDate(start.getDate()-dow-i*7); start.setHours(0,0,0,0);
+      const end = new Date(start); end.setDate(end.getDate()+7);
+      bars.push({start, end, label:start.toLocaleDateString('en-CA',{month:'short',day:'numeric'}), distance:0, isCurrent:i===0});
+    }
+    bars = [...bars].reverse();
+    document.getElementById('chart-title').textContent = `Weekly ${SPORTS[sport].label} Distance`;
+    document.getElementById('chart-legend').textContent = 'Last 8 weeks · km';
   }
+
   for (const a of gActivities) {
     if (!types.includes(a.type)) continue;
     const d = new Date(a.start_date);
-    for (const w of weeks) { if (d >= w.start && d < w.end) { w.distance += a.distance; break; } }
+    for (const w of bars) { if (d >= w.start && d < w.end) { w.distance += a.distance; break; } }
   }
-  const ordered = [...weeks].reverse();
-  const max = Math.max(...ordered.map(w => w.distance), 1);
+  const max = Math.max(...bars.map(w => w.distance), 1);
   const container = document.getElementById('chart-bars');
   container.innerHTML = '';
-  for (const w of ordered) {
+  for (const w of bars) {
     const pct = (w.distance/max*100).toFixed(1);
-    const km  = w.distance > 0 ? fmtKm(w.distance) + ' km' : '—';
+    const km  = w.distance > 0 ? fmtKm(w.distance)+' km' : '—';
     const row = document.createElement('div');
     row.className = 'bar-row';
     row.innerHTML =
@@ -664,26 +738,38 @@ function renderDetailContent(contentEl, detail, activityType) {
 function setSport(sport) {
   gSport = sport;
   const cfg = SPORTS[sport];
+  const pLabel = PERIODS[gPeriod].label;
+  const pAbbr = gPeriod.toUpperCase();
 
   document.querySelectorAll('.sport-tab').forEach(b => b.classList.toggle('active', b.dataset.sport === sport));
   document.getElementById('period-sport').textContent = cfg.label;
+  document.getElementById('period-label').textContent = pLabel;
+  document.getElementById('current-year').textContent = getPeriodSub(gPeriod);
   document.getElementById('stat-count-label').textContent = cfg.countLabel;
-  document.getElementById('chart-title').textContent = `Weekly ${cfg.label} Distance`;
-  document.getElementById('highlight-label').textContent = cfg.longestLabel;
+  document.getElementById('highlight-label').textContent = `${cfg.longestLabel} · ${pAbbr}`;
 
-  const ytd = getYtdStats(sport);
-  document.getElementById('stat-runs').textContent = fmtNum(ytd.count || 0);
-  document.getElementById('stat-distance').textContent = fmtNum((ytd.distance || 0) / 1000);
-  document.getElementById('stat-elevation').textContent = fmtNum(ytd.elevation_gain || 0);
-  document.getElementById('stat-hours').textContent = fmtHrs(ytd.moving_time || 0);
+  const stats = getPeriodStats(sport, gPeriod);
+  document.getElementById('stat-runs').textContent = fmtNum(stats.count || 0);
+  document.getElementById('stat-distance').textContent = fmtNum((stats.distance || 0) / 1000);
+  document.getElementById('stat-elevation').textContent = fmtNum(stats.elevation_gain || 0);
+  document.getElementById('stat-hours').textContent = fmtHrs(stats.moving_time || 0);
 
-  const yr = new Date().getFullYear();
-  const sportActs = gActivities.filter(a => cfg.types.includes(a.type) && new Date(a.start_date).getFullYear() === yr);
-  const longest = sportActs.length ? Math.max(...sportActs.map(a => a.distance)) : 0;
+  const filtered = getFilteredActs(sport, gPeriod);
+  const longest = filtered.length ? Math.max(...filtered.map(a => a.distance)) : 0;
   document.getElementById('longest-run').textContent = longest > 0 ? fmtKm(longest)+' km' : '—';
 
-  renderChart(sport);
-  renderActivities(gActivities.filter(a => cfg.types.includes(a.type)));
+  const actTitles = { wtd:'This Week\'s Activities', mtd:'This Month\'s Activities', ytd:'Recent Activities' };
+  document.getElementById('activities-card-title').textContent = actTitles[gPeriod];
+
+  renderChart(sport, gPeriod);
+  renderActivities(filtered);
+}
+
+// ── SET PERIOD ──
+function setPeriod(period) {
+  gPeriod = period;
+  document.querySelectorAll('.period-btn').forEach(b => b.classList.toggle('active', b.dataset.period === period));
+  setSport(gSport);
 }
 
 // ── MAIN RENDER ──
@@ -694,11 +780,11 @@ function render(athlete, stats, activities, cfg) {
   document.getElementById('current-year').textContent = yr;
   document.getElementById('footer-year').textContent = yr;
 
-  document.getElementById('ps-followers').textContent = fmtNum(athlete.follower_count || 0);
-  document.getElementById('ps-following').textContent = fmtNum(athlete.friend_count || 0);
+  document.getElementById('ps-followers').textContent = athlete.follower_count != null ? fmtNum(athlete.follower_count) : '—';
+  document.getElementById('ps-following').textContent = athlete.friend_count != null ? fmtNum(athlete.friend_count) : '—';
   const atRun = stats.all_run_totals || {};
-  document.getElementById('ps-alltime-runs').textContent = fmtNum(atRun.count || 0);
-  document.getElementById('ps-alltime-km').textContent = fmtNum((atRun.distance || 0) / 1000);
+  document.getElementById('ps-alltime-runs').textContent = atRun.count != null ? fmtNum(atRun.count) : '—';
+  document.getElementById('ps-alltime-km').textContent = atRun.distance != null ? fmtNum(atRun.distance / 1000) : '—';
 
   setSport('run');
   showDash();
@@ -721,6 +807,10 @@ document.getElementById('disconnect-btn').addEventListener('click', () => {
 
 document.querySelectorAll('.sport-tab').forEach(btn => {
   btn.addEventListener('click', () => setSport(btn.dataset.sport));
+});
+
+document.querySelectorAll('.period-btn').forEach(btn => {
+  btn.addEventListener('click', () => setPeriod(btn.dataset.period));
 });
 
 // ── INIT ──
