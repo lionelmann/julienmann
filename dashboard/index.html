@@ -58,41 +58,41 @@ button{font-family:var(--sans);cursor:pointer;border:none;background:none;}
 /* ══════════════════════════════════════════
    TRAINING SECTION
 ══════════════════════════════════════════ */
-.training-page{padding-top:1.5rem;padding-bottom:3rem;}
+.training-page{padding-top:.5rem;padding-bottom:3rem;}
 
 /* ── RACE HEADER ── */
-.race-hdr{display:flex;align-items:center;justify-content:space-between;padding:.75rem 0 1.1rem;flex-wrap:wrap;gap:.6rem;}
+.race-hdr{display:flex;align-items:center;justify-content:space-between;padding:.5rem 0 .4rem;flex-wrap:wrap;gap:.6rem;}
 .race-hdr-left{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;}
 .race-name{font-size:.95rem;font-weight:700;}
 .phase-pill{font-size:.63rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;padding:.22rem .7rem;border-radius:99px;white-space:nowrap;}
 .race-hdr-right{font-size:.72rem;color:var(--mid);}
 
 /* ── PROGRESS ── */
-.prog-wrap{height:3px;background:var(--border);border-radius:99px;overflow:hidden;margin-bottom:1.5rem;}
+.prog-wrap{height:3px;background:var(--border);border-radius:99px;overflow:hidden;margin-bottom:.75rem;}
 .prog-fill{height:100%;background:var(--orange);border-radius:99px;transition:width .8s cubic-bezier(.4,0,.2,1);}
 
 /* ── HERO ── */
 .hero{margin-bottom:1.25rem;}
 
-.pretrain-card{
-  background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow-md);
-  padding:2.25rem 2.5rem;display:grid;grid-template-columns:200px 1fr;gap:0;align-items:stretch;
-  overflow:hidden;
-}
-.pretrain-left{padding-right:2.5rem;border-right:1px solid var(--border);}
-.pretrain-eyebrow{font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);margin-bottom:.5rem;}
-.pretrain-num{font-size:8rem;font-weight:800;color:var(--orange);letter-spacing:-.05em;line-height:.85;display:block;}
-.pretrain-unit{font-size:1rem;font-weight:700;color:var(--fg);margin-top:.5rem;display:block;}
-.pretrain-date{font-size:.78rem;color:var(--mid);margin-top:.3rem;}
-.pretrain-right{padding-left:2.5rem;display:flex;flex-direction:column;justify-content:space-between;gap:1.25rem;}
-.pretrain-phase-name{font-size:1rem;font-weight:700;margin-bottom:.15rem;}
-.pretrain-phase-sub{font-size:.75rem;color:var(--mid);line-height:1.6;}
-.pretrain-week-preview{display:flex;flex-direction:column;gap:.38rem;}
-.preview-row{display:flex;align-items:center;gap:.7rem;}
-.preview-day{font-size:.65rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--mid);width:2.2rem;flex-shrink:0;}
-.preview-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
-.preview-label{font-size:.72rem;color:var(--fg);}
-.preview-dur{font-size:.65rem;color:var(--mid);margin-left:auto;}
+.pretrain-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow-md);padding:1.5rem;}
+.pretrain-info{}
+.pretrain-phase-eyebrow{font-size:.57rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);margin-bottom:.2rem;}
+.pretrain-phase-name{font-size:.92rem;font-weight:800;margin-bottom:.2rem;}
+.pretrain-phase-sub{font-size:.7rem;color:var(--mid);line-height:1.55;margin-bottom:.85rem;}
+.pretrain-week-label{font-size:.57rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--mid);margin-bottom:.4rem;}
+.pretrain-week-preview{display:flex;flex-direction:column;gap:.3rem;}
+.preview-row{display:flex;align-items:center;gap:.55rem;}
+.preview-day{font-size:.62rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--mid);width:2rem;flex-shrink:0;}
+.preview-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.preview-label{font-size:.68rem;color:var(--fg);}
+.preview-dur{font-size:.62rem;color:var(--mid);margin-left:auto;}
+/* pretrain-act-badge still used in countdown card */
+.pretrain-act-badge{display:inline-block;font-size:.63rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.24em .65em;border-radius:4px;margin:.75rem 0 .6rem;}
+/* Hero + calendar layout wrapper */
+#hero-wrap{display:block;}
+#hero-wrap.pretrain-mode{display:grid;grid-template-columns:270px 80px 1fr;gap:1rem;align-items:start;}
+#hero-wrap.pretrain-mode .hero{margin:0;}
+#hero-wrap.pretrain-mode .cal-section{margin:0;}
 
 .active-card{
   background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow-md);
@@ -114,6 +114,14 @@ button{font-family:var(--sans);cursor:pointer;border:none;background:none;}
 .timeline-bar{display:grid;grid-template-columns:10fr 12fr 12fr 12fr 6fr 3fr;border-radius:6px;overflow:hidden;height:8px;}
 .tseg{transition:filter .15s;}
 .tseg.t-active{filter:brightness(1.15);}
+/* Vertical phase bar (pretrain mode) */
+.timeline-wrap.vert{margin:0;align-self:stretch;display:flex;flex-direction:column;}
+.timeline-bar-vert{flex:1;display:flex;flex-direction:column;gap:2px;min-height:0;}
+.tseg-vrow{display:flex;align-items:flex-start;gap:6px;padding-top:4px;min-height:0;}
+.tseg-vrow.t-active .tseg-vbar{filter:brightness(1.2);}
+.tseg-vrow.t-active .tseg-vlabel{color:var(--fg);}
+.tseg-vbar{width:6px;flex-shrink:0;align-self:stretch;border-radius:3px;}
+.tseg-vlabel{font-size:.48rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mid);overflow:hidden;white-space:nowrap;line-height:1.2;}
 
 /* ── SECTION HEADER ── */
 .sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;}
@@ -305,12 +313,29 @@ button{font-family:var(--sans);cursor:pointer;border:none;background:none;}
 .stat-card-label{font-size:.68rem;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.06em;}
 
 /* ── MID GRID ── */
-.mid-grid{display:grid;grid-template-columns:260px 1fr;gap:1rem;margin-bottom:1rem;}
-.countdown-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:2rem 1.75rem;display:flex;flex-direction:column;justify-content:center;}
+.mid-grid{display:grid;grid-template-columns:300px 1fr;gap:1rem;margin-bottom:1rem;}
+.mid-grid--chart-only{grid-template-columns:1fr;}
+.countdown-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:1.5rem 1.5rem;display:flex;flex-direction:column;justify-content:center;}
 .countdown-eyebrow{font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);margin-bottom:.4rem;}
 .countdown-num{font-size:7rem;font-weight:800;color:var(--orange);letter-spacing:-.05em;line-height:.85;margin:.1rem 0 .5rem;}
 .countdown-unit{font-size:1.1rem;font-weight:700;color:var(--fg);}
 .countdown-date{font-size:.78rem;color:var(--mid);margin-top:.35rem;}
+/* ── NEXT WORKOUT DETAIL (countdown card pre-training state) ── */
+.nw-header{display:flex;align-items:center;gap:.55rem;margin:.45rem 0 .3rem;}
+.nw-name{font-size:1.05rem;font-weight:800;color:var(--fg);letter-spacing:-.025em;line-height:1.2;}
+.nw-dur{font-size:.72rem;font-weight:600;color:var(--mid);margin-bottom:.65rem;}
+.nw-divider{border:none;border-top:1px solid var(--border);margin:.6rem 0;}
+.nw-stats{display:flex;flex-direction:column;gap:.48rem;margin-bottom:.6rem;}
+.nw-stat{display:flex;align-items:center;justify-content:space-between;gap:.5rem;}
+.nw-stat-lbl{font-size:.57rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);flex-shrink:0;}
+.nw-stat-rhs{display:flex;align-items:center;gap:.35rem;font-size:.74rem;font-weight:600;color:var(--fg);}
+.nw-dots{display:flex;gap:3px;align-items:center;}
+.nw-dot{width:7px;height:7px;border-radius:50%;background:var(--border);}
+.nw-effort-txt{font-size:.7rem;font-weight:600;color:var(--mid);margin-left:.15rem;}
+.nw-zone-pip{width:7px;height:7px;border-radius:50%;flex-shrink:0;display:inline-block;}
+.nw-stat-unit{font-size:.63rem;color:var(--mid);font-weight:500;margin-left:.15rem;}
+.nw-focus{font-size:.69rem;color:var(--mid);line-height:1.6;padding:.45rem .6rem;background:var(--bg);border-radius:6px;margin-bottom:.6rem;font-style:italic;}
+.nw-date{font-size:.7rem;color:var(--mid);}
 
 /* ── CHART CARD ── */
 .chart-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:1.25rem;}
@@ -406,17 +431,17 @@ footer{border-top:1px solid var(--border);background:var(--card);}
   .topnav-inner{padding:0 1rem;}
   .week-grid{gap:.3rem;}
   .day-session-lbl{display:none;}
-  .timeline-label-row,.timeline-bar{display:none;}
+  .timeline-label-row,.timeline-bar,.timeline-wrap.vert{display:none;}
   .training-page{padding-top:1rem;padding-bottom:2rem;}
 }
 @media(max-width:700px){
   .detail-two-col{grid-template-columns:1fr;}
 }
-@media(max-width:600px){
+@media(max-width:760px){
+  #hero-wrap.pretrain-mode{grid-template-columns:1fr;}
   .pretrain-card{grid-template-columns:1fr;}
-  .pretrain-left{padding-right:0;border-right:none;border-bottom:1px solid var(--border);padding-bottom:1.5rem;margin-bottom:1.5rem;}
-  .pretrain-right{padding-left:0;}
-  .pretrain-num{font-size:5rem;}
+}
+@media(max-width:600px){
   .active-card{grid-template-columns:1fr;gap:1rem;}
   .active-right{text-align:left;}
   .stat-grid{gap:.6rem;}
@@ -438,10 +463,7 @@ footer{border-top:1px solid var(--border);background:var(--card);}
 <nav class="topnav">
   <div class="topnav-inner">
     <a href="../" class="topnav-back">← julienmann.ca</a>
-    <div class="topnav-links">
-      <a href="#activities" class="topnav-link">Activities</a>
-      <a href="#training" class="topnav-link">Training</a>
-    </div>
+
     <div class="topnav-right">
       <span class="topnav-alltime hidden" id="topnav-alltime"></span>
       <span class="topnav-race" id="nav-race"></span>
@@ -498,7 +520,7 @@ footer{border-top:1px solid var(--border);background:var(--card);}
 
   <div class="period-bar">
     <div class="period-bar-left">
-      <span class="period-title"><span id="period-sport">Running</span> —</span>
+      <span class="period-title"><span id="period-sport">Running</span></span>
       <div class="period-seg">
         <button class="period-btn" data-period="wtd">Week</button>
         <button class="period-btn" data-period="mtd">Month</button>
@@ -555,16 +577,6 @@ footer{border-top:1px solid var(--border);background:var(--card);}
 
 </div><!-- /strava-content -->
 
-<!-- ══════════════════════════════════════════
-     SECTION DIVIDER
-══════════════════════════════════════════ -->
-<div class="section-divider">
-  <div class="page">
-    <div class="section-sep">
-      <span class="section-sep-label">Training</span>
-    </div>
-  </div>
-</div>
 
 <!-- ══════════════════════════════════════════
      TRAINING SECTION
@@ -581,9 +593,27 @@ footer{border-top:1px solid var(--border);background:var(--card);}
 
   <div class="prog-wrap"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
 
-  <section class="hero" id="hero"></section>
-
-  <div class="timeline-wrap" id="timeline-wrap"></div>
+  <div id="hero-wrap">
+    <section class="hero" id="hero"></section>
+    <div class="timeline-wrap" id="timeline-wrap"></div>
+    <section class="cal-section" id="cal-section">
+      <div class="cal-hdr">
+        <span class="cal-month-name" id="cal-month-name"></span>
+        <div class="cal-nav-btns">
+          <button class="cal-nav-btn" id="cal-prev" aria-label="Previous month">‹</button>
+          <button class="cal-nav-btn" id="cal-next" aria-label="Next month">›</button>
+        </div>
+      </div>
+      <div class="cal-dow-row">
+        <div class="cal-dow">Mon</div><div class="cal-dow">Tue</div>
+        <div class="cal-dow">Wed</div><div class="cal-dow">Thu</div>
+        <div class="cal-dow">Fri</div><div class="cal-dow">Sat</div>
+        <div class="cal-dow">Sun</div>
+      </div>
+      <div class="cal-grid" id="cal-grid"></div>
+      <div class="cal-legend" id="cal-legend"></div>
+    </section>
+  </div>
 
   <section class="week-section">
     <div class="sec-hdr">
@@ -620,24 +650,6 @@ footer{border-top:1px solid var(--border);background:var(--card);}
       </div>
       <div id="recent-acts-footer"></div>
     </div>
-  </section>
-
-  <section class="cal-section">
-    <div class="cal-hdr">
-      <span class="cal-month-name" id="cal-month-name"></span>
-      <div class="cal-nav-btns">
-        <button class="cal-nav-btn" id="cal-prev" aria-label="Previous month">‹</button>
-        <button class="cal-nav-btn" id="cal-next" aria-label="Next month">›</button>
-      </div>
-    </div>
-    <div class="cal-dow-row">
-      <div class="cal-dow">Mon</div><div class="cal-dow">Tue</div>
-      <div class="cal-dow">Wed</div><div class="cal-dow">Thu</div>
-      <div class="cal-dow">Fri</div><div class="cal-dow">Sat</div>
-      <div class="cal-dow">Sun</div>
-    </div>
-    <div class="cal-grid" id="cal-grid"></div>
-    <div class="cal-legend" id="cal-legend"></div>
   </section>
 
 </main>
@@ -872,6 +884,22 @@ function daysUntil(target) {
 
 function sportStyle(type) {
   return SPORT_CFG[type] || SPORT_CFG.rest;
+}
+
+function stravaTypeToSport(t) {
+  if (STRAVA_TYPES.run.includes(t))  return 'run';
+  if (STRAVA_TYPES.ride.includes(t)) return 'bike';
+  if (STRAVA_TYPES.swim.includes(t)) return 'swim';
+  if (STRAVA_TYPES.hike.includes(t)) return 'rest';
+  return null;
+}
+
+function fmtCalActStat(a) {
+  const isSwim = a.type === 'Swim';
+  if (isSwim && a.distance > 0) return Math.round(a.distance) + 'm';
+  if (a.distance > 0) return fmtKm(a.distance) + ' km';
+  if (a.moving_time > 0) return fmtTrnDur(Math.round(a.moving_time / 60));
+  return '';
 }
 
 // ── Adaptation constants ─────────────────────────────────────────
@@ -1374,21 +1402,22 @@ function renderProgress() {
 }
 
 function renderHero() {
-  const el = document.getElementById('hero');
+  const el   = document.getElementById('hero');
+  const wrap = document.getElementById('hero-wrap');
 
   if (today < TRAIN_START) {
-    const days = daysUntil(TRAIN_START);
-    const w1Mon = mondayOf(TRAIN_START);
+    wrap?.classList.add('pretrain-mode');
+    const w1Mon    = mondayOf(TRAIN_START);
     const dayNames = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
     let previewRows = '';
-    for (let i=0; i<7; i++) {
-      const d = addDays(w1Mon, i);
+    for (let i = 0; i < 7; i++) {
+      const d   = addDays(w1Mon, i);
       const act = getActivity(d);
       if (!act) {
         previewRows += `<div class="preview-row"><span class="preview-day">${dayNames[i]}</span><span class="preview-dot" style="background:var(--border)"></span><span class="preview-label" style="color:var(--mid)">Pre-training</span></div>`;
         continue;
       }
-      const sc = sportStyle(act.type);
+      const sc  = sportStyle(act.type);
       const dur = fmtTrnDur(act.duration);
       previewRows += `<div class="preview-row">
         <span class="preview-day">${dayNames[i]}</span>
@@ -1399,25 +1428,16 @@ function renderHero() {
     }
     el.innerHTML = `
       <div class="pretrain-card">
-        <div class="pretrain-left">
-          <div class="pretrain-eyebrow">Training begins in</div>
-          <span class="pretrain-num">${days}</span>
-          <span class="pretrain-unit">${days === 1 ? 'Day' : 'Days'}</span>
-          <div class="pretrain-date">${fmtTrnDate(TRAIN_START, {weekday:'long',month:'long',day:'numeric',year:'numeric'})}</div>
-        </div>
-        <div class="pretrain-right">
-          <div>
-            <div class="pretrain-phase-name">Phase 1: Foundation</div>
-            <div class="pretrain-phase-sub">5–7 hrs/wk · June 12 – August 20, 2026<br>Swim 3× / Bike 2× / Run 2× · Establish the base</div>
-          </div>
-          <div>
-            <div style="font-size:.62rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--mid);margin-bottom:.5rem;">Week 1 Preview</div>
-            <div class="pretrain-week-preview">${previewRows}</div>
-          </div>
-        </div>
+        <div class="pretrain-phase-eyebrow">Phase 1</div>
+        <div class="pretrain-phase-name">Foundation</div>
+        <div class="pretrain-phase-sub">5–7 hrs/wk · Jun 12 – Aug 20, 2026<br>Swim 3× / Bike 2× / Run 2× · Establish the base</div>
+        <div class="pretrain-week-label">Week 1 Preview</div>
+        <div class="pretrain-week-preview">${previewRows}</div>
       </div>`;
     return;
   }
+
+  wrap?.classList.remove('pretrain-mode');
 
   if (trnDateStr(today) === trnDateStr(RACE_DATE)) {
     el.innerHTML = `<div class="active-card" style="border:2px solid var(--orange);">
@@ -1453,7 +1473,8 @@ function renderHero() {
   const dur = fmtTrnDur(act.duration);
   const phase = getPhaseForDate(actDate);
   const phaseName = phase ? `Phase ${phase.id}: ${phase.name}` : '';
-  const todayIsRest = (() => { const a = getActivity(today); return !a || a.type === 'rest'; })();
+  const todayAct    = getActivity(today);
+  const todayIsRest = !todayAct || todayAct.type === 'rest';
   el.innerHTML = `
     <div class="active-card">
       <div>
@@ -1471,17 +1492,33 @@ function renderHero() {
 
 function renderTimeline() {
   const wrap = document.getElementById('timeline-wrap');
+  if (!wrap) return;
+  const isVert = document.getElementById('hero-wrap')?.classList.contains('pretrain-mode');
   const totalMs = RACE_DATE - TRAIN_START;
   const segments = PHASES.map(p => {
     const ms = startOfDay(new Date(p.end)) - startOfDay(new Date(p.start));
-    return { ...p, pct: (ms/totalMs*100).toFixed(1) };
+    return { ...p, pct: (ms / totalMs * 100).toFixed(2) };
   });
   const activePhase = getPhaseForDate(today);
-  const labelRow = segments.map(s => `<div class="timeline-seg-label">${s.name}</div>`).join('');
-  const barRow   = segments.map(s =>
-    `<div class="tseg ${activePhase && activePhase.id===s.id?'t-active':''}" title="${s.name}" style="background:${s.color}${activePhase && activePhase.id===s.id?'':'80'};"></div>`
-  ).join('');
-  wrap.innerHTML = `<div class="timeline-label-row">${labelRow}</div><div class="timeline-bar">${barRow}</div>`;
+
+  if (isVert) {
+    wrap.classList.add('vert');
+    const rows = segments.map(s => {
+      const active = activePhase && activePhase.id === s.id;
+      return `<div class="tseg-vrow${active ? ' t-active' : ''}" style="flex:${s.pct}" title="${s.name} · ${s.hrs}">` +
+        `<div class="tseg-vbar" style="background:${s.color}"></div>` +
+        `<span class="tseg-vlabel">${s.name}</span>` +
+        `</div>`;
+    }).join('');
+    wrap.innerHTML = `<div class="timeline-bar-vert">${rows}</div>`;
+  } else {
+    wrap.classList.remove('vert');
+    const labelRow = segments.map(s => `<div class="timeline-seg-label">${s.name}</div>`).join('');
+    const barRow   = segments.map(s =>
+      `<div class="tseg ${activePhase && activePhase.id===s.id?'t-active':''}" title="${s.name}" style="background:${s.color}${activePhase && activePhase.id===s.id?'':'80'};"></div>`
+    ).join('');
+    wrap.innerHTML = `<div class="timeline-label-row">${labelRow}</div><div class="timeline-bar">${barRow}</div>`;
+  }
 }
 
 function renderWeekStrip() {
@@ -1517,7 +1554,7 @@ function renderWeekStrip() {
     const ov    = aiOv || rOv;
     const adaptLbl = aiOv ? '✦ ai' : rOv ? { moved_from:'→ moved', moved_here:'↗ rescheduled', makeup:'+ makeup', reduced:'↓ easier' }[rOv.type] : null;
     const adaptCls = aiOv ? 'ai' : ov?.type;
-    const adaptHtml = adaptLbl ? `<span class="day-adapt day-adapt-${adaptCls}" title="${ov.reason}">${adaptLbl}</span>` : '';
+    const adaptHtml = adaptLbl ? `<span class="day-adapt day-adapt-${adaptCls}" title="${esc(ov.reason)}">${adaptLbl}</span>` : '';
     html += `<div class="${cls}">
       <span class="day-name-lbl">${fullNames[i]}</span>
       <span class="day-num-lbl">${d.getDate()}</span>
@@ -1567,25 +1604,50 @@ function renderCalendar() {
       if (!isCurrentMonth) cls += ' other-mo';
       if (isToday)  cls += ' is-today';
       if ((isPreTrain || isFuture) && isCurrentMonth) cls += ' is-pretrain';
-      if (act) { cls += ' has-act'; typesInMonth.add(act.type); }
       let dotHtml='', durHtml='', flagHtml='', tipHtml='', checkHtml='';
-      if (act && isCurrentMonth) {
-        const sc = sportStyle(act.type);
-        dotHtml = `<div class="cal-dot" style="background:${sc.color};"></div>`;
-        const dur = fmtTrnDur(act.duration);
-        if (dur) durHtml = `<span class="cal-dur">${dur}</span>`;
-        tipHtml = `<div class="cal-tip">${act.label}${dur ? ' · '+dur : ''}</div>`;
-        if (act.type !== 'rest') {
-          const status = getCompletionStatus(d);
-          if (status) checkHtml = `<span class="cal-check ${status}">${status === 'done' ? '✓' : '✗'}</span>`;
-        }
-        const aiOv2 = gAiOverrides[ds];
-        const rOv2  = gOverrides[ds];
-        const ov2   = aiOv2 || rOv2;
-        if (ov2) {
-          const lbl2 = aiOv2 ? '✦' : { moved_from:'→', moved_here:'↗', makeup:'+', reduced:'↓' }[ov2.type];
-          const cls2 = aiOv2 ? 'ai' : ov2.type;
-          if (lbl2) checkHtml += `<span class="cal-adapt cal-adapt-${cls2}" title="${ov2.reason}">${lbl2}</span>`;
+      if (isCurrentMonth) {
+        const isPastOrToday = startOfDay(d) <= today;
+        const stravaActs    = isPastOrToday ? getStravaActsForDate(d) : [];
+        const stravaAct     = stravaActs.length > 0 ? stravaActs[0] : null;
+
+        if (stravaAct) {
+          // ── Completed Strava activity ──
+          const sport = stravaTypeToSport(stravaAct.type) || 'rest';
+          const sc    = sportStyle(sport);
+          typesInMonth.add(sport);
+          cls += ' has-act';
+          dotHtml = `<div class="cal-dot" style="background:${sc.color};"></div>`;
+          const stat = fmtCalActStat(stravaAct);
+          if (stat) durHtml = `<span class="cal-dur">${stat}</span>`;
+          const paceStr = stravaAct.average_speed > 0
+            ? ' · ' + fmtPace(stravaAct.average_speed, stravaAct.type) : '';
+          const extraActs = stravaActs.length > 1 ? ` +${stravaActs.length - 1}` : '';
+          tipHtml = `<div class="cal-tip">${esc(stravaAct.name)}${stat ? ' · '+stat : ''}${paceStr}${extraActs}</div>`;
+          if (startOfDay(d) >= TRAIN_START)
+            checkHtml = `<span class="cal-check done">✓</span>`;
+          const aiOv2 = gAiOverrides[ds], rOv2 = gOverrides[ds], ov2 = aiOv2 || rOv2;
+          if (ov2) {
+            const lbl2 = aiOv2 ? '✦' : { moved_from:'→', moved_here:'↗', makeup:'+', reduced:'↓' }[ov2.type];
+            const cls2 = aiOv2 ? 'ai' : ov2.type;
+            if (lbl2) checkHtml += `<span class="cal-adapt cal-adapt-${cls2}" title="${esc(ov2.reason)}">${lbl2}</span>`;
+          }
+        } else if (act) {
+          // ── Planned activity (upcoming or missed) ──
+          const sc = sportStyle(act.type);
+          typesInMonth.add(act.type);
+          cls += ' has-act';
+          dotHtml = `<div class="cal-dot" style="background:${sc.color};"></div>`;
+          const dur = fmtTrnDur(act.duration);
+          if (dur) durHtml = `<span class="cal-dur">${dur}</span>`;
+          tipHtml = `<div class="cal-tip">${esc(act.label)}${dur ? ' · '+dur : ''}</div>`;
+          if (act.type !== 'rest' && isPastOrToday && startOfDay(d) >= TRAIN_START)
+            checkHtml = `<span class="cal-check missed">✗</span>`;
+          const aiOv2 = gAiOverrides[ds], rOv2 = gOverrides[ds], ov2 = aiOv2 || rOv2;
+          if (ov2) {
+            const lbl2 = aiOv2 ? '✦' : { moved_from:'→', moved_here:'↗', makeup:'+', reduced:'↓' }[ov2.type];
+            const cls2 = aiOv2 ? 'ai' : ov2.type;
+            if (lbl2) checkHtml += `<span class="cal-adapt cal-adapt-${cls2}" title="${esc(ov2.reason)}">${lbl2}</span>`;
+          }
         }
       }
       if (isRaceEvent) flagHtml = `<div class="cal-flag">🏁</div>`;
@@ -1818,6 +1880,26 @@ function renderChart(sport, period) {
   requestAnimationFrame(() => container.querySelectorAll('.bar-fill').forEach(el => { el.style.width = el.dataset.target+'%'; }));
 }
 
+// ── Shared activity row builder ───────────────────────────────────
+function buildActivityRow(a, i) {
+  const tc = typeClass(a.type);
+  const tr = document.createElement('tr');
+  tr.className = 'data-row';
+  tr.dataset.id   = a.id;
+  tr.dataset.type = a.type;
+  tr.innerHTML =
+    `<td class="td-index">${i+1}</td>` +
+    `<td><span class="type-badge ${tc}">${typeLabel(a.type)}</span></td>` +
+    `<td class="td-name" title="${esc(a.name)}">${esc(a.name)} <span class="expand-icon">▾</span></td>` +
+    `<td class="td-date">${fmtActDate(a.start_date)}</td>` +
+    `<td class="td-dist">${a.distance>0?fmtKm(a.distance)+' km':'—'}</td>` +
+    `<td class="td-time">${fmtActDur(a.moving_time)}</td>` +
+    `<td class="td-pace ${tc}">${fmtPace(a.average_speed, a.type)}</td>` +
+    `<td class="td-elev">${a.total_elevation_gain>0?Math.round(a.total_elevation_gain)+' m':'—'}</td>`;
+  tr.addEventListener('click', () => toggleDetail(a.id, a.type, tr));
+  return tr;
+}
+
 // ── Activities table ─────────────────────────────────────────────
 function renderActivities(activities) {
   const meta  = document.getElementById('activities-meta');
@@ -1829,24 +1911,7 @@ function renderActivities(activities) {
     return;
   }
   meta.textContent = `Last ${activities.length} activit${activities.length===1?'y':'ies'}`;
-  activities.forEach((a, i) => {
-    const tc = typeClass(a.type);
-    const tr = document.createElement('tr');
-    tr.className = 'data-row';
-    tr.dataset.id = a.id;
-    tr.dataset.type = a.type;
-    tr.innerHTML =
-      `<td class="td-index">${i+1}</td>` +
-      `<td><span class="type-badge ${tc}">${typeLabel(a.type)}</span></td>` +
-      `<td class="td-name" title="${esc(a.name)}">${esc(a.name)} <span class="expand-icon">▾</span></td>` +
-      `<td class="td-date">${fmtActDate(a.start_date)}</td>` +
-      `<td class="td-dist">${a.distance>0?fmtKm(a.distance)+' km':'—'}</td>` +
-      `<td class="td-time">${fmtActDur(a.moving_time)}</td>` +
-      `<td class="td-pace ${tc}">${fmtPace(a.average_speed, a.type)}</td>` +
-      `<td class="td-elev">${a.total_elevation_gain>0?Math.round(a.total_elevation_gain)+' m':'—'}</td>`;
-    tr.addEventListener('click', () => toggleDetail(a.id, a.type, tr));
-    tbody.appendChild(tr);
-  });
+  activities.forEach((a, i) => tbody.appendChild(buildActivityRow(a, i)));
 }
 
 // ── Comparison against recent efforts ────────────────────────────
@@ -2090,8 +2155,7 @@ function renderDetailContent(contentEl, detail, activityType) {
 // ── setSport / setPeriod ─────────────────────────────────────────
 function setSport(sport) {
   gSport = sport;
-  const cfg    = SPORTS[sport];
-  const pAbbr  = gPeriod.toUpperCase();
+  const cfg = SPORTS[sport];
   document.querySelectorAll('.sport-tab').forEach(b => b.classList.toggle('active', b.dataset.sport === sport));
   document.getElementById('period-sport').textContent   = cfg.label;
   document.getElementById('current-year').textContent   = getPeriodSub(gPeriod);
@@ -2110,21 +2174,156 @@ function setPeriod(period) {
   setSport(gSport);
 }
 
+// ── Workout detail metadata (effort, HR zone, pace, focus) ───────
+function getWorkoutDetails(act) {
+  const label = (act.label || '').toLowerCase();
+  const type  = act.type;
+
+  // Effort 1–5
+  let effort = 2;
+  if (type === 'race')                                                                    effort = 5;
+  else if (/\brace.?sim\b/.test(label))                                                  effort = 4;
+  else if (/\brace.?pace\b/.test(label))                                                 effort = 4;
+  else if (/\b(intervals|quality ride|confidence brick)\b/.test(label))                  effort = 4;
+  else if (/\b(tempo|sweet spot|css intervals|hard)\b/.test(label))                      effort = 3;
+  else if (/\b(easy|recovery|opener|easy jog|easy long|short run|activation|taper)\b/.test(label)) effort = 1;
+  else if (/\b(long run|long ride|long brick|endurance|moderate)\b/.test(label))         effort = 2;
+
+  const EFFORT_META = [
+    null,
+    { label:'Recovery',  dots:[1,0,0,0,0] },
+    { label:'Aerobic',   dots:[1,1,0,0,0] },
+    { label:'Tempo',     dots:[1,1,1,0,0] },
+    { label:'Threshold', dots:[1,1,1,1,0] },
+    { label:'Race',      dots:[1,1,1,1,1] },
+  ];
+
+  const HR_ZONES = [
+    { zone:1, label:'Zone 1', range:'100–115 bpm', color:'#22C55E' },
+    { zone:2, label:'Zone 2', range:'116–135 bpm', color:'#84CC16' },
+    { zone:3, label:'Zone 3', range:'136–152 bpm', color:'#EAB308' },
+    { zone:4, label:'Zone 4', range:'153–168 bpm', color:'#F97316' },
+    { zone:5, label:'Zone 5', range:'169–185 bpm', color:'#EF4444' },
+  ];
+  const hrZone = HR_ZONES[effort - 1];
+
+  // Sport-specific pace / power targets
+  let paceTarget = null, paceUnit = null;
+  if (type === 'run') {
+    if      (effort <= 1) { paceTarget = '6:10 – 6:50'; paceUnit = 'min/km'; }
+    else if (effort === 2) { paceTarget = '5:45 – 6:15'; paceUnit = 'min/km'; }
+    else if (effort === 3) { paceTarget = '4:55 – 5:20'; paceUnit = 'min/km'; }
+    else                  { paceTarget = '4:25 – 4:50'; paceUnit = 'min/km'; }
+  } else if (type === 'swim') {
+    if      (effort <= 1) { paceTarget = '2:15 – 2:40'; paceUnit = '/100m'; }
+    else if (effort === 2) { paceTarget = '2:00 – 2:20'; paceUnit = '/100m'; }
+    else                  { paceTarget = '1:45 – 2:05'; paceUnit = '/100m'; }
+  } else if (type === 'bike') {
+    if      (effort <= 1) { paceTarget = '140 – 165 W'; paceUnit = '28–32 km/h'; }
+    else if (effort === 2) { paceTarget = '170 – 200 W'; paceUnit = '30–34 km/h'; }
+    else if (effort === 3) { paceTarget = '210 – 240 W'; paceUnit = '33–37 km/h'; }
+    else                  { paceTarget = '235 – 265 W'; paceUnit = '35–38 km/h'; }
+  } else if (type === 'brick') {
+    if      (effort <= 2) { paceTarget = '5:45 – 6:20'; paceUnit = 'run min/km'; }
+    else if (effort === 3) { paceTarget = '5:10 – 5:35'; paceUnit = 'run min/km'; }
+    else                  { paceTarget = '4:35 – 5:00'; paceUnit = 'run min/km'; }
+  }
+
+  // Coaching focus
+  let focus = 'Show up and execute. Consistency beats perfection.';
+  if      (/technique swim/.test(label))            focus = 'Drills before laps. Focus on catch position and hip-driven rotation.';
+  else if (/css intervals/.test(label))             focus = 'Swim at critical speed — controlled discomfort. 10 sec rest between reps.';
+  else if (/endurance swim/.test(label))            focus = 'Negative split. Start conservative and build pace through the set.';
+  else if (/race.?pace swim/.test(label))           focus = 'Feel your race effort — settle in and hold it without forcing.';
+  else if (/tempo run/.test(label))                 focus = 'Comfortably hard. Steady breathing, not gasping. Hold form through the final km.';
+  else if (/race.?pace run/.test(label))            focus = 'Dial in race rhythm. Smooth and controlled — this is what race day feels like.';
+  else if (/long run/.test(label))                  focus = 'Aerobic base builder. Finish feeling you could go 20% further.';
+  else if (/sweet spot/.test(label))                focus = 'Heavy but not blown up. Hold steady power in the target band.';
+  else if (/long ride|long race.?pace ride/.test(label)) focus = 'Fuel every 45 min. Cadence 85–95 rpm. This is where your bike fitness is built.';
+  else if (/quality ride/.test(label))              focus = 'Every interval counts. Make the hard efforts hard, the easy efforts easy.';
+  else if (/race.?pace ride/.test(label))           focus = 'Mental race rehearsal. Practice your pacing strategy and nutrition timing.';
+  else if (/race.?sim|confidence brick|long brick/.test(label)) focus = 'Simulate race day. Practice transitions, nutrition, and mental pacing.';
+  else if (/brick/.test(label))                     focus = 'T2 practice. The first 500m run will feel heavy — stay relaxed, let the legs adapt.';
+  else if (/strides/.test(label))                   focus = '4–6 × 20s strides at mile effort. Full recovery between each. Finish fresh.';
+  else if (/taper swim|taper/.test(label))          focus = 'Keep sharp, not tired. Maintain pace, reduce volume — trust the taper.';
+  else if (/easy|recovery|opener|activation/.test(label)) focus = 'Zone 1–2 only. If you can\'t hold a sentence while running, slow down.';
+
+  return { effort, effortMeta: EFFORT_META[effort], hrZone, paceTarget, paceUnit, focus };
+}
+
 // ── Countdown card (days until training start or race) ───────────
 function renderCountdownCard() {
+  const card      = document.getElementById('countdown-card');
+  const midGrid   = card?.closest('.mid-grid');
   const eyebrowEl = document.getElementById('countdown-eyebrow');
   const numEl     = document.getElementById('countdown-num');
   const unitEl    = document.getElementById('countdown-unit');
   const dateEl    = document.getElementById('countdown-date');
-  if (!eyebrowEl) return;
-  const dateOpts = { weekday:'long', month:'long', day:'numeric', year:'numeric' };
+  if (!card) return;
+
+  card.classList.remove('hidden');
+  midGrid?.classList.remove('mid-grid--chart-only');
+
   if (today < TRAIN_START) {
-    const d = daysUntil(TRAIN_START);
-    eyebrowEl.textContent = 'Training begins in';
-    numEl.textContent     = d;
-    unitEl.textContent    = d === 1 ? 'Day' : 'Days';
-    dateEl.textContent    = TRAIN_START.toLocaleDateString('en-CA', dateOpts);
-  } else if (today < RACE_DATE) {
+    // Show the next workout with full detail beside the chart
+    let nextAct = null, nextDate = null;
+    for (let i = 1; i <= 120; i++) {
+      const d   = addDays(today, i);
+      const act = getActivity(d);
+      if (act && act.type !== 'rest') { nextAct = act; nextDate = d; break; }
+    }
+    if (nextAct && nextDate) {
+      const sc      = sportStyle(nextAct.type);
+      const dur     = fmtTrnDur(nextAct.duration);
+      const dCount  = daysUntil(nextDate);
+      const dateLbl = fmtTrnDate(nextDate, {weekday:'short', month:'short', day:'numeric'});
+      const wd      = getWorkoutDetails(nextAct);
+
+      const dotHtml = wd.effortMeta.dots.map(on =>
+        `<span class="nw-dot" style="${on ? `background:${sc.color}` : ''}"></span>`
+      ).join('');
+
+      const paceRow = wd.paceTarget ? `
+        <div class="nw-stat">
+          <span class="nw-stat-lbl">Pace</span>
+          <span class="nw-stat-rhs">${esc(wd.paceTarget)}<span class="nw-stat-unit">${esc(wd.paceUnit || '')}</span></span>
+        </div>` : '';
+
+      card.innerHTML = `
+        <div class="countdown-eyebrow">Next Workout</div>
+        <div class="nw-header">
+          <span class="pretrain-act-badge" style="color:${sc.color};background:${sc.dim};">${sc.badge}</span>
+          <span class="nw-name">${esc(nextAct.label)}</span>
+        </div>
+        ${dur ? `<div class="nw-dur">${dur}</div>` : ''}
+        <hr class="nw-divider">
+        <div class="nw-stats">
+          <div class="nw-stat">
+            <span class="nw-stat-lbl">Effort</span>
+            <span class="nw-stat-rhs">
+              <span class="nw-dots">${dotHtml}</span>
+              <span class="nw-effort-txt">${esc(wd.effortMeta.label)}</span>
+            </span>
+          </div>
+          <div class="nw-stat">
+            <span class="nw-stat-lbl">HR Zone</span>
+            <span class="nw-stat-rhs">
+              <span class="nw-zone-pip" style="background:${wd.hrZone.color}"></span>
+              ${esc(wd.hrZone.label)} · ${esc(wd.hrZone.range)}
+            </span>
+          </div>
+          ${paceRow}
+        </div>
+        <div class="nw-focus">${esc(wd.focus)}</div>
+        <div class="nw-date">${dateLbl} · in ${dCount} day${dCount === 1 ? '' : 's'}</div>`;
+    } else {
+      card.innerHTML = `<div class="countdown-eyebrow">No sessions scheduled</div>`;
+    }
+    return;
+  }
+
+  const dateOpts = { weekday:'long', month:'long', day:'numeric', year:'numeric' };
+  if (today < RACE_DATE) {
     const d = daysUntil(RACE_DATE);
     eyebrowEl.textContent = 'Race in';
     numEl.textContent     = d;
@@ -2161,24 +2360,7 @@ function renderRecentActivities(expanded) {
 
   const tbody = document.getElementById('recent-acts-tbody');
   tbody.innerHTML = '';
-  acts.forEach((a, i) => {
-    const tc = typeClass(a.type);
-    const tr = document.createElement('tr');
-    tr.className = 'data-row';
-    tr.dataset.id   = a.id;
-    tr.dataset.type = a.type;
-    tr.innerHTML =
-      `<td class="td-index">${i+1}</td>` +
-      `<td><span class="type-badge ${tc}">${typeLabel(a.type)}</span></td>` +
-      `<td class="td-name" title="${esc(a.name)}">${esc(a.name)} <span class="expand-icon">▾</span></td>` +
-      `<td class="td-date">${fmtActDate(a.start_date)}</td>` +
-      `<td class="td-dist">${a.distance>0?fmtKm(a.distance)+' km':'—'}</td>` +
-      `<td class="td-time">${fmtActDur(a.moving_time)}</td>` +
-      `<td class="td-pace ${tc}">${fmtPace(a.average_speed, a.type)}</td>` +
-      `<td class="td-elev">${a.total_elevation_gain>0?Math.round(a.total_elevation_gain)+' m':'—'}</td>`;
-    tr.addEventListener('click', () => toggleDetail(a.id, a.type, tr));
-    tbody.appendChild(tr);
-  });
+  acts.forEach((a, i) => tbody.appendChild(buildActivityRow(a, i)));
 
   const footer = document.getElementById('recent-acts-footer');
   if (gActivities.length > RECENT_ACTS_DEFAULT) {
