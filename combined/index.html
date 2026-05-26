@@ -1457,66 +1457,68 @@ function render(athlete, stats, activities, cfg) {
 }
 
 // ── EVENTS ──
-document.getElementById('setup-btn').addEventListener('click', () => {
-  const id  = document.getElementById('input-client-id').value.trim();
-  const sec = document.getElementById('input-client-secret').value.trim();
-  const err = document.getElementById('setup-error');
-  if (!id || !sec)        { err.textContent = 'Both fields are required.'; return; }
-  if (!/^\d+$/.test(id)) { err.textContent = 'Client ID should be a number.'; return; }
-  saveCfg({ client_id:id, client_secret:sec });
-  startOAuth(id);
-});
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('setup-btn').addEventListener('click', () => {
+    const id  = document.getElementById('input-client-id').value.trim();
+    const sec = document.getElementById('input-client-secret').value.trim();
+    const err = document.getElementById('setup-error');
+    if (!id || !sec)        { err.textContent = 'Both fields are required.'; return; }
+    if (!/^\d+$/.test(id)) { err.textContent = 'Client ID should be a number.'; return; }
+    saveCfg({ client_id:id, client_secret:sec });
+    startOAuth(id);
+  });
 
-document.getElementById('disconnect-btn').addEventListener('click', () => {
-  if (confirm('Disconnect Strava and clear saved tokens?')) { clearCfg(); window.location.replace(window.location.pathname); }
-});
+  document.getElementById('disconnect-btn').addEventListener('click', () => {
+    if (confirm('Disconnect Strava and clear saved tokens?')) { clearCfg(); window.location.replace(window.location.pathname); }
+  });
 
-document.querySelectorAll('.sport-tab').forEach(btn => {
-  btn.addEventListener('click', () => setSport(btn.dataset.sport));
-});
+  document.querySelectorAll('.sport-tab').forEach(btn => {
+    btn.addEventListener('click', () => setSport(btn.dataset.sport));
+  });
 
-document.querySelectorAll('.period-btn').forEach(btn => {
-  btn.addEventListener('click', () => setPeriod(btn.dataset.period));
-});
+  document.querySelectorAll('.period-btn').forEach(btn => {
+    btn.addEventListener('click', () => setPeriod(btn.dataset.period));
+  });
 
-// ── INIT ──
-async function init() {
-  const params   = new URLSearchParams(window.location.search);
-  const code     = params.get('code');
-  const errParam = params.get('error');
-  let cfg = getCfg();
+  // ── INIT ──
+  async function init() {
+    const params   = new URLSearchParams(window.location.search);
+    const code     = params.get('code');
+    const errParam = params.get('error');
+    let cfg = getCfg();
 
-  if (errParam) { clearCfg(); showSetup(); document.getElementById('setup-error').textContent = 'Authorization denied.'; return; }
+    if (errParam) { clearCfg(); showSetup(); document.getElementById('setup-error').textContent = 'Authorization denied.'; return; }
 
-  if (code) {
-    if (!cfg) { showSetup(); return; }
+    if (code) {
+      if (!cfg) { showSetup(); return; }
+      showLoading();
+      window.history.replaceState({}, '', window.location.pathname);
+      try { const tokens = await exchangeCode(cfg, code); cfg = {...cfg,...tokens}; saveCfg(cfg); }
+      catch (e) { clearCfg(); showSetup(); document.getElementById('setup-error').textContent = e.message; return; }
+    }
+
+    if (!cfg)              { showSetup(); return; }
+    if (!cfg.access_token) { startOAuth(cfg.client_id); return; }
     showLoading();
-    window.history.replaceState({}, '', window.location.pathname);
-    try { const tokens = await exchangeCode(cfg, code); cfg = {...cfg,...tokens}; saveCfg(cfg); }
-    catch (e) { clearCfg(); showSetup(); document.getElementById('setup-error').textContent = e.message; return; }
+
+    if (Date.now()/1000 >= (cfg.expires_at||0) - 60) {
+      try { const tokens = await refreshToken(cfg); cfg = {...cfg,...tokens}; saveCfg(cfg); }
+      catch { clearCfg(); showSetup(); document.getElementById('setup-error').textContent = 'Session expired — please reconnect.'; return; }
+    }
+
+    try {
+      const [athlete, activities] = await Promise.all([api('/athlete', cfg.access_token), api('/athlete/activities?per_page=60', cfg.access_token)]);
+      const stats = await api(`/athletes/${athlete.id}/stats`, cfg.access_token);
+      render(athlete, stats, activities, cfg);
+    } catch (e) {
+      console.error(e);
+      cfg.access_token = null; cfg.expires_at = 0; saveCfg(cfg);
+      showSetup(); document.getElementById('setup-error').textContent = 'Failed to load data — please reconnect.';
+    }
   }
 
-  if (!cfg)              { showSetup(); return; }
-  if (!cfg.access_token) { startOAuth(cfg.client_id); return; }
-  showLoading();
-
-  if (Date.now()/1000 >= (cfg.expires_at||0) - 60) {
-    try { const tokens = await refreshToken(cfg); cfg = {...cfg,...tokens}; saveCfg(cfg); }
-    catch { clearCfg(); showSetup(); document.getElementById('setup-error').textContent = 'Session expired — please reconnect.'; return; }
-  }
-
-  try {
-    const [athlete, activities] = await Promise.all([api('/athlete', cfg.access_token), api('/athlete/activities?per_page=60', cfg.access_token)]);
-    const stats = await api(`/athletes/${athlete.id}/stats`, cfg.access_token);
-    render(athlete, stats, activities, cfg);
-  } catch (e) {
-    console.error(e);
-    cfg.access_token = null; cfg.expires_at = 0; saveCfg(cfg);
-    showSetup(); document.getElementById('setup-error').textContent = 'Failed to load data — please reconnect.';
-  }
-}
-
-init();
+  init();
+});
 </script>
 </body>
 </html>
