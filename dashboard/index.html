@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline'; connect-src https://www.strava.com https://api.anthropic.com; font-src https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src * data:;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline'; connect-src https://www.strava.com https://api.anthropic.com https://*.workers.dev; font-src https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src * data:;">
 <title>Julien's Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -488,20 +488,7 @@ footer{border-top:1px solid var(--border);background:var(--card);}
       </div>
       <div class="connect-heading">Connect your account</div>
       <p class="connect-sub">Link Strava to see your runs, rides, and swims alongside your training plan.</p>
-      <div class="connect-note">
-        Create an API app at <a href="https://www.strava.com/settings/api" target="_blank" rel="noopener">strava.com/settings/api</a>.
-        Set the <strong>Authorization Callback Domain</strong> to <code id="callback-domain"></code>.
-        Your Client ID and Secret are on that page.
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="input-client-id">Client ID</label>
-        <input class="form-input" type="text" id="input-client-id" placeholder="e.g. 123456" autocomplete="off" spellcheck="false">
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="input-client-secret">Client Secret</label>
-        <input class="form-input" type="password" id="input-client-secret" placeholder="40-character hex string" autocomplete="off" spellcheck="false">
-      </div>
-      <button class="connect-btn" id="setup-btn">Connect to Strava</button>
+      <button class="connect-btn" id="setup-btn">Connect with Strava →</button>
       <div class="connect-error" id="setup-error" aria-live="polite"></div>
     </div>
   </div>
@@ -1674,6 +1661,12 @@ function renderCalendar() {
 //  STRAVA
 // ════════════════════════════════════════════
 
+// ── Strava App Config ─────────────────────────────────────────────
+// STRAVA_CLIENT_ID — numeric ID shown on strava.com/settings/api (not secret, fine in source)
+// WORKER_URL       — your deployed Cloudflare Worker URL (handles token exchange with the secret)
+const STRAVA_CLIENT_ID = '250989';
+const WORKER_URL       = 'https://strava-auth.jmdashboard.workers.dev';
+
 const STORAGE_KEY = 'jm_strava_v1';
 let gAthlete, gStats, gActivities, gCfg;
 let gSport  = 'run';
@@ -1705,7 +1698,6 @@ function showStravaSetup() {
   document.getElementById('strava-content').classList.add('hidden');
   document.getElementById('training').classList.add('hidden');
   document.getElementById('strava-topbar').innerHTML = '';
-  document.getElementById('callback-domain').textContent = window.location.hostname;
 }
 function showStravaLoading() {
   document.getElementById('strava-setup').classList.add('hidden');
@@ -1729,21 +1721,24 @@ function showStravaContent() {
 // ── OAuth ────────────────────────────────────────────────────────
 function redirectUri() { return window.location.origin + window.location.pathname; }
 
-function startOAuth(clientId) {
-  const p = new URLSearchParams({ client_id:clientId, response_type:'code', redirect_uri:redirectUri(), approval_prompt:'auto', scope:'activity:read_all,read' });
+function startOAuth() {
+  const p = new URLSearchParams({ client_id:STRAVA_CLIENT_ID, response_type:'code', redirect_uri:redirectUri(), approval_prompt:'auto', scope:'activity:read_all,read' });
   window.location.href = 'https://www.strava.com/oauth/authorize?' + p;
 }
 
-async function exchangeCode(cfg, code) {
-  const r = await fetch('https://www.strava.com/oauth/token', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:new URLSearchParams({ client_id:cfg.client_id, client_secret:cfg.client_secret, code, grant_type:'authorization_code' }) });
-  if (!r.ok) throw new Error('Token exchange failed — check your Client ID and Secret.');
-  return r.json();
+async function workerPost(body) {
+  const r = await fetch(WORKER_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) });
+  const data = await r.json();
+  if (!r.ok) throw new Error(data.error || `Request failed (${r.status})`);
+  return data;
 }
 
-async function refreshToken(cfg) {
-  const r = await fetch('https://www.strava.com/oauth/token', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:new URLSearchParams({ client_id:cfg.client_id, client_secret:cfg.client_secret, refresh_token:cfg.refresh_token, grant_type:'refresh_token' }) });
-  if (!r.ok) throw new Error('Token refresh failed.');
-  return r.json();
+async function exchangeCode(code) {
+  return workerPost({ grant_type:'authorization_code', code });
+}
+
+async function refreshToken(refreshTok) {
+  return workerPost({ grant_type:'refresh_token', refresh_token:refreshTok });
 }
 
 async function stravaApi(path, token) {
@@ -2421,20 +2416,18 @@ async function stravaInit() {
   if (errParam) { clearCfg(); showStravaSetup(); document.getElementById('setup-error').textContent = 'Authorization denied.'; return; }
 
   if (code) {
-    if (!cfg) { showStravaSetup(); return; }
     showStravaLoading();
     window.history.replaceState({}, '', window.location.pathname);
-    try { const tokens = await exchangeCode(cfg, code); cfg = {...cfg,...tokens}; saveCfg(cfg); }
+    try { const tokens = await exchangeCode(code); cfg = {...(cfg||{}),...tokens}; saveCfg(cfg); }
     catch (e) { clearCfg(); showStravaSetup(); document.getElementById('setup-error').textContent = e.message; return; }
   }
 
   if (!cfg) { showStravaSetup(); return; }
-  // Credentials stored — auto-start OAuth if no valid token
-  if (!cfg.access_token) { startOAuth(cfg.client_id); return; }
+  if (!cfg.access_token) { startOAuth(); return; }
   showStravaLoading();
 
   if (Date.now()/1000 >= (cfg.expires_at||0) - 60) {
-    try { const tokens = await refreshToken(cfg); cfg = {...cfg,...tokens}; saveCfg(cfg); }
+    try { const tokens = await refreshToken(cfg.refresh_token); cfg = {...cfg,...tokens}; saveCfg(cfg); }
     catch { clearCfg(); showStravaSetup(); return; }
   }
 
@@ -2445,19 +2438,18 @@ async function stravaInit() {
   } catch (e) {
     console.error(e);
     cfg.access_token = null; cfg.expires_at = 0; saveCfg(cfg);
-    startOAuth(cfg.client_id);
+    startOAuth();
   }
 }
 
 // ── Setup form ───────────────────────────────────────────────────
 document.getElementById('setup-btn').addEventListener('click', () => {
-  const id  = document.getElementById('input-client-id').value.trim();
-  const sec = document.getElementById('input-client-secret').value.trim();
   const err = document.getElementById('setup-error');
-  if (!id || !sec)        { err.textContent = 'Both fields are required.'; return; }
-  if (!/^\d+$/.test(id)) { err.textContent = 'Client ID should be a number.'; return; }
-  saveCfg({ client_id:id, client_secret:sec });
-  startOAuth(id);
+  if (!STRAVA_CLIENT_ID || !WORKER_URL) {
+    err.textContent = 'Set STRAVA_CLIENT_ID and WORKER_URL in the source first.';
+    return;
+  }
+  startOAuth();
 });
 
 // ════════════════════════════════════════════
