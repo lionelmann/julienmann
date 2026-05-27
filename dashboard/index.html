@@ -380,7 +380,7 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit;margin:0;}
 .detail-tr td{padding:0;border-bottom:1px solid var(--border);background:#FAFAFA;}
 .detail-content{display:grid;grid-template-rows:0fr;overflow:hidden;transition:grid-template-rows .3s ease-out;}
 .detail-content.open{grid-template-rows:1fr;}
-.detail-inner{min-height:0;padding:1.1rem 1.5rem;display:flex;flex-direction:column;gap:.9rem;}
+.detail-inner{min-height:0;overflow:hidden;padding:1.1rem 1.5rem;display:flex;flex-direction:column;gap:.9rem;}
 .detail-chips{display:flex;gap:.5rem;flex-wrap:wrap;}
 .detail-chip{background:var(--card);border:1px solid var(--border);border-radius:7px;padding:.5rem .75rem;min-width:76px;}
 .detail-chip .dc-val{font-size:.9rem;font-weight:700;color:var(--fg);display:block;line-height:1.2;}
@@ -390,6 +390,9 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit;margin:0;}
 .detail-ai-label{font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--mid);margin-bottom:.55rem;display:flex;align-items:center;gap:.3rem;}
 .detail-ai-label .ai-icon{color:var(--orange);font-style:normal;}
 .detail-ai-text{font-size:.8rem;color:var(--fg);line-height:1.7;}
+.detail-user-note{margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--border);}
+.detail-user-note-label{font-size:.56rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--mid);margin-bottom:.35rem;}
+.detail-user-note-text{font-size:.8rem;color:var(--fg);line-height:1.7;white-space:pre-wrap;}
 .detail-splits-label{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--mid);margin-bottom:.35rem;}
 .splits-table{border-collapse:collapse;min-width:300px;}
 .splits-table th{font-size:.58rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--mid);padding:.32rem .7rem;text-align:left;border-bottom:1px solid var(--border);background:var(--card);}
@@ -2095,12 +2098,13 @@ function renderDetailContent(contentEl, detail, activityType) {
     splitsHtml += '</tbody></table></div>';
   }
 
-  // Description: prefer Strava's own (user content — must escape), fall back to generated
-  const isStravaDesc = !!detail.description;
-  const descText     = detail.description || generateActivityDescription(detail, activityType);
-  const descHtml     = `<div class="detail-ai-card">
-    <div class="detail-ai-label"><em class="ai-icon">✦</em>${isStravaDesc ? 'Description' : 'Summary'}</div>
-    <p class="detail-ai-text">${esc(descText)}</p>
+  // Always generate the stats-based summary; if there's a Strava description, show it below
+  const generatedDesc = generateActivityDescription(detail, activityType);
+  const userNote      = detail.description ? detail.description.trim() : null;
+  const descHtml      = `<div class="detail-ai-card">
+    <div class="detail-ai-label"><em class="ai-icon">✦</em>Summary</div>
+    <p class="detail-ai-text">${esc(generatedDesc)}</p>
+    ${userNote ? `<div class="detail-user-note"><div class="detail-user-note-label">Your note</div><p class="detail-user-note-text">${esc(userNote)}</p></div>` : ''}
   </div>`;
 
   let html = '<div class="detail-inner">';
