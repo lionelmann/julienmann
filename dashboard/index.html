@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline'; connect-src https://www.strava.com https://api.anthropic.com https://*.workers.dev; font-src https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src * data:;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline'; connect-src https://www.strava.com https://strava-auth.jmdashboard.workers.dev; font-src https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src * data:;">
 <title>Julien's Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -1055,11 +1055,7 @@ function adaptPlan() {
 //  AI PLAN OPTIMIZATION
 // ════════════════════════════════════════════
 
-const CLAUDE_KEY  = 'jm_claude_v1';
-const AI_OPT_KEY  = 'jm_ai_opt_v1';
-
-function getClaudeApiKey()   { return localStorage.getItem(CLAUDE_KEY) || ''; }
-function saveClaudeApiKey(k) { localStorage.setItem(CLAUDE_KEY, k); }
+const AI_OPT_KEY = 'jm_ai_opt_v1';
 
 function getCachedOpt() {
   try { return JSON.parse(localStorage.getItem(AI_OPT_KEY)); } catch { return null; }
@@ -1132,33 +1128,12 @@ function buildPlanContext() {
 }
 
 const CLAUDE_MODEL_KEY = 'jm_claude_model_v1';
-function getSavedModel()    { return localStorage.getItem(CLAUDE_MODEL_KEY) || ''; }
-function saveModel(m)        { localStorage.setItem(CLAUDE_MODEL_KEY, m); }
-
-const ANTHROPIC_HEADERS = (apiKey) => ({
-  'x-api-key': apiKey,
-  'anthropic-version': '2023-06-01',
-  'content-type': 'application/json',
-  'anthropic-dangerous-direct-browser-access': 'true',
-});
-
-// Fetch the list of models available to this API key
-async function fetchAvailableModels(apiKey) {
-  const res = await fetch('https://api.anthropic.com/v1/models', {
-    headers: ANTHROPIC_HEADERS(apiKey),
-  });
-  if (!res.ok) return null;
-  const data = await res.json();
-  // data.data is an array of { id, ... }; prefer claude-3-5 and claude-3 models
-  return (data.data || []).map(m => m.id);
-}
+function getSavedModel() { return localStorage.getItem(CLAUDE_MODEL_KEY) || ''; }
+function saveModel(m)    { localStorage.setItem(CLAUDE_MODEL_KEY, m); }
 
 async function aiOptimizePlan() {
-  const apiKey  = getClaudeApiKey();
   const panelEl = document.getElementById('ai-panel');
   if (!panelEl) return;
-
-  if (!apiKey) { renderAiKeyPrompt(); return; }
 
   const lastAct = gActivities?.[0];
   if (!lastAct) return;
@@ -1166,12 +1141,7 @@ async function aiOptimizePlan() {
   // Serve from cache if the last activity hasn't changed
   const cached = getCachedOpt();
   if (cached?.activityId === lastAct.id) {
-    // stravaRender may have already pre-applied this cache; only apply + re-render if needed
-    if (!gAiSummary.length) {
-      applyAiResult(cached);
-      renderWeekStrip();
-      renderCalendar();
-    }
+    if (!gAiSummary.length) { applyAiResult(cached); renderWeekStrip(); renderCalendar(); }
     renderAiPanel(cached.summary);
     return;
   }
@@ -1194,57 +1164,38 @@ Respond ONLY with a valid JSON object — no markdown, no explanation outside th
 {"summary":"1–2 sentence coaching note","changes":[{"date":"YYYY-MM-DD","type":"run|swim|bike|brick|rest","label":"session name","duration":minutes,"reason":"why"}]}`;
 
   try {
-    // Resolve model: saved preference → probe /v1/models → hardcoded fallbacks
-    let model = getSavedModel();
-    if (!model) {
-      const available = await fetchAvailableModels(apiKey);
-      if (available && available.length > 0) {
-        // Pick the best available: prefer claude-3-5-sonnet, then any claude-3-5, then any claude-3
-        model = available.find(id => id.includes('claude-3-5-sonnet'))
-             || available.find(id => id.includes('claude-3-5'))
-             || available.find(id => id.includes('claude-3'))
-             || available[0];
-        saveModel(model);
-      }
-    }
-
     const FALLBACKS = [
+      'claude-sonnet-4-6',
       'claude-3-5-sonnet-20241022',
       'claude-3-5-haiku-20241022',
       'claude-3-haiku-20240307',
-      'claude-3-sonnet-20240229',
-      'claude-3-opus-20240229',
     ];
-    const candidates = model ? [model, ...FALLBACKS.filter(m => m !== model)] : FALLBACKS;
+    const saved = getSavedModel();
+    const candidates = saved ? [saved, ...FALLBACKS.filter(m => m !== saved)] : FALLBACKS;
 
-    const planContext = buildPlanContext(); // hoist outside loop — same data for all retries
+    const planContext = buildPlanContext();
     let res = { ok: false }, lastErr;
     for (const candidate of candidates) {
-      res = await fetch('https://api.anthropic.com/v1/messages', {
+      res = await fetch(WORKER_URL + '/ai', {
         method: 'POST',
-        headers: ANTHROPIC_HEADERS(apiKey),
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model:    candidate,
-          max_tokens: 1024,
-          system:   systemPrompt,
+          model: candidate, max_tokens: 1024,
+          system: systemPrompt,
           messages: [{ role: 'user', content: planContext }],
         }),
       });
       if (res.ok) { if (candidate !== getSavedModel()) saveModel(candidate); break; }
       const errBody = await res.json().catch(() => ({}));
-      if (res.status === 401) { localStorage.removeItem(CLAUDE_KEY); renderAiKeyPrompt(); return; }
       lastErr = `HTTP ${res.status}: ${errBody.error?.message || JSON.stringify(errBody)}`;
       console.warn(`Model ${candidate} failed:`, lastErr);
-      if (res.status !== 404) break; // non-404 is not a model issue — stop trying
+      if (res.status !== 404) break;
     }
 
-    if (!res.ok) {
-      // All candidates failed — show error with hint and link to console
-      throw new Error(lastErr + ' — check available models at console.anthropic.com/settings/limits');
-    }
+    if (!res.ok) throw new Error(lastErr);
 
-    const data   = await res.json();
-    const text   = data.content?.[0]?.text || '';
+    const data    = await res.json();
+    const text    = data.content?.[0]?.text || '';
     const jsonStr = text.match(/\{[\s\S]*\}/)?.[0];
     if (!jsonStr) throw new Error('No JSON in response');
     const result = JSON.parse(jsonStr);
@@ -1261,38 +1212,14 @@ Respond ONLY with a valid JSON object — no markdown, no explanation outside th
     panelEl.innerHTML = `<div class="ai-panel-inner"><div class="ai-panel-error">
       <div>✦ AI coaching unavailable</div>
       <div style="font-size:.7rem;margin-top:.35rem;font-weight:400;">${esc(e.message)}</div>
-      <button id="ai-change-key" style="margin-top:.6rem;font-size:.7rem;color:var(--orange);font-weight:600;text-decoration:underline;background:none;border:none;cursor:pointer;padding:0;">Change API key / model</button>
+      <button id="ai-retry-btn" style="margin-top:.6rem;font-size:.7rem;color:var(--orange);font-weight:600;text-decoration:underline;background:none;border:none;cursor:pointer;padding:0;">Retry</button>
     </div></div>`;
-    document.getElementById('ai-change-key')?.addEventListener('click', () => {
-      localStorage.removeItem(CLAUDE_KEY);
+    document.getElementById('ai-retry-btn')?.addEventListener('click', () => {
       localStorage.removeItem(CLAUDE_MODEL_KEY);
       localStorage.removeItem(AI_OPT_KEY);
-      renderAiKeyPrompt();
+      aiOptimizePlan();
     });
   }
-}
-
-function renderAiKeyPrompt() {
-  const panelEl = document.getElementById('ai-panel');
-  if (!panelEl) return;
-  panelEl.classList.remove('hidden');
-  panelEl.innerHTML = `<div class="ai-panel-inner ai-panel-setup">
-    <div class="ai-panel-setup-hdr"><em class="ai-panel-icon">✦</em> AI Coaching</div>
-    <p class="ai-panel-setup-sub">Enter your Anthropic API key and Claude will rebalance your plan after each workout.</p>
-    <div class="ai-key-row">
-      <input class="ai-key-input" type="password" id="ai-key-input" placeholder="sk-ant-api03-…" autocomplete="off" spellcheck="false">
-      <button class="ai-key-btn" id="ai-key-btn">Enable</button>
-    </div>
-    <div class="ai-key-error" id="ai-key-error"></div>
-  </div>`;
-  document.getElementById('ai-key-btn').addEventListener('click', () => {
-    const val = document.getElementById('ai-key-input').value.trim();
-    if (val.length < 20) { document.getElementById('ai-key-error').textContent = 'Key looks too short.'; return; }
-    localStorage.removeItem(CLAUDE_MODEL_KEY); // clear any cached bad model
-    localStorage.removeItem(AI_OPT_KEY);
-    saveClaudeApiKey(val);
-    aiOptimizePlan();
-  });
 }
 
 function renderAiPanel(summary) {
@@ -1741,6 +1668,29 @@ async function refreshToken(refreshTok) {
   return workerPost({ grant_type:'refresh_token', refresh_token:refreshTok });
 }
 
+// Serialises concurrent refresh calls across tabs/async paths so only one
+// exchange runs at a time; subsequent callers share the same promise result.
+let _refreshPromise = null;
+async function ensureFreshToken(cfg) {
+  if (Date.now() / 1000 < (cfg.expires_at || 0) - 60) return cfg;
+  if (!_refreshPromise) {
+    _refreshPromise = refreshToken(cfg.refresh_token)
+      .then(tokens => { const updated = { ...cfg, ...tokens }; saveCfg(updated); return updated; })
+      .finally(() => { _refreshPromise = null; });
+  }
+  return _refreshPromise;
+}
+
+async function fetchAllActivities(token) {
+  const all = [];
+  for (let page = 1; page <= 5; page++) {
+    const batch = await stravaApi(`/athlete/activities?per_page=200&page=${page}`, token);
+    all.push(...batch);
+    if (batch.length < 200) break;
+  }
+  return all;
+}
+
 async function stravaApi(path, token) {
   const r = await fetch('https://www.strava.com/api/v3' + path, { headers:{ Authorization:'Bearer ' + token } });
   if (!r.ok) throw new Error('Strava API error ' + r.status);
@@ -2093,6 +2043,7 @@ async function fetchDetail(activityId, activityType) {
     return;
   }
   try {
+    gCfg = await ensureFreshToken(gCfg);
     const detail = await stravaApi(`/activities/${activityId}`, gCfg.access_token);
     gDetailCache[activityId] = detail;
     renderDetailContent(contentEl, detail, activityType);
@@ -2134,7 +2085,7 @@ function renderDetailContent(contentEl, detail, activityType) {
   const descText     = detail.description || generateActivityDescription(detail, activityType);
   const descHtml     = `<div class="detail-ai-card">
     <div class="detail-ai-label"><em class="ai-icon">✦</em>${isStravaDesc ? 'Description' : 'Summary'}</div>
-    <p class="detail-ai-text">${isStravaDesc ? esc(descText) : descText}</p>
+    <p class="detail-ai-text">${esc(descText)}</p>
   </div>`;
 
   let html = '<div class="detail-inner">';
@@ -2426,13 +2377,11 @@ async function stravaInit() {
   if (!cfg.access_token) { startOAuth(); return; }
   showStravaLoading();
 
-  if (Date.now()/1000 >= (cfg.expires_at||0) - 60) {
-    try { const tokens = await refreshToken(cfg.refresh_token); cfg = {...cfg,...tokens}; saveCfg(cfg); }
-    catch { clearCfg(); showStravaSetup(); return; }
-  }
+  try { cfg = await ensureFreshToken(cfg); }
+  catch { clearCfg(); showStravaSetup(); return; }
 
   try {
-    const [athlete, activities] = await Promise.all([stravaApi('/athlete', cfg.access_token), stravaApi('/athlete/activities?per_page=60', cfg.access_token)]);
+    const [athlete, activities] = await Promise.all([stravaApi('/athlete', cfg.access_token), fetchAllActivities(cfg.access_token)]);
     const stats = await stravaApi(`/athletes/${athlete.id}/stats`, cfg.access_token);
     stravaRender(athlete, stats, activities, cfg);
   } catch (e) {
